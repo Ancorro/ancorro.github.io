@@ -1097,12 +1097,13 @@ Answer: true</pre>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const sidebar = document.querySelector('.paper-refs-sidebar');
-            if (!sidebar) return;
 
             // Intercept all citation-link clicks in the paper
             document.querySelectorAll('.citation-link').forEach(function (link) {
                 link.addEventListener('click', function (e) {
                     e.preventDefault();
+
+                    if (!sidebar) return;
 
                     // Extract all ref IDs from the href (handles "[2, 3]" style links)
                     const href = this.getAttribute('href');
@@ -1132,22 +1133,30 @@ Answer: true</pre>
             });
 
             // Also prevent sidebar ref links from scrolling the main page
+            if (!sidebar) return;
+
             sidebar.querySelectorAll('a').forEach(function (link) {
                 link.addEventListener('click', function (e) {
                     e.preventDefault();
-                    // Scroll the main page to the reference in the paper body
                     const refId = this.getAttribute('href').replace('#', '');
-                    const target = document.getElementById(refId);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        // Brief highlight on the reference in the paper
-                        target.style.transition = 'background 0.3s ease';
-                        target.style.background = 'rgba(249, 115, 22, 0.15)';
-                        target.style.borderRadius = '4px';
+
+                    const sidebarItem = sidebar.querySelector('li[data-ref="' + refId + '"]');
+                    if (!sidebarItem) return;
+
+                    // Keep focus in the sidebar only; do not move the main paper.
+                    sidebarItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    sidebarItem.style.transition = 'background 0.3s ease';
+                    sidebarItem.style.background = 'rgba(249, 115, 22, 0.15)';
+                    sidebarItem.style.borderRadius = '6px';
+                    sidebarItem.style.padding = '0.25rem 0.4rem';
+                    sidebarItem.style.margin = '-0.25rem -0.4rem';
+                    setTimeout(function () {
+                        sidebarItem.style.background = 'transparent';
                         setTimeout(function () {
-                            target.style.background = 'transparent';
-                        }, 1500);
-                    }
+                            sidebarItem.style.padding = '';
+                            sidebarItem.style.margin = '';
+                        }, 300);
+                    }, 1500);
                 });
             });
         });
