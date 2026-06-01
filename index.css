@@ -1115,10 +1115,16 @@ footer p {
 }
 
 /* Paper Page Specific Layout & Styles */
+.paper-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
 .paper-layout {
     display: grid;
-    grid-template-columns: 260px 1fr;
-    gap: 2.5rem;
+    grid-template-columns: 240px 1fr;
+    gap: 5rem; /* Larger gap pushes sections box further left! */
     align-items: start;
     padding-top: 8rem;
     padding-bottom: 6rem;
@@ -1179,13 +1185,14 @@ footer p {
 
 /* Paper Sheet Styling (Simulating Letter Page) */
 .paper-sheet {
-    background: var(--bg-surface-elevated);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 3.5rem;
-    box-shadow: 0 15px 40px rgba(60, 45, 30, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    max-width: 960px;
-    margin: 0 auto;
+    background: #ffffff;
+    border: 1px solid rgba(60, 45, 30, 0.06);
+    border-radius: 0; /* Sharp academic page edges */
+    padding: 3.75rem 4.5rem; /* Standard CVPR margin proportions */
+    box-shadow: 0 12px 35px rgba(60, 45, 30, 0.05);
+    max-width: 850px; /* Authentic print width */
+    width: 100%;
+    justify-self: start;
     position: relative;
 }
 
@@ -1197,12 +1204,13 @@ footer p {
 
 .paper-title-section h1 {
     font-family: var(--font-heading);
-    font-size: 2.3rem;
+    font-size: 2.15rem;
     margin-top: 1rem;
     margin-bottom: 1.25rem;
     line-height: 1.2;
     color: var(--text-primary);
     font-weight: 700;
+    letter-spacing: -0.01em;
 }
 
 .paper-authors {
@@ -1221,13 +1229,13 @@ footer p {
 .author-block strong {
     color: var(--text-primary);
     font-size: 1.05rem;
-    font-family: var(--font-heading);
+    font-family: Georgia, serif;
 }
 
 .author-block span {
     color: var(--text-secondary);
     font-size: 0.9rem;
-    font-family: var(--font-heading);
+    font-family: Georgia, serif;
 }
 
 .author-email {
@@ -1252,18 +1260,18 @@ footer p {
 
 .abstract-box h3 {
     text-align: center;
-    font-size: 1.15rem;
-    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-family: Georgia, serif;
     margin-bottom: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    font-weight: 700;
+    font-weight: bold;
 }
 
 .abstract-box p {
-    font-family: var(--font-heading);
-    font-size: 0.92rem;
-    line-height: 1.5;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 0.88rem; /* LaTeX abstract is 9pt */
+    line-height: 1.42;
     color: var(--text-primary);
     font-style: normal;
     text-indent: 0;
@@ -1281,12 +1289,13 @@ footer p {
     width: 100%;
 }
 
-/* Paragraph Layout (Indentation) */
+/* Paragraph Layout (Indentation & Tight Spacing) */
 .paper-content-columns p {
-    font-family: var(--font-heading);
-    font-size: 0.94rem;
-    line-height: 1.55;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 0.92rem; /* LaTeX body text is 10pt */
+    line-height: 1.38; /* Academic line height */
     color: var(--text-primary);
+    margin-top: 0;
     margin-bottom: 0;
     text-indent: 1.5em; /* Academic paragraph indent */
 }
@@ -1309,24 +1318,27 @@ footer p {
     column-break-after: avoid;
     break-inside: avoid;
     text-indent: 0;
-    margin-top: 1.75rem;
-    margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.4rem;
     font-family: var(--font-heading);
     font-weight: 700;
 }
 
 .paper-content-columns h2 {
-    font-size: 1.3rem;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 0.25rem;
+    font-size: 1.05rem;
+    text-transform: uppercase; /* Replicates LaTeX uppercase main headers */
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-top: 1.75rem;
 }
 
 .paper-content-columns h3 {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
+    margin-top: 1.25rem;
 }
 
 .paper-content-columns h4 {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-style: italic;
     font-weight: 600;
 }
@@ -1343,51 +1355,51 @@ footer p {
 
 /* Figures and Captions */
 .paper-figure {
-    margin: 1.5rem 0;
+    margin: 1.25rem 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.5rem;
     break-inside: avoid;
     text-indent: 0;
 }
 
 .paper-figure.span-both-columns {
-    margin: 2.5rem 0;
+    margin: 2.25rem 0;
     column-span: all;
 }
 
 .paper-figure img {
     max-width: 100%;
     height: auto;
-    border-radius: 6px;
-    box-shadow: 0 4px 15px rgba(60, 45, 30, 0.05);
+    border-radius: 0; /* Keep it print-style */
+    box-shadow: 0 4px 15px rgba(60, 45, 30, 0.04);
 }
 
 .paper-figure figcaption {
-    font-family: var(--font-heading);
+    font-family: Georgia, serif;
     font-size: 0.82rem;
     color: var(--text-secondary);
     text-align: justify;
     line-height: 1.4;
-    padding: 0 0.5rem;
+    padding: 0 0.25rem;
 }
 
 /* Lists */
 .paper-content-columns ul,
 .paper-content-columns ol {
-    margin: 1rem 0;
-    padding-left: 1.5rem;
+    margin: 0.75rem 0;
+    padding-left: 1.25rem;
     text-indent: 0;
     break-inside: avoid;
 }
 
 .paper-content-columns li {
-    font-family: var(--font-heading);
+    font-family: Georgia, serif;
     color: var(--text-secondary);
-    margin-bottom: 0.35rem;
-    font-size: 0.94rem;
-    line-height: 1.5;
+    margin-bottom: 0.25rem;
+    font-size: 0.92rem;
+    line-height: 1.45;
 }
 
 /* Equations Styling */
@@ -1395,7 +1407,7 @@ footer p {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 1.25rem 0;
+    margin: 0.75rem 0;
     width: 100%;
     break-inside: avoid;
     text-indent: 0;
@@ -1405,12 +1417,13 @@ footer p {
     flex: 1;
     text-align: center;
     overflow-x: auto;
+    font-size: 0.9rem;
 }
 
 .equation-number {
-    font-family: var(--font-heading);
+    font-family: Georgia, serif;
     color: var(--text-primary);
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     font-weight: 500;
     padding-left: 0.5rem;
     white-space: nowrap;
@@ -1435,13 +1448,13 @@ footer p {
 }
 
 .references-list li {
-    font-family: var(--font-heading);
-    font-size: 0.85rem;
-    line-height: 1.45;
-    margin-bottom: 0.75rem;
+    font-family: Georgia, serif;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
     text-align: justify;
-    padding-left: 1.5rem;
-    text-indent: -1.5rem; /* Hanging indent for bibliography */
+    padding-left: 1.25rem;
+    text-indent: -1.25rem; /* Hanging indent for bibliography */
     color: var(--text-secondary);
 }
 
@@ -1472,7 +1485,7 @@ footer p {
 
 @media (max-width: 768px) {
     .paper-sheet {
-        padding: 1.5rem;
+        padding: 2.5rem 1.75rem;
     }
     .paper-content-columns {
         column-count: 1;
@@ -1486,4 +1499,5 @@ footer p {
         font-size: 1.85rem;
     }
 }
+
 
