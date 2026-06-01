@@ -996,14 +996,14 @@ footer p {
 
 /* Paper Page Specific Layout & Styles */
 .paper-container {
-    max-width: 1400px;
+    max-width: 1500px;
     margin: 0 auto;
     padding: 0 2rem;
 }
 
 .paper-layout {
     display: grid;
-    grid-template-columns: 240px 1fr 240px;
+    grid-template-columns: 240px 1fr 280px;
     gap: 3rem;
     align-items: start;
     padding-top: 3rem;
@@ -1230,19 +1230,24 @@ header + .paper-layout {
 }
 
 .paper-sheet section {
-    padding: 0.8rem 0;
+    padding: 1.5rem 0 0.8rem 0;
+}
+
+.paper-sheet section:first-of-type {
+    padding-top: 0;
 }
 
 .paper-sheet section + section {
     border-top: 1px solid rgba(60, 45, 30, 0.1);
+    margin-top: 0.5rem;
 }
 
 .abstract-box {
     max-width: 800px;
-    margin: 0 auto 2.5rem auto;
+    margin: 0 auto 1rem auto;
     text-align: justify;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(60, 45, 30, 0.1);
+    padding-bottom: 0;
+    border-bottom: none;
 }
 
 .span-both-columns {
@@ -1461,7 +1466,7 @@ header + .paper-layout {
     margin: 2rem 0;
 }
 
-@media (max-width: 1400px) {
+@media (max-width: 1500px) {
     .paper-layout {
         grid-template-columns: 240px 1fr;
         gap: 3rem;

@@ -520,6 +520,28 @@
                             Table 1 reports final validation accuracy under the evaluation protocol used for each run,
                             validation loss, and fusion parameter state (fixed vs learned) after 3 epochs.
                         </p>
+                        <p style="text-indent:0;">
+                            The parameter-matched control model substantially outperforms the Baseline, indicating that
+                            additional parallel capacity alone already improves performance, while routing variants provide
+                            the strongest overall scores in this setting.
+                        </p>
+                        <p>
+                            The best observed ProofWriter result is the inter-token routed variant with $G=8$ and fixed
+                            $\alpha=0.01$ (0.562 val accuracy), compared with 0.525 for No-Gate Control and 0.417 for
+                            Baseline. Inter-token routing is consistently competitive with or better than intra-token
+                            routing at matched gate count, while increasing to $G=16$ under these settings reduces accuracy
+                            (0.501), indicating that more routed channels do not automatically improve quality. Additional
+                            hyperparameters listed in the appendix.
+                        </p>
+                        <p>
+                            The mechanism columns in Table 1 show routed variants have substantially lower gradient norms
+                            (about 10.41--10.96) than the Baseline (29.38), while No-Gate Control is intermediate (11.14).
+                            This is consistent with more stable update magnitudes in the routed settings under the current
+                            training regime. Routing entropy is tightly clustered around 3.067 for the $G=8$ routed runs,
+                            but rises to 3.7483 for $G=16$, where validation quality drops. In this sweep, higher routing
+                            entropy at larger gate count appears to coincide with weaker task performance, suggesting a more
+                            diffuse routing regime that does not translate into better accuracy.
+                        </p>
                     </div>
 
                     <!-- Table 1 (Wide Double Column Table) -->
@@ -596,29 +618,6 @@
                         </table>
                         <p class="table-caption"><strong>Table 1:</strong> ProofWriter validation results after 3 epochs. Routed variants outperform both the Baseline and No-Gate Control. The best result is inter-token routing with G=8 and fixed α=0.01.</p>
                     </div>
-
-                    <p style="text-indent:0;">
-                        The parameter-matched control model substantially outperforms the Baseline, indicating that
-                        additional parallel capacity alone already improves performance, while routing variants provide
-                        the strongest overall scores in this setting.
-                    </p>
-                    <p>
-                        The best observed ProofWriter result is the inter-token routed variant with $G=8$ and fixed
-                        $\alpha=0.01$ (0.562 val accuracy), compared with 0.525 for No-Gate Control and 0.417 for
-                        Baseline. Inter-token routing is consistently competitive with or better than intra-token
-                        routing at matched gate count, while increasing to $G=16$ under these settings reduces accuracy
-                        (0.501), indicating that more routed channels do not automatically improve quality. Additional
-                        hyperparameters listed in the appendix.
-                    </p>
-                    <p>
-                        The mechanism columns in Table 1 show routed variants have substantially lower gradient norms
-                        (about 10.41--10.96) than the Baseline (29.38), while No-Gate Control is intermediate (11.14).
-                        This is consistent with more stable update magnitudes in the routed settings under the current
-                        training regime. Routing entropy is tightly clustered around 3.067 for the $G=8$ routed runs,
-                        but rises to 3.7483 for $G=16$, where validation quality drops. In this sweep, higher routing
-                        entropy at larger gate count appears to coincide with weaker task performance, suggesting a more
-                        diffuse routing regime that does not translate into better accuracy.
-                    </p>
 
                     <h3>5.2. Size and Transfer</h3>
                     <p>
@@ -1045,23 +1044,23 @@ Answer: true</pre>
         <aside class="paper-refs-sidebar">
             <h3>References</h3>
             <ul>
-                <li><a href="#ref-attention-is-all-you-need"><span class="ref-number">[1]</span> Vaswani et al. — Attention is all you need</a></li>
-                <li><a href="#ref-cot"><span class="ref-number">[2]</span> Wei et al. — Chain-of-thought prompting</a></li>
-                <li><a href="#ref-reasoning"><span class="ref-number">[3]</span> Jiang et al. — Mistral 7B</a></li>
-                <li><a href="#ref-moe-1"><span class="ref-number">[4]</span> Jacobs et al. — Adaptive mixtures of local experts</a></li>
-                <li><a href="#ref-moe-2"><span class="ref-number">[5]</span> Shazeer et al. — Sparsely-gated MoE</a></li>
-                <li><a href="#ref-switch"><span class="ref-number">[6]</span> Fedus et al. — Switch Transformers</a></li>
-                <li><a href="#ref-aleksander"><span class="ref-number">[7]</span> Aleksander & Morton — Intro to Neural Computing</a></li>
-                <li><a href="#ref-diff-logic"><span class="ref-number">[8]</span> Petersen et al. — Deep differentiable logic gates</a></li>
-                <li><a href="#ref-lnn"><span class="ref-number">[9]</span> Riegel et al. — Logical neural networks</a></li>
-                <li><a href="#ref-dlm"><span class="ref-number">[10]</span> Zimmer et al. — Differentiable logic machines</a></li>
-                <li><a href="#ref-fuzzy"><span class="ref-number">[11]</span> Zadeh — Fuzzy sets</a></li>
-                <li><a href="#ref-neurosymbolic"><span class="ref-number">[12]</span> Besold et al. — Neural-symbolic learning</a></li>
-                <li><a href="#ref-llama"><span class="ref-number">[13]</span> Touvron et al. — Llama</a></li>
-                <li><a href="#ref-adamw"><span class="ref-number">[14]</span> Loshchilov & Hutter — AdamW</a></li>
-                <li><a href="#ref-proofwriter"><span class="ref-number">[15]</span> Tafjord et al. — ProofWriter</a></li>
-                <li><a href="#ref-mnli"><span class="ref-number">[16]</span> Williams et al. — MNLI corpus</a></li>
-                <li><a href="#ref-generalization"><span class="ref-number">[17]</span> Keysers et al. — Compositional generalization</a></li>
+                <li data-ref="ref-attention-is-all-you-need"><a href="#ref-attention-is-all-you-need"><span class="ref-number">[1]</span> Vaswani et al. — Attention is all you need</a></li>
+                <li data-ref="ref-cot"><a href="#ref-cot"><span class="ref-number">[2]</span> Wei et al. — Chain-of-thought prompting</a></li>
+                <li data-ref="ref-reasoning"><a href="#ref-reasoning"><span class="ref-number">[3]</span> Jiang et al. — Mistral 7B</a></li>
+                <li data-ref="ref-moe-1"><a href="#ref-moe-1"><span class="ref-number">[4]</span> Jacobs et al. — Adaptive mixtures of local experts</a></li>
+                <li data-ref="ref-moe-2"><a href="#ref-moe-2"><span class="ref-number">[5]</span> Shazeer et al. — Sparsely-gated MoE</a></li>
+                <li data-ref="ref-switch"><a href="#ref-switch"><span class="ref-number">[6]</span> Fedus et al. — Switch Transformers</a></li>
+                <li data-ref="ref-aleksander"><a href="#ref-aleksander"><span class="ref-number">[7]</span> Aleksander &amp; Morton — Intro to Neural Computing</a></li>
+                <li data-ref="ref-diff-logic"><a href="#ref-diff-logic"><span class="ref-number">[8]</span> Petersen et al. — Deep differentiable logic gates</a></li>
+                <li data-ref="ref-lnn"><a href="#ref-lnn"><span class="ref-number">[9]</span> Riegel et al. — Logical neural networks</a></li>
+                <li data-ref="ref-dlm"><a href="#ref-dlm"><span class="ref-number">[10]</span> Zimmer et al. — Differentiable logic machines</a></li>
+                <li data-ref="ref-fuzzy"><a href="#ref-fuzzy"><span class="ref-number">[11]</span> Zadeh — Fuzzy sets</a></li>
+                <li data-ref="ref-neurosymbolic"><a href="#ref-neurosymbolic"><span class="ref-number">[12]</span> Besold et al. — Neural-symbolic learning</a></li>
+                <li data-ref="ref-llama"><a href="#ref-llama"><span class="ref-number">[13]</span> Touvron et al. — Llama</a></li>
+                <li data-ref="ref-adamw"><a href="#ref-adamw"><span class="ref-number">[14]</span> Loshchilov &amp; Hutter — AdamW</a></li>
+                <li data-ref="ref-proofwriter"><a href="#ref-proofwriter"><span class="ref-number">[15]</span> Tafjord et al. — ProofWriter</a></li>
+                <li data-ref="ref-mnli"><a href="#ref-mnli"><span class="ref-number">[16]</span> Williams et al. — MNLI corpus</a></li>
+                <li data-ref="ref-generalization"><a href="#ref-generalization"><span class="ref-number">[17]</span> Keysers et al. — Compositional generalization</a></li>
             </ul>
         </aside>
 
@@ -1081,6 +1080,65 @@ Answer: true</pre>
             </div>
         </div>
     </footer>
+    <!-- Citation → Right Sidebar Scroll Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebar = document.querySelector('.paper-refs-sidebar');
+            if (!sidebar) return;
+
+            // Intercept all citation-link clicks in the paper
+            document.querySelectorAll('.citation-link').forEach(function (link) {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    // Extract all ref IDs from the href (handles "[2, 3]" style links)
+                    const href = this.getAttribute('href');
+                    const refId = href.replace('#', '');
+
+                    // Find matching sidebar item
+                    const sidebarItem = sidebar.querySelector('li[data-ref="' + refId + '"]');
+                    if (!sidebarItem) return;
+
+                    // Scroll the sidebar container to the item
+                    sidebarItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                    // Flash highlight effect
+                    sidebarItem.style.transition = 'background 0.3s ease';
+                    sidebarItem.style.background = 'rgba(249, 115, 22, 0.15)';
+                    sidebarItem.style.borderRadius = '6px';
+                    sidebarItem.style.padding = '0.25rem 0.4rem';
+                    sidebarItem.style.margin = '-0.25rem -0.4rem';
+                    setTimeout(function () {
+                        sidebarItem.style.background = 'transparent';
+                        setTimeout(function () {
+                            sidebarItem.style.padding = '';
+                            sidebarItem.style.margin = '';
+                        }, 300);
+                    }, 1500);
+                });
+            });
+
+            // Also prevent sidebar ref links from scrolling the main page
+            sidebar.querySelectorAll('a').forEach(function (link) {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    // Scroll the main page to the reference in the paper body
+                    const refId = this.getAttribute('href').replace('#', '');
+                    const target = document.getElementById(refId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        // Brief highlight on the reference in the paper
+                        target.style.transition = 'background 0.3s ease';
+                        target.style.background = 'rgba(249, 115, 22, 0.15)';
+                        target.style.borderRadius = '4px';
+                        setTimeout(function () {
+                            target.style.background = 'transparent';
+                        }, 1500);
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 
