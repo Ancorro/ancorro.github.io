@@ -969,7 +969,8 @@ footer p {
 }
 
 @media (max-width: 576px) {
-    header .container {
+    header .container,
+    header .paper-container {
         flex-direction: column;
         justify-content: center;
         height: 6.5rem;
