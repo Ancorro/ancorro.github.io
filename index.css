@@ -1416,8 +1416,8 @@ footer p {
 .equation-math {
     flex: 1;
     text-align: center;
-    overflow-x: auto;
-    font-size: 0.9rem;
+    overflow-x: visible;
+    font-size: 0.82rem;
 }
 
 .equation-number {
@@ -1498,6 +1498,51 @@ footer p {
     .paper-title-section h1 {
         font-size: 1.85rem;
     }
+}/* Academic Table Formatting (Booktabs style) */
+.paper-sheet .table-wrapper {
+    overflow-x: visible;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    margin: 1.25rem 0;
+    width: 100%;
+    break-inside: avoid;
 }
 
+.paper-sheet table {
+    width: 100%;
+    border-collapse: collapse;
+    border-top: 1.5px solid var(--text-primary);
+    border-bottom: 1.5px solid var(--text-primary);
+    font-size: 0.8rem;
+}
 
+.paper-sheet th,
+.paper-sheet td {
+    padding: 0.4rem 0.35rem;
+    border: none;
+    border-bottom: 1px solid rgba(60, 45, 30, 0.08);
+    font-family: Georgia, serif;
+    font-size: 0.8rem;
+}
+
+.paper-sheet th {
+    font-weight: bold;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--text-primary);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+}
+
+.paper-sheet tr:last-child td {
+    border-bottom: none;
+}
+
+.paper-sheet td.highlight-cell {
+    font-weight: bold;
+    color: var(--text-primary);
+    text-shadow: none;
+}
