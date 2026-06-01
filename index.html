@@ -79,15 +79,15 @@
             <div class="toc-sticky">
                 <h3>Paper Sections</h3>
                 <ul>
-                    <li><a href="#abstract"><i class="fas fa-bookmark"></i> Abstract</a></li>
-                    <li><a href="#introduction"><i class="fas fa-align-left"></i> 1. Introduction</a></li>
-                    <li><a href="#related-work"><i class="fas fa-book-open"></i> 2. Related Work</a></li>
-                    <li><a href="#methods"><i class="fas fa-square-root-alt"></i> 3. Methods</a></li>
-                    <li><a href="#experiments"><i class="fas fa-vial"></i> 4. Experiments</a></li>
-                    <li><a href="#results"><i class="fas fa-chart-bar"></i> 5. Results</a></li>
-                    <li><a href="#discussion"><i class="fas fa-comments"></i> 6. Discussion</a></li>
-                    <li><a href="#limitations"><i class="fas fa-exclamation-triangle"></i> 7. Limitations</a></li>
-                    <li><a href="#conclusion"><i class="fas fa-flag"></i> 8. Conclusion</a></li>
+                    <li><a href="#abstract">Abstract</a></li>
+                    <li><a href="#introduction">1. Introduction</a></li>
+                    <li><a href="#related-work">2. Related Work</a></li>
+                    <li><a href="#methods">3. Methods</a></li>
+                    <li><a href="#experiments">4. Experiments</a></li>
+                    <li><a href="#results">5. Results</a></li>
+                    <li><a href="#discussion">6. Discussion</a></li>
+                    <li><a href="#limitations">7. Limitations</a></li>
+                    <li><a href="#conclusion">8. Conclusion</a></li>
                 </ul>
             </div>
         </aside>
@@ -376,6 +376,8 @@
                         </div>
                         <div class="equation-number">(11)</div>
                     </div>
+
+                    <div class="page-break-divider span-both-columns" aria-hidden="true"></div>
 
                     <h3>3.4. Windowed Operator Composition</h3>
                     <p>
@@ -1091,6 +1093,7 @@ Answer: true</pre>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const sidebar = document.querySelector('.paper-refs-sidebar');
+            const refLinkSelector = '.citation-link[href^="#ref-"], .paper-refs-sidebar a[href^="#ref-"]';
 
             function getFullReferenceText(refId) {
                 const referenceItem = document.getElementById(refId);
@@ -1128,66 +1131,79 @@ Answer: true</pre>
                 }, 1500);
             }
 
-            // Intercept all citation-link clicks in the paper
-            document.querySelectorAll('.citation-link').forEach(function (link) {
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
+            function preserveMainScroll(callback) {
+                const scrollX = window.scrollX;
+                const scrollY = window.scrollY;
 
-                    if (!sidebar) return;
+                function restoreScroll() {
+                    const originalScrollBehavior = document.documentElement.style.scrollBehavior;
+                    document.documentElement.style.scrollBehavior = 'auto';
+                    window.scrollTo(scrollX, scrollY);
+                    document.documentElement.style.scrollBehavior = originalScrollBehavior;
+                }
 
-                    // Extract all ref IDs from the href (handles "[2, 3]" style links)
-                    const href = this.getAttribute('href');
-                    const refId = href.replace('#', '');
+                callback();
+                restoreScroll();
 
-                    // Find matching sidebar item
-                    const sidebarItem = sidebar.querySelector('li[data-ref="' + refId + '"]');
-                    if (!sidebarItem) return;
-
-                    // Keep scrolling isolated to the refs sidebar.
-                    scrollSidebarToItem(sidebarItem);
-
-                    // Flash highlight effect
-                    highlightSidebarItem(sidebarItem);
+                requestAnimationFrame(function () {
+                    restoreScroll();
                 });
-            });
 
-            // Also prevent sidebar ref links from scrolling the main page
-            if (!sidebar) return;
+                setTimeout(function () {
+                    restoreScroll();
+                }, 250);
+            }
 
-            sidebar.querySelectorAll('a').forEach(function (link) {
-                link.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const refId = this.getAttribute('href').replace('#', '');
+            function collapseExpandedReferences() {
+                sidebar.querySelectorAll('li.ref-expanded').forEach(function (item) {
+                    item.classList.remove('ref-expanded');
+                    const fullTextBlock = item.querySelector('.ref-full-text');
+                    if (fullTextBlock) {
+                        fullTextBlock.remove();
+                    }
+                });
+            }
 
-                    const sidebarItem = sidebar.querySelector('li[data-ref="' + refId + '"]');
-                    if (!sidebarItem) return;
+            function expandSidebarReference(sidebarItem, refId) {
+                const wasExpanded = sidebarItem.classList.contains('ref-expanded');
 
-                    const wasExpanded = sidebarItem.classList.contains('ref-expanded');
+                collapseExpandedReferences();
 
-                    sidebar.querySelectorAll('li.ref-expanded').forEach(function (item) {
-                        item.classList.remove('ref-expanded');
-                        const fullTextBlock = item.querySelector('.ref-full-text');
-                        if (fullTextBlock) {
-                            fullTextBlock.remove();
-                        }
-                    });
+                if (!wasExpanded) {
+                    const fullReferenceText = getFullReferenceText(refId);
+                    if (fullReferenceText) {
+                        const fullTextBlock = document.createElement('div');
+                        fullTextBlock.className = 'ref-full-text';
+                        fullTextBlock.textContent = fullReferenceText;
+                        sidebarItem.appendChild(fullTextBlock);
+                        sidebarItem.classList.add('ref-expanded');
+                    }
+                }
+            }
 
-                    if (!wasExpanded) {
-                        const fullReferenceText = getFullReferenceText(refId);
-                        if (fullReferenceText) {
-                            const fullTextBlock = document.createElement('div');
-                            fullTextBlock.className = 'ref-full-text';
-                            fullTextBlock.textContent = fullReferenceText;
-                            sidebarItem.appendChild(fullTextBlock);
-                            sidebarItem.classList.add('ref-expanded');
-                        }
+            document.addEventListener('click', function (event) {
+                const clickedElement = event.target instanceof Element ? event.target : null;
+                const link = clickedElement ? clickedElement.closest(refLinkSelector) : null;
+                if (!link) return;
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                if (!sidebar) return;
+
+                const refId = link.getAttribute('href').replace('#', '');
+                const sidebarItem = sidebar.querySelector('li[data-ref="' + refId + '"]');
+                if (!sidebarItem) return;
+
+                preserveMainScroll(function () {
+                    if (sidebar.contains(link)) {
+                        expandSidebarReference(sidebarItem, refId);
                     }
 
-                    // Keep focus in the sidebar only; do not move the main paper.
                     scrollSidebarToItem(sidebarItem);
                     highlightSidebarItem(sidebarItem);
                 });
-            });
+            }, true);
         });
     </script>
 

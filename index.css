@@ -1116,6 +1116,7 @@ footer p {
     box-shadow: 0 10px 30px rgba(60, 45, 30, 0.03);
     max-height: calc(100vh - 10rem);
     overflow-y: auto;
+    overscroll-behavior: contain;
 }
 
 .paper-refs-sidebar h3 {
@@ -1226,25 +1227,13 @@ header + .paper-layout {
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
+    display: block;
     transition: var(--transition-fast);
 }
 
 .paper-toc a:hover {
     color: var(--accent-primary);
     transform: translateX(4px);
-}
-
-.paper-toc a i {
-    width: 16px;
-    color: var(--text-muted);
-    transition: var(--transition-fast);
-}
-
-.paper-toc a:hover i {
-    color: var(--accent-primary);
 }
 
 /* Paper Sheet Styling (Simulating Letter Page) */
@@ -1731,4 +1720,3 @@ header + .paper-layout {
     color: var(--accent-primary);
     transform: translateX(-2px);
 }
-
