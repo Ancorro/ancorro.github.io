@@ -894,7 +894,8 @@ td.highlight-cell {
 
 .results-intro {
     max-width: 780px;
-    margin: 0 auto 2rem;
+    margin: 0 auto;
+    padding: 1.15rem 1.5rem;
     text-align: center;
 }
 
@@ -907,6 +908,10 @@ td.highlight-cell {
 .results-intro p {
     max-width: 620px;
     margin: 0 auto;
+}
+
+.results-intro + .results-grid {
+    margin-top: 3rem;
 }
 
 .callout-box {
