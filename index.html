@@ -1098,6 +1098,21 @@ Answer: true</pre>
                 return referenceItem.textContent.replace(/\s+/g, ' ').trim();
             }
 
+            function scrollSidebarToItem(sidebarItem) {
+                if (!sidebar || !sidebarItem) return;
+
+                const sidebarRect = sidebar.getBoundingClientRect();
+                const itemRect = sidebarItem.getBoundingClientRect();
+                const itemTop = itemRect.top - sidebarRect.top + sidebar.scrollTop;
+                const targetScrollTop = itemTop - (sidebar.clientHeight / 2) + (sidebarItem.offsetHeight / 2);
+                const maxScrollTop = Math.max(0, sidebar.scrollHeight - sidebar.clientHeight);
+
+                sidebar.scrollTo({
+                    top: Math.min(Math.max(targetScrollTop, 0), maxScrollTop),
+                    behavior: 'smooth'
+                });
+            }
+
             function highlightSidebarItem(sidebarItem) {
                 sidebarItem.style.transition = 'background 0.3s ease';
                 sidebarItem.style.background = 'rgba(249, 115, 22, 0.15)';
@@ -1128,8 +1143,8 @@ Answer: true</pre>
                     const sidebarItem = sidebar.querySelector('li[data-ref="' + refId + '"]');
                     if (!sidebarItem) return;
 
-                    // Scroll the sidebar container to the item
-                    sidebarItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    // Keep scrolling isolated to the refs sidebar.
+                    scrollSidebarToItem(sidebarItem);
 
                     // Flash highlight effect
                     highlightSidebarItem(sidebarItem);
@@ -1169,7 +1184,7 @@ Answer: true</pre>
                     }
 
                     // Keep focus in the sidebar only; do not move the main paper.
-                    sidebarItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    scrollSidebarToItem(sidebarItem);
                     highlightSidebarItem(sidebarItem);
                 });
             });
