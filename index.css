@@ -1133,6 +1133,10 @@ footer p {
     gap: 0.6rem;
 }
 
+.paper-refs-sidebar li {
+    position: relative;
+}
+
 .paper-refs-sidebar a {
     color: var(--text-secondary);
     text-decoration: none;
@@ -1152,6 +1156,26 @@ footer p {
     color: var(--accent-primary);
     font-weight: 700;
     margin-right: 0.25rem;
+}
+
+.paper-refs-sidebar .ref-full-text {
+    display: none;
+    margin-top: 0.45rem;
+    padding: 0.55rem 0.65rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.62);
+    font-size: 0.74rem;
+    line-height: 1.45;
+    color: var(--text-secondary);
+}
+
+.paper-refs-sidebar li.ref-expanded > a {
+    color: var(--text-primary);
+}
+
+.paper-refs-sidebar li.ref-expanded .ref-full-text {
+    display: block;
 }
 
 /* Scrollbar styling for refs sidebar */

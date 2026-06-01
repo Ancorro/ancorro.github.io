@@ -103,6 +103,7 @@
                         <strong>Steven Cleasby-Mayeda</strong>
                         <span>Oregon State University</span>
                         <a href="mailto:cleasbys@oregonstate.edu" class="author-email">cleasbys@oregonstate.edu</a>
+                        <a href="mailto:steven.cleasby.mayeda@gmail.com" class="author-email">steven.cleasby.mayeda@gmail.com</a>
                     </div>
                 </div>
             </div>
@@ -1075,7 +1076,7 @@ Answer: true</pre>
     <!-- Footer Area -->
     <footer>
         <div class="container">
-            <p>&copy; 2026 Steven Cleasby-Mayeda. Built for academic demonstration & professional portfolio.</p>
+            <p>&copy; 2026 Steven Cleasby-Mayeda.</p>
             <div class="social-links">
                 <a href="https://github.com/Ancorro" aria-label="Steven's GitHub Profile"><i
                         class="fab fa-github"></i></a>
@@ -1090,6 +1091,27 @@ Answer: true</pre>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const sidebar = document.querySelector('.paper-refs-sidebar');
+
+            function getFullReferenceText(refId) {
+                const referenceItem = document.getElementById(refId);
+                if (!referenceItem) return '';
+                return referenceItem.textContent.replace(/\s+/g, ' ').trim();
+            }
+
+            function highlightSidebarItem(sidebarItem) {
+                sidebarItem.style.transition = 'background 0.3s ease';
+                sidebarItem.style.background = 'rgba(249, 115, 22, 0.15)';
+                sidebarItem.style.borderRadius = '6px';
+                sidebarItem.style.padding = '0.25rem 0.4rem';
+                sidebarItem.style.margin = '-0.25rem -0.4rem';
+                setTimeout(function () {
+                    sidebarItem.style.background = 'transparent';
+                    setTimeout(function () {
+                        sidebarItem.style.padding = '';
+                        sidebarItem.style.margin = '';
+                    }, 300);
+                }, 1500);
+            }
 
             // Intercept all citation-link clicks in the paper
             document.querySelectorAll('.citation-link').forEach(function (link) {
@@ -1110,18 +1132,7 @@ Answer: true</pre>
                     sidebarItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
                     // Flash highlight effect
-                    sidebarItem.style.transition = 'background 0.3s ease';
-                    sidebarItem.style.background = 'rgba(249, 115, 22, 0.15)';
-                    sidebarItem.style.borderRadius = '6px';
-                    sidebarItem.style.padding = '0.25rem 0.4rem';
-                    sidebarItem.style.margin = '-0.25rem -0.4rem';
-                    setTimeout(function () {
-                        sidebarItem.style.background = 'transparent';
-                        setTimeout(function () {
-                            sidebarItem.style.padding = '';
-                            sidebarItem.style.margin = '';
-                        }, 300);
-                    }, 1500);
+                    highlightSidebarItem(sidebarItem);
                 });
             });
 
@@ -1136,20 +1147,30 @@ Answer: true</pre>
                     const sidebarItem = sidebar.querySelector('li[data-ref="' + refId + '"]');
                     if (!sidebarItem) return;
 
+                    const wasExpanded = sidebarItem.classList.contains('ref-expanded');
+
+                    sidebar.querySelectorAll('li.ref-expanded').forEach(function (item) {
+                        item.classList.remove('ref-expanded');
+                        const fullTextBlock = item.querySelector('.ref-full-text');
+                        if (fullTextBlock) {
+                            fullTextBlock.remove();
+                        }
+                    });
+
+                    if (!wasExpanded) {
+                        const fullReferenceText = getFullReferenceText(refId);
+                        if (fullReferenceText) {
+                            const fullTextBlock = document.createElement('div');
+                            fullTextBlock.className = 'ref-full-text';
+                            fullTextBlock.textContent = fullReferenceText;
+                            sidebarItem.appendChild(fullTextBlock);
+                            sidebarItem.classList.add('ref-expanded');
+                        }
+                    }
+
                     // Keep focus in the sidebar only; do not move the main paper.
                     sidebarItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    sidebarItem.style.transition = 'background 0.3s ease';
-                    sidebarItem.style.background = 'rgba(249, 115, 22, 0.15)';
-                    sidebarItem.style.borderRadius = '6px';
-                    sidebarItem.style.padding = '0.25rem 0.4rem';
-                    sidebarItem.style.margin = '-0.25rem -0.4rem';
-                    setTimeout(function () {
-                        sidebarItem.style.background = 'transparent';
-                        setTimeout(function () {
-                            sidebarItem.style.padding = '';
-                            sidebarItem.style.margin = '';
-                        }, 300);
-                    }, 1500);
+                    highlightSidebarItem(sidebarItem);
                 });
             });
         });
