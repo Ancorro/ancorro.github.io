@@ -1010,6 +1010,10 @@ footer p {
     padding-bottom: 6rem;
 }
 
+header + .paper-layout {
+    padding-top: 8rem; /* Extra padding when there is no sub-header bar */
+}
+
 .paper-toc {
     position: sticky;
     top: 7.5rem;
