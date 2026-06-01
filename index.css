@@ -156,7 +156,7 @@ header .paper-container {
 .logo {
     font-family: var(--font-heading);
     font-size: clamp(0.92rem, 0.65rem + 0.9vw, 1.25rem);
-    font-weight: 700;
+    font-weight: 500;
     color: var(--text-primary);
     text-decoration: none;
     display: flex;
@@ -1262,8 +1262,8 @@ header + .paper-layout {
     margin-bottom: 1.25rem;
     line-height: 1.2;
     color: var(--text-primary);
-    font-weight: 700;
-    letter-spacing: -0.01em;
+    font-weight: 500;
+    letter-spacing: 0;
 }
 
 .paper-authors {
