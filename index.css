@@ -1,31 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
 
 :root {
-    /* Color Palette - Cosmic Nebula & Quantum Neon */
-    --bg-main: hsl(245, 30%, 4%);
-    --bg-surface: rgba(17, 18, 30, 0.45);
-    --bg-surface-elevated: rgba(28, 30, 48, 0.75);
-    --border-color: rgba(255, 255, 255, 0.05);
-    --border-hover: rgba(255, 255, 255, 0.12);
+    /* Color Palette - Refined Eggshell & Bitter Orange */
+    --bg-main: hsl(30, 24%, 96%); /* Eggshell base */
+    --bg-surface: rgba(255, 255, 255, 0.7); /* Glassmorphic translucent white */
+    --bg-surface-elevated: rgba(255, 255, 255, 0.95);
+    --border-color: rgba(60, 45, 30, 0.08); /* Warm brown border */
+    --border-hover: rgba(60, 45, 30, 0.18);
     
-    --text-primary: hsl(0, 0%, 100%);
-    --text-secondary: hsl(240, 15%, 85%);
-    --text-muted: hsl(240, 10%, 65%);
+    --text-primary: hsl(30, 20%, 15%); /* Deep warm charcoal */
+    --text-secondary: hsl(30, 12%, 32%); /* Warm grey-brown */
+    --text-muted: hsl(30, 8%, 52%); /* Muted warm grey */
     
-    /* Accents (Cosmic Rose, Cyber Purple, Aurora Cyan, Quantum Mint) */
-    --accent-primary: hsl(325, 95%, 60%);
-    --accent-secondary: hsl(265, 90%, 65%);
-    --accent-tertiary: hsl(185, 95%, 50%);
-    --accent-success: hsl(150, 90%, 55%);
-    --accent-success-hover: hsl(150, 90%, 65%);
-    --accent-glow: rgba(265, 90%, 65%, 0.12);
+    /* Accents (Bitter Orange, Rust Terracotta, Amber Orange, Sage Green) */
+    --accent-primary: hsl(20, 90%, 55%); /* Bitter Orange */
+    --accent-secondary: hsl(15, 80%, 45%); /* Terracotta/Rust */
+    --accent-tertiary: hsl(35, 95%, 50%); /* Amber Orange */
+    --accent-success: hsl(145, 45%, 38%); /* Sage Green */
+    --accent-success-hover: hsl(145, 45%, 45%);
+    --accent-glow: rgba(249, 115, 22, 0.08);
     
-    --accent-gradient: linear-gradient(135deg, hsl(325, 95%, 60%) 0%, hsl(265, 90%, 65%) 50%, hsl(185, 95%, 50%) 100%);
-    --emerald-gradient: linear-gradient(135deg, hsl(150, 90%, 55%) 0%, hsl(175, 95%, 45%) 100%);
-    --dark-gradient: linear-gradient(180deg, hsl(245, 30%, 6%) 0%, hsl(245, 30%, 3%) 100%);
+    --accent-gradient: linear-gradient(135deg, hsl(20, 90%, 55%) 0%, hsl(35, 95%, 50%) 100%);
+    --emerald-gradient: linear-gradient(135deg, hsl(145, 45%, 38%) 0%, hsl(160, 50%, 35%) 100%);
+    --dark-gradient: linear-gradient(180deg, hsl(30, 24%, 97%) 0%, hsl(30, 24%, 93%) 100%);
     
     /* Font Stacks */
-    --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-heading: 'DM Serif Text', Georgia, serif;
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --font-mono: 'Fira Code', 'Courier New', Courier, monospace;
     
@@ -58,7 +58,7 @@ body {
 }
 
 ::selection {
-    background: rgba(265, 90%, 65%, 0.3);
+    background: rgba(249, 115, 22, 0.2);
     color: var(--text-primary);
 }
 
@@ -79,8 +79,8 @@ body {
     position: absolute;
     border-radius: 50%;
     filter: blur(140px);
-    opacity: 0.15;
-    mix-blend-mode: screen;
+    opacity: 0.06;
+    mix-blend-mode: multiply;
     pointer-events: none;
 }
 .orb-1 {
@@ -113,7 +113,7 @@ body {
     background: var(--accent-success);
     bottom: 30%;
     left: 20%;
-    opacity: 0.06;
+    opacity: 0.03;
     animation: floatOrb4 28s infinite alternate ease-in-out;
 }
 
@@ -142,13 +142,13 @@ body {
     background: var(--bg-main);
 }
 ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(60, 45, 30, 0.15);
     border-radius: 5px;
     border: 2px solid var(--bg-main);
     transition: var(--transition-fast);
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(60, 45, 30, 0.3);
 }
 
 /* Layout Utilities */
@@ -166,7 +166,7 @@ section {
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     font-weight: 700;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
     line-height: 1.25;
 }
 
@@ -190,10 +190,11 @@ header {
     left: 0;
     width: 100%;
     z-index: 100;
-    background: rgba(10, 11, 20, 0.6);
+    background: rgba(245, 241, 235, 0.75);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 4px 20px rgba(60, 45, 30, 0.02);
 }
 
 header .container {
@@ -205,7 +206,7 @@ header .container {
 
 .logo {
     font-family: var(--font-heading);
-    font-size: 1.25rem;
+    font-size: 1.35rem;
     font-weight: 700;
     color: var(--text-primary);
     text-decoration: none;
@@ -237,8 +238,8 @@ nav {
 nav a {
     color: var(--text-secondary);
     text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-size: 0.95rem;
+    font-weight: 550;
     position: relative;
     padding: 0.25rem 0;
     transition: var(--transition-fast);
@@ -276,7 +277,7 @@ nav a:hover::after {
     gap: 0.5rem;
     padding: 0.65rem 1.4rem;
     border-radius: 8px;
-    font-family: var(--font-heading);
+    font-family: var(--font-body);
     font-size: 0.9rem;
     font-weight: 600;
     text-decoration: none;
@@ -288,7 +289,7 @@ nav a:hover::after {
     background: var(--accent-gradient);
     color: white;
     border: none;
-    box-shadow: 0 4px 15px rgba(265, 90%, 65%, 0.25);
+    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.25);
     position: relative;
     z-index: 1;
     overflow: hidden;
@@ -301,7 +302,7 @@ nav a:hover::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, hsl(185, 95%, 50%) 0%, hsl(265, 90%, 65%) 50%, hsl(325, 95%, 60%) 100%);
+    background: linear-gradient(135deg, hsl(35, 95%, 50%) 0%, hsl(20, 90%, 55%) 100%);
     border-radius: inherit;
     z-index: -1;
     opacity: 0;
@@ -310,7 +311,7 @@ nav a:hover::after {
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(265, 90%, 65%, 0.4), 0 0 10px rgba(185, 95%, 50%, 0.2);
+    box-shadow: 0 6px 20px rgba(249, 115, 22, 0.35);
 }
 
 .btn-primary:hover::before {
@@ -318,17 +319,17 @@ nav a:hover::after {
 }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.6);
     color: var(--text-primary);
     border: 1px solid var(--border-color);
     backdrop-filter: blur(4px);
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.07);
-    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.9);
+    border-color: rgba(60, 45, 30, 0.2);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 15px rgba(60, 45, 30, 0.05);
 }
 
 .btn-sm {
@@ -348,10 +349,10 @@ nav a:hover::after {
 .hero-tag {
     display: inline-block;
     padding: 0.4rem 1rem;
-    background: rgba(265, 90%, 65%, 0.1);
-    border: 1px solid rgba(265, 90%, 65%, 0.2);
+    background: rgba(249, 115, 22, 0.08);
+    border: 1px solid rgba(249, 115, 22, 0.15);
     border-radius: 20px;
-    color: hsl(265, 90%, 80%);
+    color: hsl(20, 85%, 45%);
     font-family: var(--font-heading);
     font-size: 0.85rem;
     font-weight: 600;
@@ -396,7 +397,7 @@ nav a:hover::after {
     align-items: center;
     gap: 0.35rem;
     padding: 0.35rem 0.85rem;
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.6);
     border: 1px solid var(--border-color);
     border-radius: 8px;
     font-size: 0.8rem;
@@ -406,7 +407,7 @@ nav a:hover::after {
 }
 
 .badge:hover {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.9);
     border-color: var(--border-hover);
     color: var(--text-primary);
 }
@@ -443,7 +444,7 @@ nav a:hover::after {
     border: 1px solid var(--border-color);
     border-radius: 18px;
     padding: 2.5rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 30px rgba(60, 45, 30, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.6);
     transition: var(--transition-smooth);
     position: relative;
     overflow: hidden;
@@ -456,15 +457,15 @@ nav a:hover::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%);
+    background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
     pointer-events: none;
     z-index: 0;
 }
 
 .card:hover {
-    border-color: rgba(265, 90%, 65%, 0.3);
+    border-color: rgba(249, 115, 22, 0.3);
     transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35), 0 0 20px rgba(265, 90%, 65%, 0.1);
+    box-shadow: 0 20px 40px rgba(60, 45, 30, 0.08), 0 0 20px rgba(249, 115, 22, 0.05);
 }
 
 /* Abstract Section */
@@ -488,12 +489,13 @@ nav a:hover::after {
 
 .stat-box {
     padding: 1.75rem;
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.5);
     border: 1px solid var(--border-color);
     border-radius: 14px;
     text-align: center;
     transition: var(--transition-smooth);
     position: relative;
+    box-shadow: 0 4px 10px rgba(60, 45, 30, 0.01);
 }
 
 .stat-box::after {
@@ -508,9 +510,10 @@ nav a:hover::after {
 }
 
 .stat-box:hover {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.85);
     border-color: var(--border-hover);
     transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(60, 45, 30, 0.04);
 }
 
 .stat-box:nth-child(1):hover::after { background: var(--accent-primary); box-shadow: 0 0 8px var(--accent-primary); }
@@ -550,7 +553,7 @@ nav a:hover::after {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
-    background: rgba(17, 18, 30, 0.5);
+    background: rgba(255, 255, 255, 0.5);
     border: 1px solid var(--border-color);
     padding: 0.4rem;
     border-radius: 14px;
@@ -558,6 +561,7 @@ nav a:hover::after {
     margin: 0 auto;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 15px rgba(60, 45, 30, 0.02);
 }
 
 .tab-btn {
@@ -567,7 +571,7 @@ nav a:hover::after {
     border: none;
     border-radius: 10px;
     color: var(--text-secondary);
-    font-family: var(--font-heading);
+    font-family: var(--font-body);
     font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
@@ -576,13 +580,13 @@ nav a:hover::after {
 
 .tab-btn:hover {
     color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(255, 255, 255, 0.4);
 }
 
 .tab-btn.active {
     background: var(--accent-gradient);
     color: white;
-    box-shadow: 0 4px 15px rgba(265, 90%, 65%, 0.3);
+    box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
 }
 
 .tab-pane {
@@ -613,7 +617,7 @@ nav a:hover::after {
 }
 
 .visual-wrapper {
-    background: rgba(28, 30, 48, 0.3);
+    background: rgba(255, 255, 255, 0.4);
     border: 1px solid var(--border-color);
     border-radius: 16px;
     padding: 1.5rem;
@@ -623,13 +627,14 @@ nav a:hover::after {
     position: relative;
     overflow: hidden;
     backdrop-filter: blur(4px);
+    box-shadow: 0 8px 25px rgba(60, 45, 30, 0.03);
 }
 
 .visual-wrapper img {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 30px rgba(60, 45, 30, 0.1);
     transition: var(--transition-smooth);
 }
 
@@ -678,7 +683,7 @@ nav a:hover::after {
 
 /* Codebox Styles */
 .codebox {
-    background: hsl(245, 30%, 2%);
+    background: hsl(30, 15%, 12%);
     border: 1px solid rgba(255, 255, 255, 0.04);
     border-left: 3px solid var(--accent-secondary);
     border-radius: 10px;
@@ -686,15 +691,15 @@ nav a:hover::after {
     overflow-x: auto;
     font-family: var(--font-mono);
     font-size: 0.85rem;
-    color: hsl(240, 15%, 90%);
+    color: hsl(30, 20%, 90%);
     box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
     transition: var(--transition-smooth);
 }
 
 .codebox:hover {
-    border-color: rgba(265, 90%, 65%, 0.3);
+    border-color: rgba(249, 115, 22, 0.3);
     border-left-color: var(--accent-primary);
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 15px rgba(265, 90%, 65%, 0.05);
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 .codebox pre {
@@ -746,7 +751,7 @@ nav a:hover::after {
 .control-label span.value-bubble {
     font-family: var(--font-mono);
     color: var(--text-primary);
-    background: var(--bg-surface-elevated);
+    background: rgba(255, 255, 255, 0.8);
     padding: 0.15rem 0.5rem;
     border-radius: 4px;
     border: 1px solid var(--border-color);
@@ -767,7 +772,7 @@ input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
     height: 8px;
     cursor: pointer;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(60, 45, 30, 0.06);
     border-radius: 4px;
     border: 1px solid var(--border-color);
 }
@@ -780,7 +785,7 @@ input[type=range]::-webkit-slider-thumb {
     cursor: pointer;
     -webkit-appearance: none;
     margin-top: -7px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 6px rgba(60, 45, 30, 0.2);
     border: 2px solid var(--accent-primary);
     transition: var(--transition-fast);
 }
@@ -788,12 +793,12 @@ input[type=range]::-webkit-slider-thumb {
 input[type=range]::-webkit-slider-thumb:hover {
     background: white;
     border-color: var(--accent-tertiary);
-    box-shadow: 0 0 15px var(--accent-tertiary);
+    box-shadow: 0 0 10px rgba(249, 115, 22, 0.4);
     transform: scale(1.2);
 }
 
 .visualizer-output {
-    background: rgba(255, 255, 255, 0.01);
+    background: rgba(255, 255, 255, 0.4);
     border: 1px solid var(--border-color);
     border-radius: 14px;
     padding: 1.5rem;
@@ -826,25 +831,25 @@ input[type=range]::-webkit-slider-thumb:hover {
 .progress-track {
     width: 100%;
     height: 10px;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(60, 45, 30, 0.06);
     border-radius: 5px;
     overflow: hidden;
     position: relative;
-    border: 1px solid rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(60, 45, 30, 0.02);
 }
 
 .progress-fill {
     height: 100%;
     width: 0%;
     border-radius: 5px;
-    background: linear-gradient(90deg, hsl(325, 95%, 60%), hsl(265, 90%, 65%), hsl(185, 95%, 50%));
+    background: linear-gradient(90deg, hsl(20, 90%, 55%), hsl(35, 95%, 50%), hsl(20, 90%, 55%));
     background-size: 200% auto;
     animation: gradientShift 4s linear infinite;
     transition: width 0.25s cubic-bezier(0.1, 0.8, 0.2, 1);
 }
 
 .progress-fill.success {
-    background: linear-gradient(90deg, hsl(150, 90%, 55%), hsl(175, 95%, 45%));
+    background: linear-gradient(90deg, hsl(145, 45%, 38%), hsl(160, 50%, 35%));
     background-size: 200% auto;
     animation: gradientShift 4s linear infinite;
 }
@@ -870,7 +875,7 @@ input[type=range]::-webkit-slider-thumb:hover {
 
 .weight-label {
     width: 70px;
-    font-family: var(--font-heading);
+    font-family: var(--font-body);
     font-weight: 600;
     font-size: 0.85rem;
     transition: var(--transition-fast);
@@ -886,17 +891,17 @@ input[type=range]::-webkit-slider-thumb:hover {
 .weight-bar-track {
     flex: 1;
     height: 14px;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(60, 45, 30, 0.06);
     border-radius: 7px;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(60, 45, 30, 0.02);
 }
 
 .weight-bar-fill {
     height: 100%;
     width: 0%;
     border-radius: 7px;
-    background: linear-gradient(90deg, hsl(325, 95%, 60%), hsl(265, 90%, 65%), hsl(185, 95%, 50%));
+    background: linear-gradient(90deg, hsl(20, 90%, 55%), hsl(35, 95%, 50%), hsl(20, 90%, 55%));
     background-size: 200% auto;
     animation: gradientShift 4s linear infinite;
     transition: width 0.25s cubic-bezier(0.1, 0.8, 0.2, 1);
@@ -913,10 +918,10 @@ input[type=range]::-webkit-slider-thumb:hover {
 /* Results Table */
 .table-wrapper {
     overflow-x: auto;
-    background: rgba(17, 18, 30, 0.4);
+    background: rgba(255, 255, 255, 0.6);
     border: 1px solid var(--border-color);
     border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 20px rgba(60, 45, 30, 0.02);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
@@ -934,7 +939,7 @@ th, td {
 }
 
 th {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(60, 45, 30, 0.02);
     font-family: var(--font-heading);
     font-weight: 600;
     color: var(--text-primary);
@@ -952,14 +957,14 @@ tr {
 }
 
 tr:hover td {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.5);
     color: var(--text-primary);
 }
 
 td.highlight-cell {
     font-weight: 700;
     color: var(--accent-success);
-    text-shadow: 0 0 10px rgba(150, 90%, 55%, 0.2);
+    text-shadow: 0 0 10px rgba(145, 45, 38, 0.1);
 }
 
 .results-analysis {
@@ -974,7 +979,7 @@ td.highlight-cell {
 
 .callout-box {
     padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.015);
+    background: rgba(255, 255, 255, 0.3);
     border: 1px solid var(--border-color);
     border-left: 4px solid var(--accent-secondary);
     border-radius: 8px 16px 16px 8px;
@@ -982,7 +987,7 @@ td.highlight-cell {
 }
 
 .callout-box:hover {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.8);
     border-color: var(--border-hover);
     border-left-color: var(--accent-primary);
 }
@@ -1022,22 +1027,22 @@ td.highlight-cell {
 }
 
 .copy-btn {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(60, 45, 30, 0.05);
     border: 1px solid var(--border-color);
     color: var(--text-secondary);
     padding: 0.5rem 1rem;
     border-radius: 8px;
     cursor: pointer;
     font-size: 0.8rem;
-    font-family: var(--font-heading);
+    font-family: var(--font-body);
     font-weight: 600;
     transition: var(--transition-fast);
 }
 
 .copy-btn:hover {
     color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(60, 45, 30, 0.1);
+    border-color: rgba(60, 45, 30, 0.2);
     transform: translateY(-1px);
 }
 
@@ -1045,7 +1050,7 @@ td.highlight-cell {
 footer {
     padding: 5rem 0;
     border-top: 1px solid var(--border-color);
-    background: rgba(8, 9, 16, 0.8);
+    background: rgba(240, 235, 227, 0.85);
     text-align: center;
 }
 
@@ -1122,13 +1127,13 @@ footer p {
 .paper-toc {
     position: sticky;
     top: 7.5rem;
-    background: rgba(17, 18, 30, 0.4);
+    background: rgba(255, 255, 255, 0.6);
     border: 1px solid var(--border-color);
     border-radius: 16px;
     padding: 1.75rem;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 30px rgba(60, 45, 30, 0.03);
 }
 
 .paper-toc h3 {
@@ -1158,7 +1163,7 @@ footer p {
 }
 
 .paper-toc a:hover {
-    color: var(--accent-tertiary);
+    color: var(--accent-primary);
     transform: translateX(4px);
 }
 
@@ -1169,7 +1174,7 @@ footer p {
 }
 
 .paper-toc a:hover i {
-    color: var(--accent-tertiary);
+    color: var(--accent-primary);
 }
 
 .paper-body {
@@ -1217,7 +1222,7 @@ footer p {
 }
 
 .author-email {
-    color: var(--accent-tertiary);
+    color: var(--accent-primary);
     font-family: var(--font-mono);
     font-size: 0.85rem;
     text-decoration: none;
@@ -1226,12 +1231,12 @@ footer p {
 }
 
 .author-email:hover {
-    color: var(--accent-primary);
-    text-shadow: 0 0 8px rgba(265, 90%, 65%, 0.3);
+    color: var(--accent-secondary);
+    text-shadow: 0 0 8px rgba(249, 115, 22, 0.2);
 }
 
 .abstract-callout {
-    background: rgba(255, 255, 255, 0.015);
+    background: rgba(255, 255, 255, 0.3);
     border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 2rem;
@@ -1305,15 +1310,15 @@ footer p {
 }
 
 .citation-link {
-    color: var(--accent-tertiary);
+    color: var(--accent-primary);
     text-decoration: none;
     font-weight: 600;
     transition: var(--transition-fast);
 }
 
 .citation-link:hover {
-    color: var(--accent-primary);
-    text-shadow: 0 0 8px rgba(265, 90%, 65%, 0.3);
+    color: var(--accent-secondary);
+    text-shadow: 0 0 8px rgba(249, 115, 22, 0.2);
 }
 
 .paper-figure {
@@ -1368,4 +1373,3 @@ footer p {
         font-size: 2.25rem;
     }
 }
-
