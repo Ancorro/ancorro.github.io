@@ -4,7 +4,18 @@ document.addEventListener('DOMContentLoaded', () => {
     setupFuzzyCalculator();
     setupRoutingSimulator();
     setupCitationCopy();
+    setupCitationLinksNoScroll();
 });
+
+function setupCitationLinksNoScroll() {
+    const citationLinks = document.querySelectorAll('.citation-link');
+
+    citationLinks.forEach(link => {
+        link.addEventListener('click', event => {
+            event.preventDefault();
+        });
+    });
+}
 
 function setupTabs() {
     const tabButtons = document.querySelectorAll('.tab-btn');
