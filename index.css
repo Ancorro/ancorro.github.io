@@ -1136,12 +1136,6 @@ header + .paper-layout {
 }
 
 /* Abstract Box Layout */
-.abstract-box {
-    max-width: 800px;
-    margin: 0 auto 2.5rem auto;
-    text-align: justify;
-}
-
 .abstract-box h3 {
     text-align: center;
     font-size: 1.05rem;
@@ -1174,6 +1168,18 @@ header + .paper-layout {
 
 .paper-sheet section {
     padding: 0.8rem 0;
+}
+
+.paper-sheet section + section {
+    border-top: 1px solid rgba(60, 45, 30, 0.1);
+}
+
+.abstract-box {
+    max-width: 800px;
+    margin: 0 auto 2.5rem auto;
+    text-align: justify;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(60, 45, 30, 0.1);
 }
 
 .span-both-columns {
