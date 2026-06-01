@@ -110,7 +110,7 @@ section {
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
-    font-weight: 700;
+    font-weight: 500;
     letter-spacing: -0.01em;
     line-height: 1.25;
 }
@@ -373,6 +373,7 @@ nav a:hover::after {
 
 .section-header h2 {
     font-size: 2.5rem;
+    font-weight: 500;
     margin-bottom: 1rem;
 }
 
@@ -407,6 +408,7 @@ nav a:hover::after {
 
 .abstract-text h3 {
     font-size: 1.75rem;
+    font-weight: 500;
     margin-bottom: 1.25rem;
 }
 
@@ -434,7 +436,7 @@ nav a:hover::after {
 .stat-num {
     font-family: var(--font-heading);
     font-size: 2.75rem;
-    font-weight: 800;
+    font-weight: 500;
     color: var(--text-primary);
     line-height: 1;
     margin-bottom: 0.5rem;
@@ -567,6 +569,7 @@ nav a:hover::after {
 
 .arch-desc h3 {
     font-size: 1.65rem;
+    font-weight: 500;
 }
 
 .arch-desc ul {
@@ -631,6 +634,7 @@ nav a:hover::after {
 
 .interactive-card h3 {
     font-size: 1.65rem;
+    font-weight: 500;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -885,6 +889,24 @@ td.highlight-cell {
 
 .results-analysis h3 {
     font-size: 1.65rem;
+    font-weight: 500;
+}
+
+.results-intro {
+    max-width: 780px;
+    margin: 0 auto 2rem;
+    text-align: center;
+}
+
+.results-intro h2 {
+    font-size: 2.1rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+}
+
+.results-intro p {
+    max-width: 620px;
+    margin: 0 auto;
 }
 
 .callout-box {
@@ -903,6 +925,7 @@ td.highlight-cell {
 .callout-box h4 {
     color: var(--text-primary);
     font-size: 1.1rem;
+    font-weight: 500;
     margin-bottom: 0.5rem;
 }
 
@@ -1156,7 +1179,7 @@ footer p {
 
 .paper-refs-sidebar .ref-number {
     color: var(--accent-primary);
-    font-weight: 700;
+    font-weight: 500;
     margin-right: 0.25rem;
 }
 
@@ -1314,7 +1337,7 @@ header + .paper-layout {
     margin-bottom: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .abstract-box p {
@@ -1406,7 +1429,7 @@ header + .paper-layout {
 .paper-content-columns h4 {
     text-indent: 0;
     font-family: var(--font-heading);
-    font-weight: 700;
+    font-weight: 500;
 }
 
 .paper-sheet h2 {
@@ -1414,7 +1437,7 @@ header + .paper-layout {
     font-size: 1.05rem;
     text-transform: uppercase; /* Replicates LaTeX uppercase main headers */
     letter-spacing: 0.05em;
-    font-weight: bold;
+    font-weight: 500;
     border-bottom: none;
     padding-bottom: 0;
     margin-top: 0;
