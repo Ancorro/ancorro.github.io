@@ -33,6 +33,7 @@
     --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-smooth: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
     --header-scroll-offset: 7rem;
+    --paper-side-width: 260px;
 }
 
 /* Reset and Base Styles */
@@ -1101,11 +1102,16 @@ footer p {
 
 .paper-layout {
     display: grid;
-    grid-template-columns: 240px 1fr 280px;
+    grid-template-columns: var(--paper-side-width) 1fr var(--paper-side-width);
     gap: 3rem;
     align-items: start;
     padding-top: 3rem;
     padding-bottom: 6rem;
+}
+
+.paper-toc,
+.paper-refs-sidebar {
+    width: 100%;
 }
 
 /* Right References Sidebar */
@@ -1348,6 +1354,7 @@ header + .paper-layout {
 .paper-sheet section + section {
     border-top: 1px solid rgba(60, 45, 30, 0.1);
     margin-top: 1.1rem;
+    padding-top: 1.75rem;
 }
 
 .paper-sheet section[id],
@@ -1586,7 +1593,7 @@ header + .paper-layout {
 
 @media (max-width: 1500px) {
     .paper-layout {
-        grid-template-columns: 240px 1fr;
+        grid-template-columns: var(--paper-side-width) 1fr;
         gap: 3rem;
     }
     .paper-refs-sidebar {
@@ -1669,6 +1676,16 @@ header + .paper-layout {
     font-weight: bold;
     color: var(--text-primary);
     text-shadow: none;
+}
+
+#appendix .codebox {
+    overflow-x: hidden;
+}
+
+#appendix .codebox pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: anywhere;
 }
 
 /* Paper Subheader and Back Link */
