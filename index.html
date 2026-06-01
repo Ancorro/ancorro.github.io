@@ -49,17 +49,13 @@
                 </span>
                 <span>Parallel Logic Expert Research</span>
             </a>
-            <nav id="main-navigation">
-                <a href="#abstract">Abstract</a>
-                <a href="#introduction">Introduction</a>
-                <a href="#methods">Methods</a>
-                <a href="#results">Results</a>
-                <a href="#appendix">Appendix</a>
-            </nav>
             <div class="nav-buttons">
                 <a href="https://github.com/Ancorro/logic-expert-public" class="btn btn-secondary btn-sm"
                     id="btn-nav-github">
                     <i class="fab fa-github"></i> GitHub
+                </a>
+                <a href="index.html" class="btn btn-active btn-sm" id="btn-nav-paper" aria-current="page">
+                    Full Paper
                 </a>
                 <a href="playground.html" class="btn btn-primary btn-sm" id="btn-nav-playground">
                     Architecture Sandbox
@@ -70,6 +66,24 @@
             </div>
         </div>
     </header>
+
+    <div class="page-link-bar">
+        <div class="paper-container">
+            <nav id="main-navigation">
+                <a href="#abstract">Abstract</a>
+                <a href="#introduction">Introduction</a>
+                <a href="#related-work">Related Work</a>
+                <a href="#methods">Methods</a>
+                <a href="#experiments">Experiments</a>
+                <a href="#results">Results</a>
+                <a href="#discussion">Discussion</a>
+                <a href="#limitations">Limitations</a>
+                <a href="#conclusion">Conclusion</a>
+                <a href="#references">References</a>
+                <a href="#appendix">Appendix</a>
+            </nav>
+        </div>
+    </div>
 
     <!-- Main Content Area -->
     <main class="paper-layout paper-container">
@@ -148,15 +162,6 @@
                         logic-inspired pathway affects performance on reasoning problems and generalization.
                     </p>
 
-                    <!-- Figure 1 (Spans both columns inside the two-column grid) -->
-                    <figure class="paper-figure span-both-columns" id="fig-architecture">
-                        <img src="assets/images/arch1.png" alt="Logic Stream Architecture Block Diagram">
-                        <figcaption><strong>Figure 1:</strong> Our architecture, backbone hidden-states feed to logic
-                            expert, and fused back with the backbone features before classification.</figcaption>
-                    </figure>
-
-                    <div class="page-break-divider span-both-columns"><span>pg. 1</span></div>
-
                     <p>
                         Mixture-of-Experts (MoE) models <a href="#ref-moe-1" class="citation-link">[4, 5, 6]</a>
                         introduce conditional computation by routing tokens to specialized subnetworks, or weighting the
@@ -188,7 +193,15 @@
                         settings with mechanism-level metrics (routing entropy, fusion $\alpha$, and average gradient
                         norm).
                     </p>
-                    <div class="page-break-divider span-both-columns"><span>pg. 2</span></div>
+
+                    <!-- Figure 1 (Spans both columns inside the two-column grid) -->
+                    <figure class="paper-figure span-both-columns" id="fig-architecture">
+                        <img src="assets/images/arch1.png" alt="Logic Stream Architecture Block Diagram">
+                        <figcaption><strong>Figure 1:</strong> Our architecture, backbone hidden-states feed to logic
+                            expert, and fused back with the backbone features before classification.</figcaption>
+                    </figure>
+
+                    <div class="page-break-divider span-both-columns"><span>pg. 1</span></div>
                 </div>
             </section>
 
@@ -244,7 +257,7 @@
                         input space (for example, decision trees or markov-networks) <a href="#ref-neurosymbolic"
                             class="citation-link">[12]</a>.
                     </p>
-                    <div class="page-break-divider span-both-columns"><span>pg. 3</span></div>
+                    <div class="page-break-divider span-both-columns"><span>pg. 2</span></div>
                 </div>
             </section>
 
@@ -381,7 +394,7 @@
                         <div class="equation-number">(11)</div>
                     </div>
 
-                    <div class="page-break-divider span-both-columns"><span>pg. 4</span></div>
+                    <div class="page-break-divider span-both-columns"><span>pg. 3</span></div>
 
                     <h3>3.4. Windowed Operator Composition</h3>
                     <p>
@@ -459,7 +472,7 @@
                         After the final layer, fusion is applied as in Eq. (4). $\alpha$ may be fixed or learned; it
                         directly controls the contribution of the logic expert.
                     </p>
-                    <div class="page-break-divider span-both-columns"><span>pg. 5</span></div>
+                    <div class="page-break-divider span-both-columns"><span>pg. 4</span></div>
                 </div>
             </section>
 
@@ -518,7 +531,7 @@
                         large norms can indicate unstable training dynamics, small gradient norms indicates arrested
                         training.
                     </p>
-                    <div class="page-break-divider span-both-columns"><span>pg. 6</span></div>
+                    <div class="page-break-divider span-both-columns"><span>pg. 5</span></div>
                 </div>
             </section>
 
@@ -633,7 +646,7 @@
                         <p class="table-caption"><strong>Table 1:</strong> ProofWriter validation results after 3 epochs. Routed variants outperform both the Baseline and No-Gate Control. The best result is inter-token routing with G=8 and fixed α=0.01.</p>
                     </div>
 
-                    <div class="page-break-divider span-both-columns"><span>pg. 7</span></div>
+                    <div class="page-break-divider span-both-columns"><span>pg. 6</span></div>
 
                     <h3>5.2. Size and Transfer</h3>
                     <p>
@@ -767,7 +780,7 @@
                         differences are very small and are best interpreted as similar overall performance under the
                         current multi-task configuration.
                     </p>
-                    <div class="page-break-divider span-both-columns"><span>pg. 8</span></div>
+                    <div class="page-break-divider span-both-columns"><span>pg. 7</span></div>
                 </div>
             </section>
 
@@ -856,7 +869,7 @@
                             validation batch. Rows are layers and columns are routed channels; color intensity indicates
                             mean routing weight.</figcaption>
                     </figure>
-                    <div class="page-break-divider span-both-columns"><span>pg. 9</span></div>
+                    <div class="page-break-divider span-both-columns"><span>pg. 8</span></div>
                 </div>
             </section>
 
@@ -893,7 +906,7 @@
                         work establishes an implementation-complete foundation for operator-routed reasoning. Immediate
                         next steps are broader benchmark coverage, and targeted ablations.
                     </p>
-                    <div class="page-break-divider span-both-columns"><span>pg. 10</span></div>
+                    <div class="page-break-divider span-both-columns"><span>pg. 9</span></div>
                 </div>
             </section>
 
