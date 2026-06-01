@@ -1338,6 +1338,26 @@ header + .paper-layout {
     break-inside: avoid;
 }
 
+.references-section .paper-content-columns {
+    column-count: 2;
+    column-gap: 2.25rem;
+}
+
+/* Table Caption (below table, academic style) */
+.table-caption {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: var(--text-secondary);
+    text-align: justify;
+    margin-top: 0.5rem;
+    padding: 0 0.25rem;
+}
+
+.table-caption strong {
+    color: var(--text-primary);
+}
+
 .references-list {
     list-style: none;
     padding-left: 0;
