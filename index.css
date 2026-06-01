@@ -146,7 +146,7 @@ header {
 header .container,
 header .paper-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     min-height: 3.05rem;
     gap: 1.1rem;
@@ -1331,6 +1331,22 @@ footer p {
 .author-email:hover {
     color: var(--accent-primary);
     text-decoration: underline;
+}
+
+.paper-course {
+    color: var(--text-secondary);
+    font-family: Georgia, serif;
+    font-size: 0.95rem;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.paper-date {
+    color: var(--text-secondary);
+    font-family: Georgia, serif;
+    font-size: 0.95rem;
+    margin-top: 0.25rem;
+    text-align: center;
 }
 
 /* Abstract Box Layout */
