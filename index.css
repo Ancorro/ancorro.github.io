@@ -1365,8 +1365,7 @@ header + .paper-layout {
 }
 
 .abstract-box {
-    max-width: 660px;
-    margin: 0 auto 1.35rem auto;
+    margin: 0 4.5rem 1.35rem;
     text-align: justify;
     padding-bottom: 0;
     border-bottom: none;
@@ -1619,6 +1618,10 @@ header + .paper-layout {
 @media (max-width: 768px) {
     .paper-sheet {
         padding: 2.5rem 1.75rem;
+    }
+    .abstract-box {
+        margin-right: 0.25rem;
+        margin-left: 0.25rem;
     }
     .paper-content-columns {
         column-count: 1;
