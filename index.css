@@ -891,34 +891,19 @@ td.highlight-cell {
     padding: 1.5rem;
     background: rgba(255, 255, 255, 0.3);
     border: 1px solid var(--border-color);
-    border-left: 4px solid var(--accent-secondary);
-    border-radius: 8px 16px 16px 8px;
+    border-radius: 12px;
     transition: var(--transition-smooth);
 }
 
 .callout-box:hover {
     background: rgba(255, 255, 255, 0.8);
     border-color: var(--border-hover);
-    border-left-color: var(--accent-primary);
 }
 
 .callout-box h4 {
     color: var(--text-primary);
     font-size: 1.1rem;
     margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.callout-box h4 i {
-    color: var(--accent-secondary);
-    transition: var(--transition-smooth);
-}
-
-.callout-box:hover h4 i {
-    color: var(--accent-primary);
-    transform: scale(1.1);
 }
 
 /* Citation Section */
@@ -970,17 +955,32 @@ footer p {
     margin-bottom: 1.25rem;
 }
 
+.footer-email {
+    font-family: var(--font-mono);
+    font-size: 0.84rem;
+    margin-top: -0.35rem;
+    margin-bottom: 1.1rem;
+}
+
 .social-links {
     display: flex;
     justify-content: center;
     gap: 1.5rem;
+    flex-wrap: wrap;
 }
 
 .social-links a {
     color: var(--text-muted);
-    font-size: 1.25rem;
+    font-size: 1rem;
     transition: var(--transition-fast);
     text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.social-links a i {
+    font-size: 1.25rem;
 }
 
 .social-links a:hover {
