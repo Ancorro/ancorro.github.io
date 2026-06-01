@@ -32,7 +32,7 @@
     /* Transitions */
     --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-smooth: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-    --header-scroll-offset: 7rem;
+    --header-scroll-offset: 3rem;
     --paper-side-width: 260px;
 }
 
@@ -104,7 +104,7 @@ body {
 }
 
 section {
-    padding: 6rem 0;
+    padding: 2rem 0;
 }
 
 /* Typography */
