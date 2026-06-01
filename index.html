@@ -29,11 +29,9 @@
             </a>
             <nav id="main-navigation">
                 <a href="#abstract">Abstract</a>
-                <a href="#architecture">Architecture</a>
                 <a href="#playground">Playground</a>
                 <a href="#results">Results</a>
                 <a href="#citation">Citation</a>
-                <a href="paper.html">Full Paper</a>
             </nav>
             <div class="nav-buttons">
                 <a href="https://github.com/Ancorro/logic-expert-public" class="btn btn-secondary btn-sm" id="btn-nav-github">
@@ -41,6 +39,9 @@
                 </a>
                 <a href="paper.html" class="btn btn-primary btn-sm" id="btn-nav-paper">
                     <i class="fas fa-book-open"></i> Full Paper
+                </a>
+                <a href="assets/pdf/Logic_Expert.pdf" class="btn btn-secondary btn-sm" id="btn-nav-download" download>
+                    <i class="fas fa-file-pdf"></i> Download Paper
                 </a>
             </div>
         </div>
@@ -66,13 +67,13 @@
                     <div class="abstract-text">
                         <h2 id="abstract-heading">Abstract Overview</h2>
                         <p>
-                            Traditional Mixture-of-Experts (MoE) architectures group networks of neural layers (MLPs) as experts, often yielding high capacity but limited structure and interpretability. This project explores an alternative pathway: a **non-invasive, parallel logic stream** that runs alongside a frozen or fine-tuned transformer backbone.
+                            Traditional Mixture-of-Experts (MoE) architectures group networks of neural layers (MLPs) as experts, often yielding high capacity but limited structure and interpretability. This project explores an alternative pathway: a <strong>non-invasive, parallel logic stream</strong> that runs alongside a frozen or fine-tuned transformer backbone.
                         </p>
                         <p>
-                            Instead of routing tokens to general-purpose MLPs, token-level representations are projected and routed to fixed, differentiable **fuzzy logical operators (AND / OR / NOT)**. The recurrent logic state is accumulated layer-by-layer and fused back into the transformer backbone before classification.
+                            Instead of routing tokens to general-purpose MLPs, token-level representations are projected and routed to fixed, differentiable <strong>fuzzy logical operators (AND / OR / NOT)</strong>. The recurrent logic state is accumulated layer-by-layer and fused back into the transformer backbone before classification.
                         </p>
                         <p>
-                            This introduces a structured, composition-aware inductive prior directly into the network. Controlled evaluations on the **ProofWriter** logical reasoning dataset show significant accuracy gains over standard baseline models under matched training budgets.
+                            This introduces a structured, composition-aware inductive prior directly into the network. Controlled evaluations on the <strong>ProofWriter</strong> logical reasoning dataset show significant accuracy gains over standard baseline models under matched training budgets.
                         </p>
                     </div>
                     <div class="abstract-stats">
@@ -97,162 +98,6 @@
             </div>
         </section>
 
-        <!-- Architecture Tabs Section -->
-        <section id="architecture">
-            <div class="container">
-                <div class="section-header">
-                    <h2 id="architecture-heading">Architecture & Modular Pipeline</h2>
-                    <p>The logic stream is non-invasive, tapping intermediate layer representations via forward hooks and feeding a parallel depth-coupled recurrent logic state.</p>
-                </div>
-                
-                <div class="architecture-tabs-container">
-                    <div class="tabs-list" role="tablist">
-                        <button class="tab-btn active" data-tab="tab-overview" role="tab" aria-selected="true" id="tab-btn-overview">System Overview</button>
-                        <button class="tab-btn" data-tab="tab-gates" role="tab" aria-selected="false" id="tab-btn-gates">Fuzzy Logical Gates</button>
-                        <button class="tab-btn" data-tab="tab-routing" role="tab" aria-selected="false" id="tab-btn-routing">Operator Routing</button>
-                        <button class="tab-btn" data-tab="tab-fusion" role="tab" aria-selected="false" id="tab-btn-fusion">Residual Fusion</button>
-                    </div>
-
-                    <!-- Tab Pane 1: Overview -->
-                    <div class="tab-pane active" id="tab-overview" role="tabpanel">
-                        <div class="architecture-grid">
-                            <div class="arch-visuals">
-                                <div class="visual-wrapper">
-                                    <img src="assets/images/arch1.png" alt="Logic Stream Architecture Block Diagram">
-                                </div>
-                                <span class="visual-caption">Figure 1: Full System Hook-Tap and Parallel Stream Traversal.</span>
-                            </div>
-                            <div class="arch-desc">
-                                <h3>Parallel Stream Traversal</h3>
-                                <p>
-                                    The pipeline taps representations directly from successive transformer backbone blocks during the forward pass:
-                                </p>
-                                <ul>
-                                    <li><strong>Non-Invasive Hooks:</strong> Keeps backbone parameters frozen or fine-tuned with LoRA, avoiding edits to complex attention internals.</li>
-                                    <li><strong>Depth-Coupled updates:</strong> The sequence-level logic state $L_t$ is initialized to zeros, then updated sequentially at each tapped layer.</li>
-                                    <li><strong>Sequence Recurrence:</strong> Token features are mixed with the current logic state via cross-attention, updating the state recurrence sequentially.</li>
-                                </ul>
-                                <div class="codebox">
-                                    <pre># Tap layers using PyTorch forward hooks
-def _make_hook(layer_idx):
-    def _hook(module, inputs, output):
-        hidden = extract_hidden(output)
-        # 1. Project layer representation H -> L
-        init_state = logic_projection(hidden)
-        # 2. Update recurrent logic state
-        logic_state = logic_stream.layers[layer_idx](
-            init_state, logic_state, token_mask
-        )
-        return output
-    return _hook</pre>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tab Pane 2: Fuzzy Gates -->
-                    <div class="tab-pane" id="tab-gates" role="tabpanel">
-                        <div class="architecture-grid">
-                            <div class="arch-visuals">
-                                <div class="visual-wrapper">
-                                    <img src="assets/images/logic1.png" alt="Differentiable Fuzzy Gate composition diagram">
-                                </div>
-                                <span class="visual-caption">Figure 2: Fuzzy Gate operations and Window-Axis stack.</span>
-                            </div>
-                            <div class="arch-desc">
-                                <h3>Fuzzy Logical Primitives</h3>
-                                <p>
-                                    To keep the operations fully differentiable, we implement fuzzy logic approximations of AND, OR, and NOT operators over continuous activations in $[0, 1]$:
-                                </p>
-                                <ul>
-                                    <li><strong>Fuzzy AND (Product):</strong> $a \wedge b = a \cdot b$</li>
-                                    <li><strong>Fuzzy OR (Probabilistic Sum):</strong> $a \vee b = a + b - a \cdot b$</li>
-                                    <li><strong>Fuzzy NOT (Complement):</strong> $\neg a = 1 - a$</li>
-                                    <li><strong>Token Window Stack:</strong> Composability is evaluated causal-wise across neighboring sequence positions (inter-token axis) or gate channels (intra-token axis) using a sliding window.</li>
-                                </ul>
-                                <div class="codebox">
-                                    <pre># Python fuzzy logic implementation
-def and_gate(a, b):
-    return torch.clamp(a, 0.0, 1.0) * torch.clamp(b, 0.0, 1.0)
-
-def or_gate(a, b):
-    a, b = torch.clamp(a, 0.0, 1.0), torch.clamp(b, 0.0, 1.0)
-    return a + b - (a * b)</pre>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tab Pane 3: Routing -->
-                    <div class="tab-pane" id="tab-routing" role="tabpanel">
-                        <div class="architecture-grid">
-                            <div class="arch-visuals">
-                                <div class="visual-wrapper">
-                                    <img src="assets/images/routing_heatmap.png" alt="Gate routing heatmap across sequence length">
-                                </div>
-                                <span class="visual-caption">Figure 3: W&B trace: routing distribution entropy across layers.</span>
-                            </div>
-                            <div class="arch-desc">
-                                <h3>Differentiable Gate Routing</h3>
-                                <p>
-                                    At each layer, a `RoutingModule` maps projected token-level logic features to gate selection weights. It balances exploration and sparsity:
-                                </p>
-                                <ul>
-                                    <li><strong>Dense Training:</strong> Full softmax routing is applied to ensure stable gradients and gate discovery.</li>
-                                    <li><strong>Cutoff Routing:</strong> Prunes gate choices with weights below a threshold (e.g. $c=0.15$) and renormalizes to concentrate gradient updates.</li>
-                                    <li><strong>Sparse Inference:</strong> Employs Top-K sparse routing during inference to bypass inactive gates and save floating-point operations.</li>
-                                </ul>
-                                <div class="codebox">
-                                    <pre># Softmax routing with temperature & cutoff threshold
-scores = router(token_logic) / temperature
-weights = F.softmax(scores, dim=-1)
-if train_mode == 'cutoff':
-    weights = apply_cutoff(weights, cutoff_threshold)</pre>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tab Pane 4: Fusion -->
-                    <div class="tab-pane" id="tab-fusion" role="tabpanel">
-                        <div class="architecture-grid">
-                            <div class="arch-desc">
-                                <h3>Residual Fusion Bridge</h3>
-                                <p>
-                                    After traversal of all backbone layers, the final sequence logic state $L_{\text{last}}$ is integrated back into the backbone representations.
-                                </p>
-                                <p>
-                                    A linear bridge maps logic dimension $L$ back to hidden dimension $H$, and is fused residually with the final backbone representation:
-                                </p>
-                                <p class="codebox" style="font-size: 1rem; text-align: center;">
-                                    $H_{\text{fused}} = H_{\text{last}} + \alpha \cdot \text{Bridge}(L_{\text{last}})$
-                                </p>
-                                <ul>
-                                    <li><strong>Learnable Scale ($\alpha$):</strong> A learnable parameter initializes to $0.01$, enabling the network to dynamically scale the logic pathway contribution.</li>
-                                    <li><strong>Attribution Check:</strong> Tracking $\alpha$ helps identify how much the model depends on the structured logic stream vs. backbone representations.</li>
-                                </ul>
-                            </div>
-                            <div class="arch-desc">
-                                <h3>Linear Fusion implementation</h3>
-                                <div class="codebox">
-                                    <pre>class LinearFusionBridge(nn.Module):
-    def __init__(self, hidden_dim, logic_dim, alpha_init=0.01):
-        super().__init__()
-        self.bridge = nn.Linear(logic_dim, hidden_dim)
-        self.alpha = nn.Parameter(torch.tensor(alpha_init))
-
-    def forward(self, llm_hidden, logic_hidden, mask):
-        projected = self.bridge(logic_hidden) * mask.unsqueeze(-1)
-        return llm_hidden + self.alpha * projected</pre>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
         <!-- Interactive Playground Section -->
         <section id="playground" class="container">
             <div class="section-header">
@@ -265,11 +110,11 @@ if train_mode == 'cutoff':
                 <!-- Card 1: Fuzzy Gates Math -->
                 <div class="card interactive-card">
                     <h3><i class="fas fa-calculator"></i> Fuzzy Gate Calculator</h3>
-                    <p>Fuzzy logic gates operate on real numbers in the $[0, 1]$ interval. Adjust the sliders representing activation states for two sequential tokens ($t_1, t_2$) to see calculated results.</p>
+                    <p>Fuzzy logic gates operate on real numbers in the [0, 1] interval. Adjust the sliders representing activation states for two sequential tokens (<i>t</i><sub>1</sub>, <i>t</i><sub>2</sub>) to see calculated results.</p>
                     
                     <div class="control-group">
                         <div class="control-label">
-                            <label for="slider-t1">Token 1 Activation ($t_1$)</label>
+                            <label for="slider-t1">Token 1 Activation (<i>t</i><sub>1</sub>)</label>
                             <span class="value-bubble" id="value-t1">0.70</span>
                         </div>
                         <input type="range" id="slider-t1" min="0" max="1" step="0.05" value="0.70" aria-valuemin="0" aria-valuemax="1" aria-valuenow="0.70">
@@ -277,7 +122,7 @@ if train_mode == 'cutoff':
                     
                     <div class="control-group">
                         <div class="control-label">
-                            <label for="slider-t2">Token 2 Activation ($t_2$)</label>
+                            <label for="slider-t2">Token 2 Activation (<i>t</i><sub>2</sub>)</label>
                             <span class="value-bubble" id="value-t2">0.40</span>
                         </div>
                         <input type="range" id="slider-t2" min="0" max="1" step="0.05" value="0.40" aria-valuemin="0" aria-valuemax="1" aria-valuenow="0.40">
@@ -289,7 +134,7 @@ if train_mode == 'cutoff':
                                 <span>Fuzzy AND Gate</span>
                                 <span id="val-and" class="value-bubble">0.2800</span>
                             </div>
-                            <span class="output-math">Equation: $t_1 \cdot t_2$</span>
+                            <span class="output-math">Equation: <i>t</i><sub>1</sub> &middot; <i>t</i><sub>2</sub></span>
                             <div class="progress-track" aria-label="AND gate output progress">
                                 <div class="progress-fill" id="fill-and"></div>
                             </div>
@@ -300,7 +145,7 @@ if train_mode == 'cutoff':
                                 <span>Fuzzy OR Gate</span>
                                 <span id="val-or" class="value-bubble">0.8200</span>
                             </div>
-                            <span class="output-math">Equation: $t_1 + t_2 - (t_1 \cdot t_2)$</span>
+                            <span class="output-math">Equation: <i>t</i><sub>1</sub> + <i>t</i><sub>2</sub> - (<i>t</i><sub>1</sub> &middot; <i>t</i><sub>2</sub>)</span>
                             <div class="progress-track" aria-label="OR gate output progress">
                                 <div class="progress-fill" id="fill-or"></div>
                             </div>
@@ -311,7 +156,7 @@ if train_mode == 'cutoff':
                                 <span>Fuzzy NOT Gate (Token 1)</span>
                                 <span id="val-not-1" class="value-bubble">0.3000</span>
                             </div>
-                            <span class="output-math">Equation: $1 - t_1$</span>
+                            <span class="output-math">Equation: 1 - <i>t</i><sub>1</sub></span>
                             <div class="progress-track" aria-label="NOT gate token 1 output progress">
                                 <div class="progress-fill success" id="fill-not-1"></div>
                             </div>
@@ -322,7 +167,7 @@ if train_mode == 'cutoff':
                                 <span>Fuzzy NOT Gate (Token 2)</span>
                                 <span id="val-not-2" class="value-bubble">0.6000</span>
                             </div>
-                            <span class="output-math">Equation: $1 - t_2$</span>
+                            <span class="output-math">Equation: 1 - <i>t</i><sub>2</sub></span>
                             <div class="progress-track" aria-label="NOT gate token 2 output progress">
                                 <div class="progress-fill success" id="fill-not-2"></div>
                             </div>
@@ -333,7 +178,7 @@ if train_mode == 'cutoff':
                 <!-- Card 2: Softmax / Cutoff Routing -->
                 <div class="card interactive-card">
                     <h3><i class="fas fa-network-wired"></i> Routing Distribution Simulator</h3>
-                    <p>Adjust raw logit projections, temperature ($\tau$), and cutoff values to visualize softmax routing weights, sparsification effects, and renormalization fallback.</p>
+                    <p>Adjust raw logit projections, temperature (&tau;), and cutoff values to visualize softmax routing weights, sparsification effects, and renormalization fallback.</p>
                     
                     <div class="control-group">
                         <div class="control-label">
@@ -361,7 +206,7 @@ if train_mode == 'cutoff':
 
                     <div class="control-group">
                         <div class="control-label">
-                            <label for="slider-temp">Softmax Temperature ($\tau$)</label>
+                            <label for="slider-temp">Softmax Temperature (&tau;)</label>
                             <span class="value-bubble" id="val-temp">1.00</span>
                         </div>
                         <input type="range" id="slider-temp" min="0.1" max="3" step="0.1" value="1.00" aria-valuemin="0.1" aria-valuemax="3" aria-valuenow="1.00">
@@ -369,7 +214,7 @@ if train_mode == 'cutoff':
 
                     <div class="control-group">
                         <div class="control-label">
-                            <label for="slider-cutoff">Cutoff Threshold ($c$)</label>
+                            <label for="slider-cutoff">Cutoff Threshold (<i>c</i>)</label>
                             <span class="value-bubble" id="val-cutoff">0.15</span>
                         </div>
                         <input type="range" id="slider-cutoff" min="0.0" max="0.8" step="0.05" value="0.15" aria-valuemin="0.0" aria-valuemax="0.8" aria-valuenow="0.15">
@@ -491,7 +336,7 @@ if train_mode == 'cutoff':
                         </div>
                         <div class="callout-box">
                             <h4><i class="fas fa-chart-line"></i> Active Fusion Learnings</h4>
-                            <p>During training, the scale parameter $\alpha$ (initialized to 0.01) increases to 0.01001, demonstrating that gradients reinforce logic contributions.</p>
+                            <p>During training, the scale parameter <i>&alpha;</i> (initialized to 0.01) increases to 0.01001, demonstrating that gradients reinforce logic contributions.</p>
                         </div>
                         <div class="callout-box" style="background: rgba(139, 92, 246, 0.06); border-left-color: var(--accent-primary);">
                             <h4><i class="fas fa-microchip"></i> Computing Parity</h4>
