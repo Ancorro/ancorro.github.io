@@ -1005,7 +1005,7 @@ footer p {
     grid-template-columns: 240px 1fr;
     gap: 5rem; /* Larger gap pushes sections box further left! */
     align-items: start;
-    padding-top: 8rem;
+    padding-top: 3rem;
     padding-bottom: 6rem;
 }
 
@@ -1439,3 +1439,35 @@ footer p {
     color: var(--text-primary);
     text-shadow: none;
 }
+
+/* Paper Subheader and Back Link */
+.paper-subheader {
+    margin-top: 4.5rem; /* space for fixed header */
+    padding: 0.85rem 0;
+    background: rgba(255, 255, 255, 0.45);
+    border-bottom: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.paper-subheader .container {
+    display: flex;
+    align-items: center;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 550;
+    transition: var(--transition-fast);
+}
+
+.back-link:hover {
+    color: var(--accent-primary);
+    transform: translateX(-2px);
+}
+
