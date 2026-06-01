@@ -1333,7 +1333,7 @@ header + .paper-layout {
 }
 
 .paper-sheet section {
-    padding: 1.9rem 0;
+    padding: 1.0rem 0;
 }
 
 .paper-sheet section:first-of-type {
@@ -1343,7 +1343,7 @@ header + .paper-layout {
 .paper-sheet section + section {
     border-top: 1px solid rgba(60, 45, 30, 0.1);
     margin-top: 0;
-    padding-top: 3.0rem;
+    padding-top: 1.5rem;
 }
 
 .paper-sheet section[id],
