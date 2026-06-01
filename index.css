@@ -119,7 +119,10 @@ p {
 }
 
 .gradient-text {
-    color: var(--accent-secondary);
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 /* Navigation Header */
@@ -219,17 +222,16 @@ nav a:hover::after {
 }
 
 .btn-primary {
-    background: var(--accent-secondary);
+    background: var(--accent-gradient);
     color: white;
-    border: 1px solid var(--accent-secondary);
-    box-shadow: 0 2px 4px rgba(60, 45, 30, 0.08);
+    border: none;
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.20);
 }
 
 .btn-primary:hover {
-    background: var(--accent-primary);
-    border-color: var(--accent-primary);
+    background: linear-gradient(135deg, hsl(35, 95%, 50%) 0%, hsl(20, 90%, 55%) 100%);
     transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(60, 45, 30, 0.12);
+    box-shadow: 0 6px 15px rgba(249, 115, 22, 0.30);
 }
 
 .btn-secondary {
@@ -326,7 +328,10 @@ nav a:hover::after {
 
 .badge i {
     font-size: 0.85rem;
-    color: var(--accent-secondary);
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 /* Section Common Styling */
@@ -399,9 +404,13 @@ nav a:hover::after {
     font-family: var(--font-heading);
     font-size: 2.75rem;
     font-weight: 800;
-    color: var(--accent-secondary);
+    color: var(--text-primary);
     line-height: 1;
     margin-bottom: 0.5rem;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .stat-label {
