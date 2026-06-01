@@ -251,14 +251,14 @@ nav a:hover::after {
 
 .btn-primary {
     background: transparent;
-    color: var(--accent-primary);
+    color: var(--text-primary);
     border: 0;
-    border-bottom: 2px solid var(--accent-primary);
+    border-bottom: 2px solid rgba(60, 45, 30, 0.34);
     box-shadow: none;
 }
 
 .btn-primary:hover {
-    background: rgba(249, 115, 22, 0.08);
+    background: rgba(60, 45, 30, 0.05);
     transform: none;
     box-shadow: none;
 }
