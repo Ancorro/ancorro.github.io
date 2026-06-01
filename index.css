@@ -1230,6 +1230,16 @@ header + .paper-layout {
     margin-top: 0 !important;
 }
 
+.subsection-columns {
+    column-count: 2;
+    column-gap: 2.25rem;
+    text-align: justify;
+}
+
+.subsection-columns > *:first-child {
+    margin-top: 0 !important;
+}
+
 .paper-sheet section {
     padding: 1.5rem 0 1.2rem 0;
 }
@@ -1437,6 +1447,12 @@ header + .paper-layout {
     color: var(--text-primary);
 }
 
+.page-break-divider {
+    border-top: 1px solid rgba(60, 45, 30, 0.18);
+    margin: 0.5rem 0 0.85rem;
+    width: 100%;
+}
+
 .references-list {
     list-style: none;
     padding-left: 0;
@@ -1464,11 +1480,11 @@ header + .paper-layout {
 }
 
 /* Appendices elements breaking layout prevention */
-.paper-section hr {
+.paper-sheet hr {
     column-span: all;
     border: 0;
     border-top: 1px solid var(--border-color);
-    margin: 2rem 0;
+    margin: 2.75rem 0 2rem;
 }
 
 @media (max-width: 1500px) {

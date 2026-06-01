@@ -516,32 +516,34 @@
                 <div class="paper-content-columns">
                     <div class="span-both-columns">
                         <h3>5.1. ProofWriter</h3>
-                        <p style="text-indent: 0;">
-                            Table 1 reports final validation accuracy under the evaluation protocol used for each run,
-                            validation loss, and fusion parameter state (fixed vs learned) after 3 epochs.
-                        </p>
-                        <p style="text-indent:0;">
-                            The parameter-matched control model substantially outperforms the Baseline, indicating that
-                            additional parallel capacity alone already improves performance, while routing variants provide
-                            the strongest overall scores in this setting.
-                        </p>
-                        <p>
-                            The best observed ProofWriter result is the inter-token routed variant with $G=8$ and fixed
-                            $\alpha=0.01$ (0.562 val accuracy), compared with 0.525 for No-Gate Control and 0.417 for
-                            Baseline. Inter-token routing is consistently competitive with or better than intra-token
-                            routing at matched gate count, while increasing to $G=16$ under these settings reduces accuracy
-                            (0.501), indicating that more routed channels do not automatically improve quality. Additional
-                            hyperparameters listed in the appendix.
-                        </p>
-                        <p>
-                            The mechanism columns in Table 1 show routed variants have substantially lower gradient norms
-                            (about 10.41--10.96) than the Baseline (29.38), while No-Gate Control is intermediate (11.14).
-                            This is consistent with more stable update magnitudes in the routed settings under the current
-                            training regime. Routing entropy is tightly clustered around 3.067 for the $G=8$ routed runs,
-                            but rises to 3.7483 for $G=16$, where validation quality drops. In this sweep, higher routing
-                            entropy at larger gate count appears to coincide with weaker task performance, suggesting a more
-                            diffuse routing regime that does not translate into better accuracy.
-                        </p>
+                        <div class="subsection-columns">
+                            <p style="text-indent: 0;">
+                                Table 1 reports final validation accuracy under the evaluation protocol used for each run,
+                                validation loss, and fusion parameter state (fixed vs learned) after 3 epochs.
+                            </p>
+                            <p style="text-indent:0;">
+                                The parameter-matched control model substantially outperforms the Baseline, indicating that
+                                additional parallel capacity alone already improves performance, while routing variants provide
+                                the strongest overall scores in this setting.
+                            </p>
+                            <p>
+                                The best observed ProofWriter result is the inter-token routed variant with $G=8$ and fixed
+                                $\alpha=0.01$ (0.562 val accuracy), compared with 0.525 for No-Gate Control and 0.417 for
+                                Baseline. Inter-token routing is consistently competitive with or better than intra-token
+                                routing at matched gate count, while increasing to $G=16$ under these settings reduces accuracy
+                                (0.501), indicating that more routed channels do not automatically improve quality. Additional
+                                hyperparameters listed in the appendix.
+                            </p>
+                            <p>
+                                The mechanism columns in Table 1 show routed variants have substantially lower gradient norms
+                                (about 10.41--10.96) than the Baseline (29.38), while No-Gate Control is intermediate (11.14).
+                                This is consistent with more stable update magnitudes in the routed settings under the current
+                                training regime. Routing entropy is tightly clustered around 3.067 for the $G=8$ routed runs,
+                                but rises to 3.7483 for $G=16$, where validation quality drops. In this sweep, higher routing
+                                entropy at larger gate count appears to coincide with weaker task performance, suggesting a more
+                                diffuse routing regime that does not translate into better accuracy.
+                            </p>
+                        </div>
                     </div>
 
                     <!-- Table 1 (Wide Double Column Table) -->
@@ -618,6 +620,8 @@
                         </table>
                         <p class="table-caption"><strong>Table 1:</strong> ProofWriter validation results after 3 epochs. Routed variants outperform both the Baseline and No-Gate Control. The best result is inter-token routing with G=8 and fixed α=0.01.</p>
                     </div>
+
+                    <div class="page-break-divider span-both-columns" aria-hidden="true"></div>
 
                     <h3>5.2. Size and Transfer</h3>
                     <p>
