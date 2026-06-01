@@ -585,7 +585,7 @@ nav a:hover::after {
     margin: 0;
 }
 
-/* Interactive Playground Section */
+/* Interactive Architecture Sandbox Section */
 .playground-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
