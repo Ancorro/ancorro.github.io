@@ -111,12 +111,12 @@
                 </p>
             </section>
 
-            <!-- Two Column Document Flow -->
-            <div class="paper-content-columns">
+            <!-- Two Column Document Flow (Split by Section) -->
 
                 <!-- 1. Introduction -->
                 <section id="introduction">
                     <h2>1. Introduction</h2>
+                    <div class="paper-content-columns">
                     <p>
                         Transformers provide strong performance on a wide variety of tasks <a href="#ref-attention-is-all-you-need" class="citation-link">[1]</a>. Both chain-of-thought (CoT) prompting and reasoning models can greatly improve performance on reasoning tasks <a href="#ref-cot" class="citation-link">[2, 3]</a>. However, many CoT approaches use N-shot prompting. Additionally, both CoT and reasoning models utilize reasoning by iterative and extended inference, which requires far more tokens. This increases inference costs for many tasks <a href="#ref-cot" class="citation-link">[2]</a>.
                     </p>
@@ -142,11 +142,13 @@
                     <p>
                         Contributions of this paper are: (1) inter-token compositional routing with operator reductions and residual logic-state updates; (2) controlled ablations over logic dimension, gate count, window size/axis, gate mode, and fusion $\alpha$; and (3) evaluation on reasoning and transfer settings with mechanism-level metrics (routing entropy, fusion $\alpha$, and average gradient norm).
                     </p>
+                    </div>
                 </section>
 
                 <!-- 2. Related Work -->
                 <section id="related-work">
                     <h2>2. Related Work</h2>
+                    <div class="paper-content-columns">
                     <p>
                         Logical and logic-inspired neural architectures span a wide variety of designs, from classic weightless systems to modern differentiable operator networks <a href="#ref-aleksander" class="citation-link">[7]</a>. Some architectures utilize explicit logical or logic-inspired differentiable operators <a href="#ref-diff-logic" class="citation-link">[8]</a> as an alternative to dense transformations, providing evidence that structured logical computation can be more efficient and interpretable than typical transformers. Our approach builds on this motivation, but integrates operator routing directly into the transformer hidden-state rather than standalone units.
                     </p>
@@ -165,11 +167,13 @@
                     <p>
                         Fuzzy-set theory provides continuous, differentiable functions <a href="#ref-fuzzy" class="citation-link">[11]</a>. We use fuzzy-set operations to estimate logical operations, which allows training with any off-the-shelf gradient-based optimizer. Our architecture is contrasted by Neural-Symbolic networks, where explicit logic is composed in the non-compressed input space (for example, decision trees or markov-networks) <a href="#ref-neurosymbolic" class="citation-link">[12]</a>.
                     </p>
+                    </div>
                 </section>
 
                 <!-- 3. Methods -->
                 <section id="methods">
                     <h2>3. Methods</h2>
+                    <div class="paper-content-columns">
                     
                     <h3>3.1. Architecture and State Representation</h3>
                     <p>
@@ -362,11 +366,13 @@
                     <p>
                         After the final layer, fusion is applied as in Eq. (4). $\alpha$ may be fixed or learned; it directly controls the contribution of the logic expert.
                     </p>
+                    </div>
                 </section>
 
                 <!-- 4. Experiments -->
                 <section id="experiments">
                     <h2>4. Experiments</h2>
+                    <div class="paper-content-columns">
                     
                     <h3>4.1. Setup</h3>
                     <p>
@@ -392,219 +398,220 @@
                     <p>
                         Training metrics are validation accuracy and validation loss. Operator mechanism metrics are routing entropy and fusion $\alpha$. We also report average gradient norm (Avg Grad Norm) as an optimization-health signal. Stable gradient norms generally indicate smoother updates, very large norms can indicate unstable training dynamics, small gradient norms indicates arrested training.
                     </p>
+                    </div>
                 </section>
 
                 <!-- 5. Results (Spans both columns to show Table 1) -->
-                <section id="results" class="span-both-columns">
+                <section id="results">
                     <h2>5. Results</h2>
-                    <h3>5.1. ProofWriter</h3>
-                    <p style="text-indent: 0;">
-                        Table 1 reports final validation accuracy under the evaluation protocol used for each run, validation loss, and fusion parameter state (fixed vs learned) after 3 epochs.
-                    </p>
+                    <div class="paper-content-columns">
+                        <h3>5.1. ProofWriter</h3>
+                        <p style="text-indent: 0;">
+                            Table 1 reports final validation accuracy under the evaluation protocol used for each run, validation loss, and fusion parameter state (fixed vs learned) after 3 epochs.
+                        </p>
 
-                    <!-- Table 1 (Wide Double Column Table) -->
-                    <div class="table-wrapper" style="margin: 1.5rem 0;">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Model</th>
-                                    <th>Validation Accuracy</th>
-                                    <th>Validation Loss</th>
-                                    <th>Fusion $\alpha$</th>
-                                    <th>Routing Entropy</th>
-                                    <th>Avg Grad Norm</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Baseline</td>
-                                    <td>0.417</td>
-                                    <td>1.063</td>
-                                    <td>--</td>
-                                    <td>--</td>
-                                    <td>29.3765</td>
-                                </tr>
-                                <tr>
-                                    <td>No-Gate Control</td>
-                                    <td>0.525</td>
-                                    <td>0.820</td>
-                                    <td>0.00001 (fixed)</td>
-                                    <td>--</td>
-                                    <td>11.1387</td>
-                                </tr>
-                                <tr>
-                                    <td>Routed (intra, G=8)</td>
-                                    <td>0.542</td>
-                                    <td>0.818</td>
-                                    <td>0.00001 (fixed)</td>
-                                    <td>3.0675</td>
-                                    <td>10.5972</td>
-                                </tr>
-                                <tr>
-                                    <td>Routed (inter, G=8)</td>
-                                    <td>0.546</td>
-                                    <td>0.819</td>
-                                    <td>0.1 (fixed)</td>
-                                    <td>3.0668</td>
-                                    <td>10.4154</td>
-                                </tr>
-                                <tr style="background: rgba(249, 115, 22, 0.08);">
-                                    <td><strong>Routed (inter, G=8)</strong></td>
-                                    <td class="highlight-cell"><strong>0.562</strong></td>
-                                    <td><strong>0.816</strong></td>
-                                    <td><strong>0.01 (fixed)</strong></td>
-                                    <td><strong>3.0666</strong></td>
-                                    <td><strong>10.4054</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>Routed (inter, G=8)</td>
-                                    <td>0.546</td>
-                                    <td>0.819</td>
-                                    <td>0.006 (learned)</td>
-                                    <td>3.0666</td>
-                                    <td>10.5527</td>
-                                </tr>
-                                <tr>
-                                    <td>Routed (inter, G=16)</td>
-                                    <td>0.501</td>
-                                    <td>0.837</td>
-                                    <td>0.00001 (fixed)</td>
-                                    <td>3.7483</td>
-                                    <td>10.9610</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <!-- Table 1 (Wide Double Column Table) -->
+                        <div class="table-wrapper span-both-columns" style="margin: 1.5rem 0;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Model</th>
+                                        <th>Validation Accuracy</th>
+                                        <th>Validation Loss</th>
+                                        <th>Fusion $\alpha$</th>
+                                        <th>Routing Entropy</th>
+                                        <th>Avg Grad Norm</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Baseline</td>
+                                        <td>0.417</td>
+                                        <td>1.063</td>
+                                        <td>--</td>
+                                        <td>--</td>
+                                        <td>29.3765</td>
+                                    </tr>
+                                    <tr>
+                                        <td>No-Gate Control</td>
+                                        <td>0.525</td>
+                                        <td>0.820</td>
+                                        <td>0.00001 (fixed)</td>
+                                        <td>--</td>
+                                        <td>11.1387</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Routed (intra, G=8)</td>
+                                        <td>0.542</td>
+                                        <td>0.818</td>
+                                        <td>0.00001 (fixed)</td>
+                                        <td>3.0675</td>
+                                        <td>10.5972</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Routed (inter, G=8)</td>
+                                        <td>0.546</td>
+                                        <td>0.819</td>
+                                        <td>0.1 (fixed)</td>
+                                        <td>3.0668</td>
+                                        <td>10.4154</td>
+                                    </tr>
+                                    <tr style="background: rgba(249, 115, 22, 0.08);">
+                                        <td><strong>Routed (inter, G=8)</strong></td>
+                                        <td class="highlight-cell"><strong>0.562</strong></td>
+                                        <td><strong>0.816</strong></td>
+                                        <td><strong>0.01 (fixed)</strong></td>
+                                        <td><strong>3.0666</strong></td>
+                                        <td><strong>10.4054</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Routed (inter, G=8)</td>
+                                        <td>0.546</td>
+                                        <td>0.819</td>
+                                        <td>0.006 (learned)</td>
+                                        <td>3.0666</td>
+                                        <td>10.5527</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Routed (inter, G=16)</td>
+                                        <td>0.501</td>
+                                        <td>0.837</td>
+                                        <td>0.00001 (fixed)</td>
+                                        <td>3.7483</td>
+                                        <td>10.9610</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p style="text-indent:0;">
+                            The parameter-matched control model substantially outperforms the Baseline, indicating that additional parallel capacity alone already improves performance, while routing variants provide the strongest overall scores in this setting.
+                        </p>
+                        <p>
+                            The best observed ProofWriter result is the inter-token routed variant with $G=8$ and fixed $\alpha=0.01$ (0.562 val accuracy), compared with 0.525 for No-Gate Control and 0.417 for Baseline. Inter-token routing is consistently competitive with or better than intra-token routing at matched gate count, while increasing to $G=16$ under these settings reduces accuracy (0.501), indicating that more routed channels do not automatically improve quality. Additional hyperparameters listed in the appendix.
+                        </p>
+                        <p>
+                            The mechanism columns in Table 1 show routed variants have substantially lower gradient norms (about 10.41--10.96) than the Baseline (29.38), while No-Gate Control is intermediate (11.14). This is consistent with more stable update magnitudes in the routed settings under the current training regime. Routing entropy is tightly clustered around 3.067 for the $G=8$ routed runs, but rises to 3.7483 for $G=16$, where validation quality drops. In this sweep, higher routing entropy at larger gate count appears to coincide with weaker task performance, suggesting a more diffuse routing regime that does not translate into better accuracy.
+                        </p>
+
+                        <h3>5.2. Size and Transfer</h3>
+                        <p>
+                            A key confound in models is added trainable parameters. Table 2 confirms close parameter matching between No-Gate Control and routed variants (only small differences), the single-task gains from the best routed model are very unlikely to be explained solely by increased parameter-count.
+                        </p>
+
+                        <!-- Table 2 (Fits in Column) -->
+                        <div class="table-wrapper" style="margin: 1rem 0;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Model Variant</th>
+                                        <th>Trainable Parameters</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Baseline</td>
+                                        <td>7,504,936,963</td>
+                                    </tr>
+                                    <tr>
+                                        <td>No-Gate Control</td>
+                                        <td>7,582,192,484</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Routed (G=8)</td>
+                                        <td>7,579,068,164</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Routed (G=16)</td>
+                                        <td>7,579,725,060</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>5.3. Multi-Genre Natural Language (MNLI)</h3>
+                        <p>
+                            MNLI <a href="#ref-mnli" class="citation-link">[16]</a> combines sentence understanding with logic multi-class labels. We map the labels to the ProofWriter classes (contradiction $\rightarrow 0$, entailment $\rightarrow 1$, neutral $\rightarrow 2$). For comparability, evaluation uses matched sampling. Table 3 reports MNLI results.
+                        </p>
+
+                        <!-- Table 3 (Fits in Column) -->
+                        <div class="table-wrapper" style="margin: 1rem 0;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Model</th>
+                                        <th>MNLI Val Acc</th>
+                                        <th>MNLI Val Loss</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="background: rgba(249, 115, 22, 0.08);">
+                                        <td><strong>No-Gate Control</strong></td>
+                                        <td class="highlight-cell"><strong>0.89</strong></td>
+                                        <td><strong>0.34</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Routed (intra, G=8)</td>
+                                        <td>0.88</td>
+                                        <td>0.36</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Routed (inter, G=8)</td>
+                                        <td>0.88</td>
+                                        <td>0.39</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p>
+                            Table 3 reports MNLI results. On MNLI, No-Gate Control achieves the highest validation accuracy (0.888), with routed variants close behind (0.880 intra, 0.878 inter). This suggests broadly similar transfer performance at this scale; without multi-seed variance estimates, these small margins should be interpreted as comparable rather than decisive. Transfer behavior appears dependent on the supervision regime and routing configuration.
+                        </p>
+
+                        <h3>5.4. Multi-task Training</h3>
+                        <p>
+                            For multi-task training, each mini-batch is sampled from a 50/50 mixture of ProofWriter and MNLI. This experiment tests whether routing can jointly optimize symbolic-style and open-domain NLI supervision without degrading either task. Total training steps and optimizer hyperparameters are matched to single-task runs, and we report per-task validation metrics after joint training.
+                        </p>
+
+                        <!-- Table 4 (Fits in Column) -->
+                        <div class="table-wrapper" style="margin: 1rem 0;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Model</th>
+                                        <th>ProofWriter Acc</th>
+                                        <th>MNLI Acc</th>
+                                        <th>Mean</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="background: rgba(249, 115, 22, 0.08);">
+                                        <td><strong>No-Gate Control</strong></td>
+                                        <td class="highlight-cell"><strong>0.544</strong></td>
+                                        <td>0.879</td>
+                                        <td class="highlight-cell"><strong>0.712</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Routed (inter, G=8)</td>
+                                        <td>0.536</td>
+                                        <td class="highlight-cell"><strong>0.881</strong></td>
+                                        <td>0.709</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p>
+                            Table 4 reports the 50/50 multi-task evaluation. In the joint setting, No-Gate Control attains the higher average accuracy (0.712 vs 0.709), while Routed (inter, $G=8$) attains slightly higher MNLI accuracy (0.881 vs 0.879). This indicates a small task trade-off under 50/50 mixing: routing is competitive in aggregate and can preserve transfer-side performance, but these differences are very small and are best interpreted as similar overall performance under the current multi-task configuration.
+                        </p>
                     </div>
-                </section>
-
-                <!-- Results text back inside Columns -->
-                <section>
-                    <p style="text-indent:0;">
-                        The parameter-matched control model substantially outperforms the Baseline, indicating that additional parallel capacity alone already improves performance, while routing variants provide the strongest overall scores in this setting.
-                    </p>
-                    <p>
-                        The best observed ProofWriter result is the inter-token routed variant with $G=8$ and fixed $\alpha=0.01$ (0.562 val accuracy), compared with 0.525 for No-Gate Control and 0.417 for Baseline. Inter-token routing is consistently competitive with or better than intra-token routing at matched gate count, while increasing to $G=16$ under these settings reduces accuracy (0.501), indicating that more routed channels do not automatically improve quality. Additional hyperparameters listed in the appendix.
-                    </p>
-                    <p>
-                        The mechanism columns in Table 1 show routed variants have substantially lower gradient norms (about 10.41--10.96) than the Baseline (29.38), while No-Gate Control is intermediate (11.14). This is consistent with more stable update magnitudes in the routed settings under the current training regime. Routing entropy is tightly clustered around 3.067 for the $G=8$ routed runs, but rises to 3.7483 for $G=16$, where validation quality drops. In this sweep, higher routing entropy at larger gate count appears to coincide with weaker task performance, suggesting a more diffuse routing regime that does not translate into better accuracy.
-                    </p>
-
-                    <h3>5.2. Size and Transfer</h3>
-                    <p>
-                        A key confound in models is added trainable parameters. Table 2 confirms close parameter matching between No-Gate Control and routed variants (only small differences), the single-task gains from the best routed model are very unlikely to be explained solely by increased parameter-count.
-                    </p>
-
-                    <!-- Table 2 (Fits in Column) -->
-                    <div class="table-wrapper" style="margin: 1rem 0;">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Model Variant</th>
-                                    <th>Trainable Parameters</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Baseline</td>
-                                    <td>7,504,936,963</td>
-                                </tr>
-                                <tr>
-                                    <td>No-Gate Control</td>
-                                    <td>7,582,192,484</td>
-                                </tr>
-                                <tr>
-                                    <td>Routed (G=8)</td>
-                                    <td>7,579,068,164</td>
-                                </tr>
-                                <tr>
-                                    <td>Routed (G=16)</td>
-                                    <td>7,579,725,060</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <h3>5.3. Multi-Genre Natural Language (MNLI)</h3>
-                    <p>
-                        MNLI <a href="#ref-mnli" class="citation-link">[16]</a> combines sentence understanding with logic multi-class labels. We map the labels to the ProofWriter classes (contradiction $\rightarrow 0$, entailment $\rightarrow 1$, neutral $\rightarrow 2$). For comparability, evaluation uses matched sampling. Table 3 reports MNLI results.
-                    </p>
-
-                    <!-- Table 3 (Fits in Column) -->
-                    <div class="table-wrapper" style="margin: 1rem 0;">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Model</th>
-                                    <th>MNLI Val Acc</th>
-                                    <th>MNLI Val Loss</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr style="background: rgba(249, 115, 22, 0.08);">
-                                    <td><strong>No-Gate Control</strong></td>
-                                    <td class="highlight-cell"><strong>0.89</strong></td>
-                                    <td><strong>0.34</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>Routed (intra, G=8)</td>
-                                    <td>0.88</td>
-                                    <td>0.36</td>
-                                </tr>
-                                <tr>
-                                    <td>Routed (inter, G=8)</td>
-                                    <td>0.88</td>
-                                    <td>0.39</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <p>
-                        Table 3 reports MNLI results. On MNLI, No-Gate Control achieves the highest validation accuracy (0.888), with routed variants close behind (0.880 intra, 0.878 inter). This suggests broadly similar transfer performance at this scale; without multi-seed variance estimates, these small margins should be interpreted as comparable rather than decisive. Transfer behavior appears dependent on the supervision regime and routing configuration.
-                    </p>
-
-                    <h3>5.4. Multi-task Training</h3>
-                    <p>
-                        For multi-task training, each mini-batch is sampled from a 50/50 mixture of ProofWriter and MNLI. This experiment tests whether routing can jointly optimize symbolic-style and open-domain NLI supervision without degrading either task. Total training steps and optimizer hyperparameters are matched to single-task runs, and we report per-task validation metrics after joint training.
-                    </p>
-
-                    <!-- Table 4 (Fits in Column) -->
-                    <div class="table-wrapper" style="margin: 1rem 0;">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Model</th>
-                                    <th>ProofWriter Acc</th>
-                                    <th>MNLI Acc</th>
-                                    <th>Mean</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr style="background: rgba(249, 115, 22, 0.08);">
-                                    <td><strong>No-Gate Control</strong></td>
-                                    <td class="highlight-cell"><strong>0.544</strong></td>
-                                    <td>0.879</td>
-                                    <td class="highlight-cell"><strong>0.712</strong></td>
-                                </tr>
-                                <tr>
-                                    <td>Routed (inter, G=8)</td>
-                                    <td>0.536</td>
-                                    <td class="highlight-cell"><strong>0.881</strong></td>
-                                    <td>0.709</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <p>
-                        Table 4 reports the 50/50 multi-task evaluation. In the joint setting, No-Gate Control attains the higher average accuracy (0.712 vs 0.709), while Routed (inter, $G=8$) attains slightly higher MNLI accuracy (0.881 vs 0.879). This indicates a small task trade-off under 50/50 mixing: routing is competitive in aggregate and can preserve transfer-side performance, but these differences are very small and are best interpreted as similar overall performance under the current multi-task configuration.
-                    </p>
                 </section>
 
                 <!-- 6. Discussion -->
                 <section id="discussion">
                     <h2>6. Discussion</h2>
-                    <p>
+                    <div class="paper-content-columns">
+                        <p>
                         The single-task results show that the routed logic expert variants can outperform both the Baseline and the parameter-matched No-Gate Control, suggesting that gains are not solely due to increased capacity and are influenced by compositional routing bias. In contrast, the new 50/50 multi-task results show a tighter regime with near-tied outcomes: No-Gate Control has a slightly higher average accuracy (0.712 vs 0.709), while the routed variant is slightly higher on MNLI within the joint setting (0.881 vs 0.879). Given the tiny margins, these results are best read as similar performance pending multi-seed validation. Single-task MNLI transfer follows the same pattern, while ProofWriter shows larger routed gains. Overall, the evidence suggests a task-dependent benefit profile in which routing is more helpful for logical-composition supervision.
                     </p>
                     <p>
@@ -656,31 +663,37 @@
                         <img src="assets/images/routing_heatmap.png" alt="Routing Heatmap Diagram">
                         <figcaption><strong>Figure 2:</strong> Routing-weight heatmap over transformer depth for a validation batch. Rows are layers and columns are routed channels; color intensity indicates mean routing weight.</figcaption>
                     </figure>
+                    </div>
                 </section>
 
                 <!-- 7. Limitations -->
                 <section id="limitations">
                     <h2>7. Limitations</h2>
-                    <p>
-                        Additional tasks beyond the initial benchmark sets are needed to establish any generalization. We only evaluate one logical reasoning benchmark, more would allow us to evaluate generalization, specifically of the logic expert. The routing design also introduces additional hyperparameters (gate count, window size, routing sparsity) whose interactions are not yet fully explored.
-                    </p>
+                    <div class="paper-content-columns">
+                        <p>
+                            Additional tasks beyond the initial benchmark sets are needed to establish any generalization. We only evaluate one logical reasoning benchmark, more would allow us to evaluate generalization, specifically of the logic expert. The routing design also introduces additional hyperparameters (gate count, window size, routing sparsity) whose interactions are not yet fully explored.
+                        </p>
+                    </div>
                 </section>
 
                 <!-- 8. Conclusion -->
                 <section id="conclusion">
                     <h2>8. Conclusion</h2>
-                    <p>
-                        This architecture shifts conditional inference from routing among independent neural experts to routing over operator groups, yielding a novel, compact, and interpretable compositional mechanism. Across matched-capacity comparisons, results indicate that the routed logic path can improve over both the backbone Baseline and a parameter-matched No-Gate Control in single-task runs, with inter-token composition emerging as a strong setting in our current sweeps. In MNLI transfer and joint 50/50 multi-task training, routed and No-Gate variants are near-parity under the current setup.
-                    </p>
-                    <p>
-                        Mechanism-level diagnostics (routing entropy and fusion $\alpha$) provide direct visibility into whether routing is specialized and whether the branch is actually used at prediction time. This work establishes an implementation-complete foundation for operator-routed reasoning. Immediate next steps are broader benchmark coverage, and targeted ablations.
-                    </p>
+                    <div class="paper-content-columns">
+                        <p>
+                            This architecture shifts conditional inference from routing among independent neural experts to routing over operator groups, yielding a novel, compact, and interpretable compositional mechanism. Across matched-capacity comparisons, results indicate that the routed logic path can improve over both the backbone Baseline and a parameter-matched No-Gate Control in single-task runs, with inter-token composition emerging as a strong setting in our current sweeps. In MNLI transfer and joint 50/50 multi-task training, routed and No-Gate variants are near-parity under the current setup.
+                        </p>
+                        <p>
+                            Mechanism-level diagnostics (routing entropy and fusion $\alpha$) provide direct visibility into whether routing is specialized and whether the branch is actually used at prediction time. This work establishes an implementation-complete foundation for operator-routed reasoning. Immediate next steps are broader benchmark coverage, and targeted ablations.
+                        </p>
+                    </div>
                 </section>
 
                 <!-- References (inside columns) -->
                 <section id="references" class="references-section">
                     <h2>References</h2>
-                    <ol class="references-list">
+                    <div class="paper-content-columns">
+                        <ol class="references-list">
                         <li id="ref-attention-is-all-you-need">[1] Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Łukasz Kaiser, and Illia Polosukhin. <em>Attention is all you need</em>. In Advances in Neural Information Processing Systems, 2017.</li>
                         <li id="ref-cot">[2] Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Fei Xia, Ed Chi, Quoc V. Le, and Denny Zhou. <em>Chain-of-thought prompting elicits reasoning in large language models</em>. In Advances in Neural Information Processing Systems, 2022.</li>
                         <li id="ref-reasoning">[3] Albert Q. Jiang, Alexandre Sablayrolles, Arthur Mensch, Chris Bamford, Devendra Singh Chaplot, Diego de las Casas, Florian Bressand, Gianna Lengyel, Guillaume Lample, Lucile Saulnier, et al. <em>Mistral 7B</em>. arXiv preprint arXiv:2310.06825, 2023.</li>
@@ -698,7 +711,8 @@
                         <li id="ref-proofwriter">[15] Oyvind Tafjord, Bhavana Dalvi, and Peter Clark. <em>ProofWriter: Generating implications, proofs, and judgements for NLI</em>. In Findings of the Association for Computational Linguistics: EMNLP, 2021.</li>
                         <li id="ref-mnli">[16] Adina Williams, Nikita Nangia, and Samuel R. Bowman. <em>A broad-coverage challenge corpus for sentence understanding through inference</em>. In NAACL-HLT, 2018.</li>
                         <li id="ref-generalization">[17] Daniel Keysers, Nathanael Schärli, Nathan Scales, Hila Gonen, Oana-Maria Camburu, Yury Bystrov, Aurelien Boffet, Jaemin Cho, Blaise Aguera y Arcas, and Ed H. Chi. <em>Measuring compositional generalization: A comprehensive method on realistic data</em>. In International Conference on Learning Representations (ICLR), 2020.</li>
-                    </ol>
+                        </ol>
+                    </div>
                 </section>
 
                 <!-- Appendix (Spans both columns) -->
@@ -792,8 +806,6 @@ Answer: true</pre>
                         </div>
                     </div>
                 </section>
-
-            </div><!-- End Columns -->
 
         </article>
     </main>

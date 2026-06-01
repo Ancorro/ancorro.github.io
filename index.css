@@ -1311,30 +1311,36 @@ footer p {
     text-indent: 0;
 }
 
-/* Headings inside Columns */
-.paper-content-columns h2,
+/* Headings inside Columns & Section Headings */
+.paper-sheet h2,
 .paper-content-columns h3,
 .paper-content-columns h4 {
-    column-break-after: avoid;
-    break-inside: avoid;
     text-indent: 0;
-    margin-top: 1.5rem;
-    margin-bottom: 0.4rem;
     font-family: var(--font-heading);
     font-weight: 700;
 }
 
-.paper-content-columns h2 {
+.paper-sheet h2 {
     font-size: 1.05rem;
     text-transform: uppercase; /* Replicates LaTeX uppercase main headers */
     border-bottom: none;
     padding-bottom: 0;
-    margin-top: 1.75rem;
+    margin-top: 2rem;
+    margin-bottom: 0.8rem;
+    text-align: center; /* CVPR/IEEE section headers are centered */
+    width: 100%;
+}
+
+.paper-content-columns h3,
+.paper-content-columns h4 {
+    column-break-after: avoid;
+    break-inside: avoid;
+    margin-top: 1.25rem;
+    margin-bottom: 0.4rem;
 }
 
 .paper-content-columns h3 {
     font-size: 0.95rem;
-    margin-top: 1.25rem;
 }
 
 .paper-content-columns h4 {
