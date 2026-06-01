@@ -1553,9 +1553,26 @@ header + .paper-layout {
 }
 
 .page-break-divider {
-    border-top: 1px solid rgba(60, 45, 30, 0.18);
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
     margin: 0.5rem 0 0.85rem;
     width: 100%;
+}
+
+.page-break-divider::before {
+    content: '';
+    flex: 1 1 auto;
+    border-top: 1px solid rgba(60, 45, 30, 0.18);
+}
+
+.page-break-divider span {
+    flex: 0 0 auto;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.04em;
+    color: rgba(60, 45, 30, 0.45);
+    text-transform: uppercase;
 }
 
 .references-list {
