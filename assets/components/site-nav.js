@@ -30,12 +30,12 @@ class SiteNav extends HTMLElement {
                             GitHub
                             <small>ancorro</small>
                         </a>
-                        <span class="nav-link-stack nav-emails">
-                            <span>Email</span>
-                            <a href="mailto:steven.cleasby.mayeda@gmail.com"><small>steven.cleasby.mayeda@gmail.com</small></a>
-                            <a href="mailto:cleasbys@oregonstate.edu"><small>cleasbys@oregonstate.edu</small></a>
-                        </span>
                     </div>
+                    <span class="nav-link-stack nav-emails">
+                        <span>Email</span>
+                        <a href="mailto:steven.cleasby.mayeda@gmail.com"><small>steven.cleasby.mayeda@gmail.com</small></a>
+                        <a href="mailto:cleasbys@oregonstate.edu"><small>cleasbys@oregonstate.edu</small></a>
+                    </span>
                 </div>
             </nav>
         `;

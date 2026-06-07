@@ -192,6 +192,7 @@ site-nav {
     align-items: flex-end;
     user-select: text;
     cursor: default;
+    order: 1;
 }
 
 .nav-emails>span {
@@ -216,10 +217,25 @@ site-nav {
     }
 }
 
+/* Intermediate widths: brand wraps above the menu. Move emails onto the
+   brand row (order 0) and force the menu to its own full-width row below. */
+@media (max-width: 1440px) and (min-width: 1100px) {
+    .nav-emails {
+        order: 0;
+        margin-left: auto;
+    }
+
+    .nav-menu {
+        order: 1;
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
 /* Small screens: tighten spacing, shrink the brand art, and drop the
    secondary external links (those without .mobile-link). Wrapping itself is
    already handled by the base flexbox layout above. */
-@media (max-width: 1088px) {
+@media (max-width: 1100px) {
     site-nav {
         --nav-height-large: 72px;
         --nav-height-delta: 10px;
@@ -263,7 +279,6 @@ site-nav {
     }
 
     .nav-desc,
-    .nav-brand-text small,
     .nav-link-stack:not(.nav-emails) small {
         display: none;
     }
