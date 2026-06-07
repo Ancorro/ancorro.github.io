@@ -17,40 +17,36 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="fog"></div>
-    <div class="vignette"></div>
-    <div class="grain"></div>
 
-    <!-- Navigation -->
     <nav class="nav">
         <div class="wrap nav-inner">
-            <a href="#top" class="nav-brand">
-                <img src="assets/images/favicon.svg" alt="">
-                <span>S · C · M</span>
-            </a>
+            <a href="#top" class="nav-brand">SCM</a>
             <div class="nav-links">
                 <a href="#works">Works</a>
                 <a href="#experience">Experience</a>
                 <a href="#skills">Skills</a>
-                <a href="https://github.com/Ancorro" class="nav-cta" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://github.com/Ancorro" class="last" target="_blank" rel="noopener">GitHub</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero -->
-    <header id="top" class="hero">
-        <div class="wrap">
-            <div class="hero-inner reveal">
-                <p class="eyebrow">AI / ML Engineer · Oregon State University</p>
+    <!-- Masthead -->
+    <header id="top" class="masthead">
+        <div class="wrap masthead-grid">
+            <div>
                 <h1>Steven<br>Cleasby-Mayeda</h1>
-                <p class="lede">I build and study machine learning systems, focused on transformer architectures and agentic pipelines.</p>
-                <p class="sub">M.Eng. Computer Science (AI focus) candidate at Oregon State University, with a B.S. in Applied Computer Science. Work covers model architecture design, training and evaluation, and ablation studies.</p>
-                <div class="hero-actions">
-                    <a href="#works" class="btn btn-primary">Selected Works</a>
-                    <a href="https://github.com/Ancorro" class="btn btn-ghost" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
-                    <a href="mailto:stevencleasbymayeda@gmail.com" class="btn btn-ghost"><i class="fas fa-envelope"></i> Email</a>
+                <p class="role kicker">AI / ML Engineer · Oregon State University</p>
+                <p class="intro">M.Eng. Computer Science (AI focus) candidate, with a B.S. in Applied Computer Science. I build and study machine learning systems — transformer architectures, agentic pipelines, and applied research, with an emphasis on architecture design, training, evaluation, and ablation.</p>
+                <div class="links">
+                    <a href="#works">Selected Works</a>
+                    <a href="https://github.com/Ancorro" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
+                    <a href="mailto:stevencleasbymayeda@gmail.com"><i class="fas fa-envelope"></i> Email</a>
                 </div>
             </div>
+            <figure class="art masthead-art">
+                <div class="frame"><img src="assets/art/hero-abbey.jpg" alt="Caspar David Friedrich, The Abbey in the Oakwood"></div>
+                <figcaption>Caspar David Friedrich, <i>The Abbey in the Oakwood</i></figcaption>
+            </figure>
         </div>
     </header>
 
@@ -58,51 +54,49 @@
     <section id="works">
         <div class="wrap">
             <div class="section-head">
-                <div class="kicker">I.</div>
                 <h2>Selected Works</h2>
-                <div class="ornament"><i></i><i></i></div>
+                <span class="kicker">Four projects</span>
             </div>
+            <div class="works">
 
-            <div class="projects">
-
-                <article class="plate">
+                <article class="work">
                     <h3>Parallel Logic Expert with Operator Routing</h3>
                     <div class="tools">PyTorch · Transformers</div>
                     <p>A logic-augmented transformer pathway that routes token representations through differentiable fuzzy AND/OR/NOT operators, with learned operator routing and backbone cross-attention. A full PyTorch training and evaluation pipeline with matched-budget ablations, showing gains over baseline transformers on logical-reasoning benchmarks.</p>
-                    <div class="plate-links">
-                        <a href="https://ancorro.github.io/logic-expert-public/" target="_blank" rel="noopener"><i class="fas fa-feather"></i> Project page</a>
-                        <a href="https://github.com/Ancorro/logic-expert-public" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>
+                    <div class="links">
+                        <a href="https://ancorro.github.io/logic-expert-public/" target="_blank" rel="noopener">Project page</a>
+                        <a href="https://github.com/Ancorro/logic-expert-public" target="_blank" rel="noopener">Code</a>
                     </div>
                 </article>
 
-                <article class="plate">
-                    <span class="laurel">First Place · BeaverHacks 2026</span>
+                <article class="work">
+                    <div class="laurel">First place · BeaverHacks 2026</div>
                     <h3>Guidance: Agentic Field Technician Assistant</h3>
                     <div class="tools">Gemini · Python · RAG</div>
                     <p>A multimodal agent for field technicians, combining image and audio input, transcription, local retrieval-augmented generation, function calling, and image editing to return step-by-step guidance from equipment manuals. Built end to end in 24 hours; first in the beginner track of 20 teams.</p>
-                    <div class="plate-links">
-                        <a href="https://github.com/ekanshArora123/beaverhacks2026" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>
-                        <a href="https://lnkd.in/gCfc3Sih" target="_blank" rel="noopener"><i class="fas fa-film"></i> Demo</a>
-                        <a href="https://lnkd.in/gMxyVKYR" target="_blank" rel="noopener"><i class="fas fa-scroll"></i> Submission</a>
+                    <div class="links">
+                        <a href="https://github.com/ekanshArora123/beaverhacks2026" target="_blank" rel="noopener">Code</a>
+                        <a href="https://lnkd.in/gCfc3Sih" target="_blank" rel="noopener">Demo</a>
+                        <a href="https://lnkd.in/gMxyVKYR" target="_blank" rel="noopener">Submission</a>
                     </div>
                 </article>
 
-                <article class="plate">
+                <article class="work">
                     <h3>Hanford Waste-Glass Vitrification Tool</h3>
                     <div class="tools">Python · Data Pipelines</div>
                     <p>Lead engineer on a senior capstone building a Python application for safety-critical waste-vitrification calculations. Built auditable, maintainable data-analysis pipelines, authored the developer handover documentation, and managed the student engineering team.</p>
-                    <div class="plate-links">
-                        <a href="https://hlwa-portfolio.github.io/" target="_blank" rel="noopener"><i class="fas fa-feather"></i> Project page</a>
-                        <span class="plate-note">Source private (client work)</span>
+                    <div class="links">
+                        <a href="https://hlwa-portfolio.github.io/" target="_blank" rel="noopener">Project page</a>
+                        <span class="note">Source private (client work)</span>
                     </div>
                 </article>
 
-                <article class="plate">
+                <article class="work">
                     <h3>Real-Time Eye Tracking</h3>
                     <div class="tools">Python · MediaPipe</div>
                     <p>A real-time eye-landmark extraction prototype built with Google MediaPipe and FaceMesh, mapping facial mesh points to gaze-relevant features for downstream tracking experiments.</p>
-                    <div class="plate-links">
-                        <span class="plate-note">Private prototype</span>
+                    <div class="links">
+                        <span class="note">Private prototype</span>
                     </div>
                 </article>
 
@@ -110,47 +104,35 @@
         </div>
     </section>
 
-    <!-- Quote band -->
-    <div class="band">
-        <div class="wrap">
-            <blockquote>The artist should paint not only what he sees before him, but also what he sees within him.</blockquote>
-            <cite>Caspar David Friedrich</cite>
-        </div>
-    </div>
-
     <!-- Experience -->
     <section id="experience">
         <div class="wrap">
             <div class="section-head">
-                <div class="kicker">II.</div>
                 <h2>Experience &amp; Research</h2>
-                <div class="ornament"><i></i><i></i></div>
             </div>
-            <div class="stack">
-                <div class="entry">
-                    <div>
-                        <div class="role">Leading Software Engineer <span class="soft">· Senior Capstone</span></div>
-                        <div class="org">Waste Treatment Completion Company — Richland, WA (Remote)</div>
-                    </div>
-                    <div class="meta">Sep 2025 – Jun 2026</div>
-                    <p class="desc">Led the Python application processing safety-critical calculations for Hanford waste vitrification; built auditable data-analysis pipelines and managed the student engineering team.</p>
+            <div class="entry">
+                <div>
+                    <div class="role-t">Leading Software Engineer <span class="soft">· Senior Capstone</span></div>
+                    <div class="org">Waste Treatment Completion Company — Richland, WA (Remote)</div>
                 </div>
-                <div class="entry">
-                    <div>
-                        <div class="role">Research Intern</div>
-                        <div class="org">Forever Sabah — Sabah, Malaysia</div>
-                    </div>
-                    <div class="meta">Jun 2023 – Sep 2023</div>
-                    <p class="desc">Analyzed climate-change impact on Borneo precipitation outliers from weather-model raster data with QGIS; curated wildlife image datasets and database schemas for individual elephant re-identification.</p>
+                <div class="meta">Sep 2025 – Jun 2026</div>
+                <p class="desc">Led the Python application processing safety-critical calculations for Hanford waste vitrification; built auditable data-analysis pipelines and managed the student engineering team.</p>
+            </div>
+            <div class="entry">
+                <div>
+                    <div class="role-t">Research Intern</div>
+                    <div class="org">Forever Sabah — Sabah, Malaysia</div>
                 </div>
-                <div class="entry">
-                    <div>
-                        <div class="role">Undergraduate Research Intern</div>
-                        <div class="org">Oregon State University — Corvallis, OR</div>
-                    </div>
-                    <div class="meta">Jan 2023 – Jun 2023</div>
-                    <p class="desc">Developed data-analysis scripts to surface trend patterns in research datasets; documented methodology and presented findings at the OSU undergraduate conference.</p>
+                <div class="meta">Jun 2023 – Sep 2023</div>
+                <p class="desc">Analyzed climate-change impact on Borneo precipitation outliers from weather-model raster data with QGIS; curated wildlife image datasets and database schemas for individual elephant re-identification.</p>
+            </div>
+            <div class="entry">
+                <div>
+                    <div class="role-t">Undergraduate Research Intern</div>
+                    <div class="org">Oregon State University — Corvallis, OR</div>
                 </div>
+                <div class="meta">Jan 2023 – Jun 2023</div>
+                <p class="desc">Developed data-analysis scripts to surface trend patterns in research datasets; documented methodology and presented findings at the OSU undergraduate conference.</p>
             </div>
         </div>
     </section>
@@ -159,27 +141,23 @@
     <section id="education">
         <div class="wrap">
             <div class="section-head">
-                <div class="kicker">III.</div>
                 <h2>Education</h2>
-                <div class="ornament"><i></i><i></i></div>
             </div>
-            <div class="stack">
-                <div class="entry">
-                    <div>
-                        <div class="role">M.Eng. Computer Science <span class="soft">· AI focus</span></div>
-                        <div class="org">Oregon State University — GPA 3.74</div>
-                    </div>
-                    <div class="meta">Expected Jun 2027</div>
-                    <p class="desc">Coursework: Foundation Models, Deep Learning, Optimization for AI, Data Cleaning for ML, Graph Theory, Operating Systems II.</p>
+            <div class="entry">
+                <div>
+                    <div class="role-t">M.Eng. Computer Science <span class="soft">· AI focus</span></div>
+                    <div class="org">Oregon State University — GPA 3.74</div>
                 </div>
-                <div class="entry">
-                    <div>
-                        <div class="role">B.S. Applied Computer Science <span class="soft">· AI focus</span></div>
-                        <div class="org">Oregon State University — GPA 3.63 · Honor Roll (7 terms)</div>
-                    </div>
-                    <div class="meta">Jun 2026</div>
-                    <p class="desc">Coursework: Machine Learning &amp; Data Mining, Mathematical Statistics, Linear Algebra, Vector Calculus, Parallel Programming, Algorithms, Databases, Reverse Engineering Malware.</p>
+                <div class="meta">Expected Jun 2027</div>
+                <p class="desc">Coursework: Foundation Models, Deep Learning, Optimization for AI, Data Cleaning for ML, Graph Theory, Operating Systems II.</p>
+            </div>
+            <div class="entry">
+                <div>
+                    <div class="role-t">B.S. Applied Computer Science <span class="soft">· AI focus</span></div>
+                    <div class="org">Oregon State University — GPA 3.63 · Honor Roll (7 terms)</div>
                 </div>
+                <div class="meta">Jun 2026</div>
+                <p class="desc">Coursework: Machine Learning &amp; Data Mining, Mathematical Statistics, Linear Algebra, Vector Calculus, Parallel Programming, Algorithms, Databases, Reverse Engineering Malware.</p>
             </div>
         </div>
     </section>
@@ -188,11 +166,9 @@
     <section id="skills">
         <div class="wrap">
             <div class="section-head">
-                <div class="kicker">IV.</div>
                 <h2>Skills</h2>
-                <div class="ornament"><i></i><i></i></div>
             </div>
-            <dl class="skills">
+            <dl>
                 <div class="skill-row"><dt>Languages</dt><dd>Python, C</dd></div>
                 <div class="skill-row"><dt>Machine Learning</dt><dd>PyTorch, Hugging Face Transformers, architecture design, training and evaluation, ablation studies</dd></div>
                 <div class="skill-row"><dt>Agents</dt><dd>Agentic systems, multimodal pipelines, retrieval-augmented generation</dd></div>
@@ -205,7 +181,17 @@
     <!-- Footer -->
     <footer>
         <div class="wrap">
-            <div class="sig">Steven Cleasby-Mayeda</div>
+            <div class="footer-art">
+                <figure class="art">
+                    <div class="frame"><img src="assets/art/wanderer.jpg" alt="Caspar David Friedrich, Wanderer above the Sea of Fog"></div>
+                    <figcaption><i>Wanderer above the Sea of Fog</i></figcaption>
+                </figure>
+                <figure class="art">
+                    <div class="frame"><img src="assets/art/moonrise.jpg" alt="Caspar David Friedrich, Moonrise over the Sea"></div>
+                    <figcaption><i>Moonrise over the Sea</i></figcaption>
+                </figure>
+            </div>
+            <div class="footer-sig">Steven Cleasby-Mayeda</div>
             <div class="footer-links">
                 <a href="https://github.com/Ancorro" target="_blank" rel="noopener"><i class="fab fa-github"></i> github.com/Ancorro</a>
                 <a href="mailto:stevencleasbymayeda@gmail.com"><i class="fas fa-envelope"></i> Email</a>
@@ -213,7 +199,7 @@
             </div>
             <p class="footer-meta">
                 © 2026 Steven Cleasby-Mayeda<br>
-                Artwork by Caspar David Friedrich (1774–1840) — <i>The Abbey in the Oakwood</i>, <i>Wanderer above the Sea of Fog</i>, <i>Moonrise over the Sea</i>. Public domain, via <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener">Wikimedia Commons</a>.
+                Artwork by Caspar David Friedrich (1774–1840), public domain, via <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener">Wikimedia Commons</a>.
             </p>
         </div>
     </footer>
