@@ -15,15 +15,21 @@ class SiteNav extends HTMLElement {
                             <small>Steven Cleasby-Mayeda</small>
                         </span>
                     </a>
-                    <a href="${root}logic-expert/" class="nav-local nav-local-multiline">Transformers Research<br>Logic Expert</a>
-                    <a href="${root}photography/" class="nav-local">Photography</a>
-                    <div class="nav-links">
-                        <a href="https://hlwa-portfolio.github.io/" class="nav-link-stack" target="_blank" rel="noopener">
+                    <div class="nav-menu">
+                        <a href="${root}logic-expert/" class="nav-local nav-local-multiline">Transformers Research<br>Logic Expert</a>
+                        <a href="${root}photography/" class="nav-local">Photography</a>
+                        <a href="https://hlwa-portfolio.github.io/" class="nav-link nav-link-stack" target="_blank" rel="noopener">
                             Hanford
                             <small>Nuclear Waste Vitrification</small>
                         </a>
-                        <a href="${root}assets/pdf/main_ML_class.pdf" class="mobile-link" target="_blank" rel="noopener">Resume PDF</a>
-                        <a href="https://github.com/Ancorro" class="mobile-link" target="_blank" rel="noopener">GitHub</a>
+                        <a href="${root}assets/pdf/main_ML_class.pdf" class="nav-link nav-link-stack mobile-link" target="_blank" rel="noopener">
+                            Resume
+                            <small>PDF</small>
+                        </a>
+                        <a href="https://github.com/Ancorro" class="nav-link nav-link-stack mobile-link" target="_blank" rel="noopener">
+                            GitHub
+                            <small>ancorro</small>
+                        </a>
                         <span class="nav-link-stack nav-emails">
                             <span>Email</span>
                             <small>steven.cleasby.mayeda@gmail.com</small>
@@ -34,13 +40,47 @@ class SiteNav extends HTMLElement {
             </nav>
         `;
 
+        this.navEl = this.querySelector('.nav');
+
         this.updateScrollProgress = this.updateScrollProgress.bind(this);
+        this.syncHeight = this.syncHeight.bind(this);
+
         window.addEventListener('scroll', this.updateScrollProgress, { passive: true });
+        window.addEventListener('resize', this.syncHeight);
+
+        // Keep the in-flow spacer (this host element) the same height as the
+        // fixed bar, so content below is never hidden when the bar wraps.
+        if (typeof ResizeObserver !== 'undefined') {
+            this.resizeObserver = new ResizeObserver(this.syncHeight);
+            this.resizeObserver.observe(this.navEl);
+        }
+
+        this.syncHeight();
         this.updateScrollProgress();
+
+        // Re-measure after async reflows that change wrapping (and thus height):
+        // the next frame, full load (images), and web-font load — the menu
+        // widens once 'LINE Seed JP' replaces the fallback font.
+        requestAnimationFrame(this.syncHeight);
+        window.addEventListener('load', this.syncHeight);
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(this.syncHeight);
+        }
     }
 
     disconnectedCallback() {
         window.removeEventListener('scroll', this.updateScrollProgress);
+        window.removeEventListener('resize', this.syncHeight);
+        window.removeEventListener('load', this.syncHeight);
+        if (this.resizeObserver) this.resizeObserver.disconnect();
+    }
+
+    syncHeight() {
+        // Reserve the bar's un-scrolled height. We only measure near the top of
+        // the page; the scroll-shrink animation would otherwise feed its own
+        // height changes back into the reservation and cause layout jitter.
+        if (window.scrollY > 8) return;
+        this.style.height = this.navEl.offsetHeight + 'px';
     }
 
     updateScrollProgress() {
