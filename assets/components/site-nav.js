@@ -18,7 +18,7 @@ class SiteNav extends HTMLElement {
                     <div class="nav-menu">
                         <a href="${root}logic-expert/" class="nav-local nav-local-multiline"><span class="nav-desc">Transformers Research<br></span>Logic Expert</a>
                         <a href="${root}photography/" class="nav-local">Photography</a>
-                        <a href="https://hlwa-portfolio.github.io/" class="nav-link nav-link-stack" target="_blank" rel="noopener">
+                        <a href="https://hlwa-portfolio.github.io/" class="nav-link nav-link-stack mobile-link" target="_blank" rel="noopener">
                             Hanford
                             <small>Nuclear Waste Vitrification</small>
                         </a>
