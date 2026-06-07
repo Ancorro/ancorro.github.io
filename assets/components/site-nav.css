@@ -24,9 +24,9 @@ site-nav {
 
 .nav-wrap {
     width: 100%;
-    max-width: 1180px;
+    max-width: 1700px;
     margin: 0 auto;
-    padding: 0 1.6rem;
+    padding: 0 clamp(0.7rem, 6vw, 4.7rem);
 }
 
 .nav-inner {
@@ -86,7 +86,7 @@ site-nav {
 .nav-links a {
     color: #252525;
     font-family: 'LINE Seed JP', sans-serif;
-    font-size: 0.68rem;
+    font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-decoration: none;
@@ -110,6 +110,31 @@ site-nav {
     font-size: 0.58rem;
     font-weight: 400;
     letter-spacing: 0.025em;
+    text-transform: none;
+    white-space: nowrap;
+}
+
+.nav-emails {
+    color: #252525;
+    font-family: 'LINE Seed JP', sans-serif;
+    text-align: right;
+    align-items: flex-end;
+    user-select: text;
+    cursor: default;
+}
+
+.nav-emails>span {
+    font-size: 0.56rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #a0a09e;
+}
+
+.nav-emails>small {
+    font-size: 0.72rem;
+    color: #252525;
+    letter-spacing: 0.02em;
     text-transform: none;
     white-space: nowrap;
 }

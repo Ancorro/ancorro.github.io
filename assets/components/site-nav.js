@@ -21,10 +21,11 @@ class SiteNav extends HTMLElement {
                         <a href="${root}photography/">Photography</a>
                         <a href="${root}assets/pdf/main_ML_class.pdf" class="mobile-link" target="_blank" rel="noopener">Resume PDF</a>
                         <a href="https://github.com/Ancorro" class="mobile-link" target="_blank" rel="noopener">GitHub</a>
-                        <a href="mailto:steven.cleasby.mayeda@gmail.com" class="mobile-link nav-link-stack">
+                        <span class="nav-link-stack nav-emails">
                             <span>Email</span>
                             <small>steven.cleasby.mayeda@gmail.com</small>
-                        </a>
+                            <small>cleasbys@oregonstate.edu</small>
+                        </span>
                     </div>
                 </div>
             </nav>
