@@ -1,11 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=LINE+Seed+JP:wght@400;700;800&display=swap');
+
+/* Shared site nav. Sizing is pinned to fixed px (not rem) so the nav renders
+   identically on every page regardless of each page's root font-size. */
 site-nav {
     --nav-progress: 0;
-    --nav-height-large: 9rem;
-    --nav-height-delta: 2.5rem;
-    --art-width-large: 6.375rem;
-    --art-width-delta: 2.125rem;
-    --art-height-large: 7.5rem;
-    --art-height-delta: 2.5rem;
+    --nav-height-large: 153px;
+    --nav-height-delta: 42.5px;
+    --art-width-large: 108.375px;
+    --art-width-delta: 36.125px;
+    --art-height-large: 127.5px;
+    --art-height-delta: 42.5px;
     display: block;
     height: var(--nav-height-large);
 }
@@ -26,7 +30,7 @@ site-nav {
     width: 100%;
     max-width: 1700px;
     margin: 0 auto;
-    padding: 0 clamp(0.7rem, 6vw, 4.7rem);
+    padding: 0 clamp(11.9px, 6vw, 79.9px);
 }
 
 .nav-inner {
@@ -39,10 +43,10 @@ site-nav {
 .nav-brand {
     display: inline-flex;
     align-items: center;
-    gap: 1rem;
+    gap: 17px;
     color: #000;
     font-family: 'LINE Seed JP', sans-serif;
-    font-size: 1rem;
+    font-size: 17px;
     font-weight: 800;
     letter-spacing: 0.12em;
     text-decoration: none;
@@ -52,17 +56,17 @@ site-nav {
 .nav-brand-text {
     display: flex;
     flex-direction: column;
-    gap: 0.18rem;
+    gap: 3.06px;
     line-height: 1.15;
 }
 
 .nav-brand-text strong {
-    font-size: 1rem;
+    font-size: 17px;
 }
 
 .nav-brand-text small {
     color: #8a8a8a;
-    font-size: 0.58rem;
+    font-size: 9.86px;
     font-weight: 400;
     letter-spacing: 0.06em;
     white-space: nowrap;
@@ -80,7 +84,7 @@ site-nav {
 
 .nav-local {
     font-family: 'LINE Seed JP', sans-serif;
-    font-size: 0.78rem;
+    font-size: 13.26px;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -88,7 +92,7 @@ site-nav {
     text-decoration: none;
     border: 0;
     border-bottom: 1.5px solid rgba(0, 0, 0, 0.15);
-    padding-bottom: 0.1rem;
+    padding-bottom: 1.7px;
     transition: color 0.25s ease, border-color 0.25s ease;
 }
 
@@ -107,34 +111,38 @@ site-nav {
 
 .nav-links {
     display: flex;
-    gap: 1.8rem;
+    gap: 30.6px;
 }
 
 .nav-links a {
     color: #252525;
     font-family: 'LINE Seed JP', sans-serif;
-    font-size: 0.78rem;
+    font-size: 13.26px;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-decoration: none;
     text-transform: uppercase;
     border: 0;
+    border-bottom: 1.5px solid transparent;
+    padding-bottom: 1.7px;
+    transition: color 0.25s ease, border-color 0.25s ease;
 }
 
 .nav-links a:hover {
     color: #000;
+    border-color: rgba(0, 0, 0, 0.4);
 }
 
 .nav-link-stack {
     display: flex;
     flex-direction: column;
-    gap: 0.14rem;
+    gap: 2.38px;
     line-height: 1.1;
 }
 
 .nav-link-stack small {
     color: #929292;
-    font-size: 0.58rem;
+    font-size: 9.86px;
     font-weight: 400;
     letter-spacing: 0.025em;
     text-transform: none;
@@ -148,11 +156,11 @@ site-nav {
     align-items: flex-end;
     user-select: text;
     cursor: default;
-    margin-left: 1rem;
+    margin-left: 17px;
 }
 
 .nav-emails>span {
-    font-size: 0.56rem;
+    font-size: 9.52px;
     font-weight: 400;
     letter-spacing: 0.2em;
     text-transform: uppercase;
@@ -160,7 +168,7 @@ site-nav {
 }
 
 .nav-emails>small {
-    font-size: 0.72rem;
+    font-size: 12.24px;
     color: #252525;
     letter-spacing: 0.02em;
     text-transform: none;
@@ -175,28 +183,28 @@ site-nav {
 
 @media (max-width: 620px) {
     site-nav {
-        --nav-height-large: 8.25rem;
-        --nav-height-delta: 1.25rem;
-        --art-width-large: 4.75rem;
-        --art-width-delta: 1rem;
-        --art-height-large: 5.75rem;
-        --art-height-delta: 1.25rem;
+        --nav-height-large: 140.25px;
+        --nav-height-delta: 21.25px;
+        --art-width-large: 80.75px;
+        --art-width-delta: 17px;
+        --art-height-large: 97.75px;
+        --art-height-delta: 21.25px;
     }
 
     .nav-inner {
         height: auto;
         min-height: calc(var(--nav-height-large) - (var(--nav-progress) * var(--nav-height-delta)));
         flex-wrap: wrap;
-        gap: 0.4rem;
-        padding-top: 0.55rem;
-        padding-bottom: 0.55rem;
+        gap: 6.8px;
+        padding-top: 9.35px;
+        padding-bottom: 9.35px;
     }
 
     .nav-links {
         width: 100%;
         justify-content: flex-end;
         align-items: flex-start;
-        gap: 0.8rem;
+        gap: 13.6px;
     }
 
     .nav-links a:not(.mobile-link) {
