@@ -28,9 +28,8 @@
             .then(html => {
                 const doc = new DOMParser().parseFromString(html, 'text/html');
                 const names = Array.from(doc.querySelectorAll('a'))
-                    .map(a => a.getAttribute('href'))
-                    .filter(h => h && imagePattern.test(h))
-                    .map(h => h.split('/').pop());
+                    .map(a => a.textContent.trim())
+                    .filter(t => imagePattern.test(t));
                 if (!names.length) throw new Error('No images in listing');
                 return names;
             });
@@ -58,14 +57,25 @@
     }
 
     // --- Run ---
-    // CSS body::before already shows a fallback image while this loads.
+    // The CSS body::before already has a hardcoded fallback image.
+    // We discover all images in the folder dynamically — no list to maintain.
 
     const isLocal = ['localhost', '127.0.0.1', '::1', ''].includes(window.location.hostname);
     const primary = isLocal ? fromDirectoryListing : fromGitHubAPI;
     const secondary = isLocal ? fromGitHubAPI : fromDirectoryListing;
 
     primary()
-        .catch(() => secondary())
-        .then(images => setBg(pickRandom(images)))
-        .catch(err => console.log('Background randomizer: using CSS fallback.', err.message));
+        .catch(err => {
+            console.log('Background: primary strategy failed (' + err.message + '), trying secondary…');
+            return secondary();
+        })
+        .then(images => {
+            // Filter out non-photo files (e.g. screenshots)
+            const photos = images.filter(name => !name.toLowerCase().startsWith('screenshot'));
+            const pool = photos.length ? photos : images;
+            setBg(pickRandom(pool));
+        })
+        .catch(err => {
+            console.log('Background: all strategies failed, using CSS fallback.', err.message);
+        });
 })();
