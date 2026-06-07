@@ -52,6 +52,25 @@ a {
     letter-spacing: 0.12em;
 }
 
+.nav-brand-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.18rem;
+    line-height: 1.15;
+}
+
+.nav-brand-text strong {
+    font-size: 1rem;
+}
+
+.nav-brand-text small {
+    color: #8a8a8a;
+    font-size: 0.58rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+}
+
 .nav-art {
     display: block;
     width: 4.25rem;
