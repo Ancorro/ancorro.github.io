@@ -1,0 +1,51 @@
+'use strict';
+
+class SiteNav extends HTMLElement {
+    connectedCallback() {
+        const root = this.getAttribute('root') || '';
+        const homeHref = this.hasAttribute('home') ? '#top' : root;
+
+        this.innerHTML = `
+            <nav class="nav">
+                <div class="nav-wrap nav-inner">
+                    <a href="${homeHref}" class="nav-brand">
+                        <img class="nav-art" src="${root}assets/art/el_sueno_de_la_razon_produce_monstruos-huge.jpg" alt="">
+                        <span class="nav-brand-text">
+                            <strong>SCM</strong>
+                            <small>Steven Cleasby-Mayeda</small>
+                        </span>
+                    </a>
+                    <div class="nav-links">
+                        <a href="https://ancorro.github.io/logic-expert-public/" target="_blank" rel="noopener">Logic Expert</a>
+                        <a href="https://hlwa-portfolio.github.io/" target="_blank" rel="noopener">Hanford</a>
+                        <a href="${root}photography/">Photography</a>
+                        <a href="${root}assets/pdf/main_ML_class.pdf" class="mobile-link" target="_blank" rel="noopener">Resume</a>
+                        <a href="https://github.com/Ancorro" class="mobile-link" target="_blank" rel="noopener">GitHub</a>
+                        <a href="mailto:stevencleasbymayeda@gmail.com" class="mobile-link">Email</a>
+                    </div>
+                </div>
+            </nav>
+        `;
+
+        this.updateScrollProgress = this.updateScrollProgress.bind(this);
+        window.addEventListener('scroll', this.updateScrollProgress, { passive: true });
+        this.updateScrollProgress();
+    }
+
+    disconnectedCallback() {
+        window.removeEventListener('scroll', this.updateScrollProgress);
+    }
+
+    updateScrollProgress() {
+        if (this.frameRequested) return;
+
+        this.frameRequested = true;
+        requestAnimationFrame(() => {
+            const progress = Math.min(window.scrollY / 180, 1);
+            this.style.setProperty('--nav-progress', progress.toFixed(3));
+            this.frameRequested = false;
+        });
+    }
+}
+
+customElements.define('site-nav', SiteNav);
