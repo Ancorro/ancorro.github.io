@@ -1,7 +1,7 @@
 'use strict';
 
 (function() {
-    const backgrounds = [
+    const fallbackBackgrounds = [
         'image-from-rawpixel-id-1805009-original.jpg',
         'pdia-39841183-71cb-4ed4-bb25-73b4c16b480f.jpg',
         'pdia-70a93032-5464-45ad-a137-17c9df790258.jpg',
@@ -15,9 +15,69 @@
         'pdia-f946ecc9-50e9-4f46-9b6c-9f757559b043.jpg'
     ];
 
-    const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
-    const bgUrl = `assets/art/backgrounds/${randomBg}`;
-    
-    // Set custom property on document element
-    document.documentElement.style.setProperty('--bg-image', `url('${bgUrl}')`);
+    function setBg(bgName) {
+        const bgUrl = `assets/art/backgrounds/${bgName}`;
+        document.documentElement.style.setProperty('--bg-image', `url('${bgUrl}')`);
+    }
+
+    // Set an initial quick background from the static fallback list to prevent empty flash
+    const initialBg = fallbackBackgrounds[Math.floor(Math.random() * fallbackBackgrounds.length)];
+    setBg(initialBg);
+
+    // Determine repo path dynamically if hosted on github.io
+    let repoPath = "Ancorro/ancorro.github.io";
+    const host = window.location.hostname;
+    if (host.endsWith('.github.io')) {
+        const username = host.split('.')[0];
+        repoPath = `${username}/${host}`;
+    }
+
+    const apiUrl = `https://api.github.com/repos/${repoPath}/contents/assets/art/backgrounds`;
+
+    // Attempt to fetch file list dynamically from GitHub API
+    fetch(apiUrl)
+        .then(res => {
+            if (!res.ok) throw new Error('GitHub API request failed');
+            return res.json();
+        })
+        .then(data => {
+            if (!Array.isArray(data)) return;
+            const images = data
+                .filter(file => file.type === 'file' && /\.(jpe?g|png|webp|gif)$/i.test(file.name))
+                .map(file => file.name);
+            
+            if (images.length > 0) {
+                const randomBg = images[Math.floor(Math.random() * images.length)];
+                setBg(randomBg);
+            }
+        })
+        .catch(err => {
+            console.log('GitHub API fetch failed, trying local directory listing:', err.message);
+            
+            // Try fetching the local directory listing index (supported by python -m http.server)
+            fetch('assets/art/backgrounds/')
+                .then(res => {
+                    const contentType = res.headers.get('content-type');
+                    if (contentType && contentType.includes('text/html')) {
+                        return res.text();
+                    }
+                    throw new Error('Local server does not support HTML directory listing');
+                })
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const links = Array.from(doc.querySelectorAll('a'))
+                        .map(a => a.getAttribute('href'))
+                        .filter(href => href && /\.(jpe?g|png|webp|gif)$/i.test(href))
+                        .map(href => href.split('/').pop()); // Extract filename
+
+                    if (links.length > 0) {
+                        const randomBg = links[Math.floor(Math.random() * links.length)];
+                        setBg(randomBg);
+                    }
+                })
+                .catch(localErr => {
+                    console.log('Local directory fetch failed, using fallback list:', localErr.message);
+                });
+        });
 })();
