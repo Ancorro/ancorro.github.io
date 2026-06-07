@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Steven Cleasby-Mayeda — AI / ML Engineer</title>
-    <meta name="description" content="Steven Cleasby-Mayeda — M.Eng. Computer Science (AI) at Oregon State University. Machine learning, transformer architectures, and agentic systems.">
+    <meta name="description"
+        content="Steven Cleasby-Mayeda — M.Eng. Computer Science (AI) at Oregon State University. Machine learning, transformer architectures, and agentic systems.">
     <meta name="author" content="Steven Cleasby-Mayeda">
     <meta name="copyright" content="© 2026 Steven Cleasby-Mayeda. All photographs are copyright Steven Cleasby-Mayeda.">
     <meta name="rights" content="All photographs © Steven Cleasby-Mayeda. All rights reserved.">
 
     <meta property="og:title" content="Steven Cleasby-Mayeda — AI / ML Engineer">
-    <meta property="og:description" content="M.Eng. CS (AI) at Oregon State. Machine learning, transformer architectures, and agentic systems.">
+    <meta property="og:description"
+        content="M.Eng. CS (AI) at Oregon State. Machine learning, transformer architectures, and agentic systems.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ancorro.github.io/">
 
@@ -21,25 +24,37 @@
     <script src="assets/components/site-nav.js" defer></script>
     <script src="assets/components/background-randomizer.js" defer></script>
 </head>
+
 <body>
 
     <site-nav home></site-nav>
 
-    <div class="wrap opening-layout">
-        <!-- Masthead -->
-        <header id="top" class="masthead">
-            <div>
-                <h1>Steven Cleasby-Mayeda</h1>
-                <p class="role kicker">AI / ML Engineer · Oregon State University</p>
-                <p class="intro">M.Eng. Computer Science (AI Focus) candidate, with a B.S. in Applied Computer Science (AI Focus). I build and study machine learning systems — transformer architectures, agentic pipelines, and applied research, with an emphasis on architecture design, training, evaluation, and ablation.</p>
+    <div class="wrap bento-grid">
+        <!-- 1. Profile Block (Masthead) -->
+        <header id="top" class="masthead bento-card">
+            <div class="masthead-content">
+                <div class="masthead-main">
+                    <h1>Steven Cleasby-Mayeda</h1>
+                    <p class="role kicker">AI / ML Engineer · Oregon State University</p>
+                    <p class="intro">M.Eng. Computer Science (AI Focus) candidate, with a B.S. in Applied Computer Science (AI Focus). I build and study machine learning systems — transformer architectures, agentic pipelines, and applied research, with an emphasis on architecture design, training, evaluation, and ablation.</p>
+                </div>
+                <div class="masthead-stats">
+                    <div class="stat-badge"><i class="fa-solid fa-graduation-cap"></i> M.Eng. Computer Science (AI)</div>
+                    <div class="stat-badge"><i class="fa-solid fa-code"></i> PyTorch · LLMs · Agents</div>
+                    <div class="stat-badge"><i class="fa-solid fa-location-dot"></i> Corvallis, OR</div>
+                </div>
             </div>
         </header>
 
-        <!-- Works -->
-        <section id="works" class="works-section">
-            <div class="works">
-
-                <article class="work">
+        <!-- 2. Selected Projects Section -->
+        <section id="works" class="works-section span-3">
+            <div class="section-head">
+                <h2>Selected Projects</h2>
+                <span class="kicker">Core Systems &amp; Frameworks</span>
+            </div>
+            <div class="works-grid">
+                <!-- Project 1 -->
+                <article class="work bento-card">
                     <h3>Parallel Logic Expert with Operator Routing</h3>
                     <div class="tools">Course Project · PyTorch</div>
                     <p>Designed a MoE transformer architecture featuring differentiable fuzzy-set logical operators and learned operator routing. Integrated backbone cross-attention for specialized logical reasoning pathways, built a PyTorch training/evaluation pipeline, ran ablations, and analyzed routing diagnostics. Demonstrated empirical performance gains over baseline transformers on logical reasoning benchmarks.</p>
@@ -49,7 +64,8 @@
                     </div>
                 </article>
 
-                <article class="work">
+                <!-- Project 2 -->
+                <article class="work bento-card">
                     <div class="laurel">1st Place · BeaverHacks 2026</div>
                     <h3>Guidance – Agentic Field Technician Assistant</h3>
                     <div class="tools">Gemini · Python</div>
@@ -61,7 +77,8 @@
                     </div>
                 </article>
 
-                <article class="work">
+                <!-- Project 3 -->
+                <article class="work bento-card">
                     <h3>Waste Treatment Completion Company</h3>
                     <div class="tools">Leading Software Engineer (Senior Capstone Project)</div>
                     <p>Lead technical developer for a Python application processing safety-critical calculations for Hanford radioactive waste vitrification. Developed data-analysis pipelines focused on auditability, consistency, and maintainability, documented the implementation, and managed the student team.</p>
@@ -71,7 +88,8 @@
                     </div>
                 </article>
 
-                <article class="work">
+                <!-- Project 4 -->
+                <article class="work bento-card">
                     <h3>Computer Vision – Real-Time Eye Tracking</h3>
                     <div class="tools">Python · MediaPipe</div>
                     <p>Built a Python eye landmark extraction prototype using Google MediaPipe and FaceMesh.</p>
@@ -79,14 +97,11 @@
                         <span class="note">Private prototype</span>
                     </div>
                 </article>
-
             </div>
         </section>
-    </div>
 
-    <!-- Experience -->
-    <section id="experience">
-        <div class="wrap">
+        <!-- 3. Experience Box -->
+        <section id="experience" class="bento-card">
             <div class="section-head">
                 <h2>Experience &amp; Research</h2>
             </div>
@@ -114,12 +129,10 @@
                 <div class="meta">Jan 2023 – Jun 2023</div>
                 <p class="desc">Developed data analysis scripts to process research datasets and highlight trend patterns. Documented methodology and presented research findings at the OSU undergraduate conference.</p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Education -->
-    <section id="education">
-        <div class="wrap">
+        <!-- 4. Education Box -->
+        <section id="education" class="bento-card">
             <div class="section-head">
                 <h2>Education</h2>
             </div>
@@ -139,12 +152,10 @@
                 <div class="meta">June 2026</div>
                 <p class="desc">Relevant Coursework: Machine Learning &amp; Data Mining, Mathematical Statistics, Linear Algebra, Vector Calculus, Parallel Programming, Algorithms, Databases, Reverse Engineering Malware.</p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Skills -->
-    <section id="skills">
-        <div class="wrap">
+        <!-- 5. Skills Box -->
+        <section id="skills" class="bento-card">
             <div class="section-head">
                 <h2>Skills</h2>
             </div>
@@ -155,24 +166,26 @@
                 <div class="skill-row"><dt>Data</dt><dd>NumPy, optimization, statistics, feature engineering, data cleaning/visualization</dd></div>
                 <div class="skill-row"><dt>Systems</dt><dd>Linux, CUDA, Git</dd></div>
             </dl>
-        </div>
-    </section>
+        </section>
+    </div>
 
     <!-- Footer -->
     <footer>
         <div class="wrap">
             <div class="footer-sig">Steven Cleasby-Mayeda</div>
             <div class="footer-links">
-                <a href="https://github.com/Ancorro" target="_blank" rel="noopener"><i class="fab fa-github"></i> github.com/Ancorro</a>
+                <a href="https://github.com/Ancorro" target="_blank" rel="noopener"><i class="fab fa-github"></i>
+                    github.com/Ancorro</a>
                 <a href="mailto:steven.cleasby.mayeda@gmail.com"><i class="fas fa-envelope"></i> Email</a>
                 <span><i class="fas fa-location-dot"></i> Corvallis, OR</span>
             </div>
             <p class="footer-meta">
                 © 2026 Steven Cleasby-Mayeda<br>
-                Artwork by Francisco Goya, <i>Capricho No. 43: El sueño de la razón produce monstruos</i>, public domain.<br>
-                Backgrounds from <a href="https://pdimagearchive.org" target="_blank" rel="noopener">Public Domain Image Archive</a>.
+                Backgrounds from <a href="https://pdimagearchive.org" target="_blank" rel="noopener">Public Domain Image
+                    Archive</a>.
             </p>
         </div>
     </footer>
 </body>
+
 </html>

@@ -16,7 +16,7 @@
     --body: 'LINE Seed JP', sans-serif;
 
     --t: 0.25s ease;
-    --maxw: 1180px;
+    --maxw: 1400px;
 }
 
 *,
@@ -117,64 +117,207 @@ figure.art figcaption {
     border: 0;
 }
 
-/* ---------- Opening layout ---------- */
-.opening-layout {
-    display: block;
+/* ---------- Bento Grid Layout ---------- */
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+    padding-top: 3rem;
+    padding-bottom: 4rem;
 }
 
-.masthead {
-    padding: 3rem 0 2rem;
+/* Base Bento Card Style */
+.bento-card {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--line);
+    padding: 1.6rem 1.8rem !important;
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
 }
 
-.masthead>div {
-    background: #191917;
+/* Card Column Spans on Desktop */
+.bento-grid .masthead {
+    grid-column: span 3;
+    background: radial-gradient(circle at 80% 20%, #2c2c29 0%, #151514 100%);
     color: #e5e5e2;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 1.8rem 2.2rem;
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16);
+    position: relative;
+    overflow: hidden;
 }
+
+.bento-grid #works {
+    grid-column: span 3;
+}
+
+.bento-grid #experience {
+    grid-column: span 2;
+}
+
+.bento-grid #education {
+    grid-column: span 1;
+}
+
+.bento-grid #skills {
+    grid-column: span 3;
+}
+
+/* Inner Section Reset */
+.bento-grid section {
+    padding: 0;
+}
+
+/* Profile Masthead Content Layout */
+.masthead-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.masthead-main {
+    display: flex;
+    flex-direction: column;
+}
+
+
 
 .masthead h1 {
     font-family: var(--serif);
     font-weight: 800;
-    font-size: 0.95rem;
-    line-height: 1.08;
-    letter-spacing: -0.01em;
+    font-size: 2.1rem;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
     color: #ffffff;
-    white-space: nowrap;
 }
 
 .masthead .role {
-    margin-top: 0.5rem;
-    font-size: 0.64rem;
+    margin-top: 0.4rem;
+    font-size: 0.72rem;
     color: #a0a09e;
+    font-weight: 700;
 }
 
 .masthead .intro {
-    margin-top: 0.85rem;
+    margin-top: 0.95rem;
     color: #d0d0cd;
-    max-width: 78ch;
-    font-size: 0.8rem;
+    max-width: 72ch;
+    font-size: 0.82rem;
+    line-height: 1.6;
 }
 
-@media (max-width: 620px) {
+/* Masthead Highlights Stats Panel */
+.masthead-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.stat-badge {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    color: #d0d0cd;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: background var(--t), border-color var(--t), transform var(--t);
+}
+
+.stat-badge:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.12);
+    transform: translateX(3px);
+}
+
+.stat-badge i {
+    color: #a0a09e;
+    font-size: 0.85rem;
+    width: 1rem;
+    text-align: center;
+}
+
+/* Works Section Nested Grid Layout */
+.works-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+    margin-top: 1.4rem;
+}
+
+@media (max-width: 1024px) and (min-width: 700px) {
+    .bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .bento-grid .masthead {
+        grid-column: span 2;
+    }
+
+    .bento-grid #works {
+        grid-column: span 2;
+    }
+
+    .bento-grid #experience {
+        grid-column: span 2;
+    }
+
+    .bento-grid #education {
+        grid-column: span 2;
+    }
+
+    .bento-grid #skills {
+        grid-column: span 2;
+    }
+
+    .masthead-content {
+        grid-template-columns: 1fr;
+        gap: 1.8rem;
+    }
+}
+
+@media (max-width: 699px) {
+    .bento-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+        padding-top: 2rem;
+        padding-bottom: 3rem;
+    }
+
+    .bento-grid>* {
+        grid-column: span 1 !important;
+    }
+
     .masthead {
-        padding: 2rem 0 1.5rem;
+        padding: 1.6rem 1.6rem !important;
+    }
+
+    .masthead-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .masthead h1 {
-        font-size: 0.9rem;
+        font-size: 1.6rem;
         overflow-wrap: anywhere;
     }
 
     .masthead .intro {
         font-size: 0.78rem;
     }
+
+    .works-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ---------- Sections ---------- */
 section {
-    padding: 4rem 0;
+    padding: 0;
 }
 
 .works-section {
@@ -220,6 +363,12 @@ section {
     display: grid;
     grid-template-columns: 1fr;
     gap: 0.75rem;
+}
+
+@media (min-width: 1100px) {
+    .works {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 .work {
@@ -394,11 +543,6 @@ section {
 }
 
 /* ---------- Skills ---------- */
-#skills dl {
-    background: rgba(255, 255, 255, 0.45);
-    border: 1px solid var(--line);
-    padding: 1.2rem 1.4rem;
-}
 
 .skill-row {
     display: grid;
