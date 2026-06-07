@@ -16,7 +16,7 @@
     --body: 'LINE Seed JP', sans-serif;
 
     --t: 0.25s ease;
-    --maxw: 1400px;
+    --maxw: 1600px;
 }
 
 *,
@@ -53,7 +53,7 @@ body::before {
     z-index: -1;
     background: var(--bg-image, url('assets/art/backgrounds/pdia-f946ecc9-50e9-4f46-9b6c-9f757559b043.jpg')) center top / cover no-repeat;
     filter: contrast(0.5);
-    opacity: 0.28;
+    opacity: 0.4;
 }
 
 ::selection {
@@ -123,7 +123,7 @@ figure.art figcaption {
     grid-template-columns: repeat(3, 1fr);
     gap: 1.2rem;
     padding-top: 1.5rem;
-    padding-bottom: 4rem;
+    padding-bottom: 2rem;
 }
 
 /* Base Bento Card Style */
