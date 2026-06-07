@@ -111,6 +111,7 @@ site-nav {
 
 .nav-links {
     display: flex;
+    align-items: center;
     gap: 30.6px;
 }
 

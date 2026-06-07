@@ -186,7 +186,9 @@ header .paper-container {
     display: block;
 }
 
-nav {
+/* Scoped with :not(.nav) so these page-local nav styles never leak into the
+   shared <nav class="nav"> injected by the site-nav component. */
+nav:not(.nav) {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -196,7 +198,7 @@ nav {
     gap: clamp(0.8rem, 1vw, 1.6rem);
 }
 
-nav a {
+nav:not(.nav) a {
     color: var(--text-secondary);
     text-decoration: none;
     font-size: 0.92rem;
@@ -207,7 +209,7 @@ nav a {
     white-space: nowrap;
 }
 
-nav a::after {
+nav:not(.nav) a::after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -218,11 +220,11 @@ nav a::after {
     transition: var(--transition-fast);
 }
 
-nav a:hover {
+nav:not(.nav) a:hover {
     color: var(--text-primary);
 }
 
-nav a:hover::after {
+nav:not(.nav) a:hover::after {
     width: 100%;
 }
 
