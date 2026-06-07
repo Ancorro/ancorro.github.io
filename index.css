@@ -160,7 +160,11 @@ figure.art figcaption {
 }
 
 .bento-grid #skills {
-    grid-column: span 3;
+    grid-column: span 2;
+}
+
+.bento-grid #eye-tracking {
+    grid-column: span 1;
 }
 
 /* Inner Section Reset */
@@ -240,10 +244,9 @@ figure.art figcaption {
     text-align: center;
 }
 
-/* Works Section Nested Grid Layout */
 .works-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.2rem;
     margin-top: 1.4rem;
 }
@@ -271,6 +274,14 @@ figure.art figcaption {
 
     .bento-grid #skills {
         grid-column: span 2;
+    }
+
+    .bento-grid #eye-tracking {
+        grid-column: span 2;
+    }
+
+    .works-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .masthead-content {
