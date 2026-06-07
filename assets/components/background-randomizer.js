@@ -18,6 +18,6 @@
     const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
     const bgUrl = `assets/art/backgrounds/${randomBg}`;
     
-    // Set custom property on document element so it can be consumed in CSS
+    // Set custom property on document element
     document.documentElement.style.setProperty('--bg-image', `url('${bgUrl}')`);
 })();
