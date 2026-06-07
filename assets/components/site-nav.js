@@ -15,10 +15,10 @@ class SiteNav extends HTMLElement {
                             <small>Steven Cleasby-Mayeda</small>
                         </span>
                     </a>
+                    <a href="${root}photography/" class="nav-local">Photography</a>
                     <div class="nav-links">
                         <a href="https://ancorro.github.io/logic-expert-public/" target="_blank" rel="noopener">Logic Expert</a>
                         <a href="https://hlwa-portfolio.github.io/" target="_blank" rel="noopener">Hanford</a>
-                        <a href="${root}photography/">Photography</a>
                         <a href="${root}assets/pdf/main_ML_class.pdf" class="mobile-link" target="_blank" rel="noopener">Resume PDF</a>
                         <a href="https://github.com/Ancorro" class="mobile-link" target="_blank" rel="noopener">GitHub</a>
                         <span class="nav-link-stack nav-emails">
