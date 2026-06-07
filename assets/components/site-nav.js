@@ -15,9 +15,9 @@ class SiteNav extends HTMLElement {
                             <small>Steven Cleasby-Mayeda</small>
                         </span>
                     </a>
+                    <a href="${root}logic-expert/" class="nav-local nav-local-multiline">Transformers Research<br>Logic Expert</a>
                     <a href="${root}photography/" class="nav-local">Photography</a>
                     <div class="nav-links">
-                        <a href="${root}logic-expert/">Logic Expert</a>
                         <a href="https://hlwa-portfolio.github.io/" target="_blank" rel="noopener">Hanford</a>
                         <a href="${root}assets/pdf/main_ML_class.pdf" class="mobile-link" target="_blank" rel="noopener">Resume PDF</a>
                         <a href="https://github.com/Ancorro" class="mobile-link" target="_blank" rel="noopener">GitHub</a>

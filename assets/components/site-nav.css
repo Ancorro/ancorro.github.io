@@ -97,6 +97,14 @@ site-nav {
     border-color: rgba(0, 0, 0, 0.4);
 }
 
+.nav-local-multiline {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.35;
+    text-align: left;
+}
+
 .nav-links {
     display: flex;
     gap: 1.8rem;
@@ -140,6 +148,7 @@ site-nav {
     align-items: flex-end;
     user-select: text;
     cursor: default;
+    margin-left: 1rem;
 }
 
 .nav-emails>span {
