@@ -32,8 +32,8 @@ class SiteNav extends HTMLElement {
                         </a>
                         <span class="nav-link-stack nav-emails">
                             <span>Email</span>
-                            <small>steven.cleasby.mayeda@gmail.com</small>
-                            <small>cleasbys@oregonstate.edu</small>
+                            <a href="mailto:steven.cleasby.mayeda@gmail.com"><small>steven.cleasby.mayeda@gmail.com</small></a>
+                            <a href="mailto:cleasbys@oregonstate.edu"><small>cleasbys@oregonstate.edu</small></a>
                         </span>
                     </div>
                 </div>

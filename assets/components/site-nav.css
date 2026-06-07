@@ -173,6 +173,18 @@ site-nav {
     white-space: nowrap;
 }
 
+.nav-emails a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.25s ease;
+    cursor: pointer;
+}
+
+.nav-emails a:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
 .nav-emails {
     color: #252525;
     font-family: 'LINE Seed JP', sans-serif;
@@ -207,7 +219,7 @@ site-nav {
 /* Small screens: tighten spacing, shrink the brand art, and drop the
    secondary external links (those without .mobile-link). Wrapping itself is
    already handled by the base flexbox layout above. */
-@media (max-width: 620px) {
+@media (max-width: 1088px) {
     site-nav {
         --nav-height-large: 72px;
         --nav-height-delta: 10px;
@@ -219,10 +231,13 @@ site-nav {
     }
 
     .nav-menu {
+        width: 100%;
+        margin-left: 0;
         row-gap: 8px;
     }
 
     .nav-inner {
+        position: relative;
         padding-top: 6px;
         padding-bottom: 6px;
     }
@@ -233,12 +248,23 @@ site-nav {
 
     /* Compact mobile layout tweaks */
     .nav-emails {
+        position: absolute;
+        top: calc(20px - (var(--nav-progress) * 3px));
+        right: clamp(11.9px, 6vw, 79.9px);
+        margin-left: 0;
+    }
+
+    .nav-emails>span {
         display: none;
+    }
+
+    .nav-emails small {
+        font-size: 10.5px;
     }
 
     .nav-desc,
     .nav-brand-text small,
-    .nav-link-stack small {
+    .nav-link-stack:not(.nav-emails) small {
         display: none;
     }
 
