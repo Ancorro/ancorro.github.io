@@ -1,14 +1,17 @@
 # ancorro.github.io
 
-This repository hosts the **GitHub Pages** showcase and interactive portfolio for [Parallel Logic Expert with Operator Routing](https://github.com/Ancorro/logic-expert-public).
+Source for my personal portfolio home page, live at **[ancorro.github.io](https://ancorro.github.io/)**.
 
-The project is a course project for Oregon State University AI 535, designing and evaluating a parallel, differentiable fuzzy-logic pathway for transformer models like Llama 3.1 8B.
+A single static page (no build step — served verbatim via `.nojekyll`) introducing me and
+linking to my featured projects, experience, and skills.
 
-## Website Features
-- **Project Overview**: Conceptual highlights and core mathematical breakdowns.
-- **Interactive Fuzzy Logic Calculator**: Live visualization of continuous AND/OR/NOT fuzzy logic gate compositions.
-- **Routing Simulator**: Visual simulation of routing distributions under varying temperature $\tau$ and cutoff threshold $c$.
-- **Empirical Evaluation**: Matched-budget training results on the ProofWriter dataset.
-- **Academic Citation**: Ready-to-use BibTeX citation card.
+## Linked projects
+- **[Parallel Logic Expert with Operator Routing](https://ancorro.github.io/logic-expert-public/)** — interactive project page ([code](https://github.com/Ancorro/logic-expert-public)).
+- **Guidance — Agentic Field Technician Assistant** — 1st place, BeaverHacks 2026 ([code](https://github.com/ekanshArora123/beaverhacks2026)).
+- **Hanford Waste-Glass Vitrification Tool** — senior capstone ([project page](https://hlwa-portfolio.github.io/)).
+- **Real-Time Eye Tracking** — MediaPipe / FaceMesh prototype.
 
-Visit the live page at [ancorro.github.io](https://ancorro.github.io/).
+## Structure
+- `index.html` — the portfolio page
+- `index.css` — styles (Eggshell & Bitter-Orange theme)
+- `assets/images/favicon.svg` — site icon
