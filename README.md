@@ -14,4 +14,4 @@ linking to my featured projects, experience, and skills.
 ## Structure
 - `index.html` — the portfolio page
 - `index.css` — styles (Eggshell & Bitter-Orange theme)
-- `assets/images/favicon.svg` — site icon
+- `assets/images/favicon.png` — site icon

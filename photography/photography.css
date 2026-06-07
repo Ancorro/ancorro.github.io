@@ -1,0 +1,38 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #f7f7f5;
+}
+
+.gallery {
+    columns: 3 20rem;
+    column-gap: 0.8rem;
+    padding: 0.8rem;
+}
+
+.gallery a {
+    display: block;
+    break-inside: avoid;
+    margin-bottom: 0.8rem;
+}
+
+.gallery img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+@media (max-width: 600px) {
+    .gallery {
+        columns: 1;
+        padding: 0;
+    }
+
+    .gallery a {
+        margin-bottom: 0.35rem;
+    }
+}
