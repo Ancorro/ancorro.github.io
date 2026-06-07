@@ -10,6 +10,8 @@ body {
     background: #f7f7f5;
     color: #111;
     font-family: 'LINE Seed JP', sans-serif;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 a {
@@ -78,7 +80,7 @@ a {
     padding: 0.8rem;
 }
 
-.gallery a {
+.gallery div {
     display: block;
     break-inside: avoid;
     margin-bottom: 0.8rem;
@@ -88,6 +90,9 @@ a {
     display: block;
     width: 100%;
     height: auto;
+    pointer-events: none;
+    -webkit-user-drag: none;
+    user-select: none;
 }
 
 @media (max-width: 600px) {
@@ -113,7 +118,13 @@ a {
         padding: 0;
     }
 
-    .gallery a {
+    .gallery div {
         margin-bottom: 0.35rem;
+    }
+}
+
+@media print {
+    body {
+        display: none !important;
     }
 }
