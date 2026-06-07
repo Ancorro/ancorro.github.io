@@ -19,9 +19,12 @@ class SiteNav extends HTMLElement {
                         <a href="https://ancorro.github.io/logic-expert-public/" target="_blank" rel="noopener">Logic Expert</a>
                         <a href="https://hlwa-portfolio.github.io/" target="_blank" rel="noopener">Hanford</a>
                         <a href="${root}photography/">Photography</a>
-                        <a href="${root}assets/pdf/main_ML_class.pdf" class="mobile-link" target="_blank" rel="noopener">Resume</a>
+                        <a href="${root}assets/pdf/main_ML_class.pdf" class="mobile-link" target="_blank" rel="noopener">Resume PDF</a>
                         <a href="https://github.com/Ancorro" class="mobile-link" target="_blank" rel="noopener">GitHub</a>
-                        <a href="mailto:stevencleasbymayeda@gmail.com" class="mobile-link">Email</a>
+                        <a href="mailto:steven.cleasby.mayeda@gmail.com" class="mobile-link nav-link-stack">
+                            <span>Email</span>
+                            <small>steven.cleasby.mayeda@gmail.com</small>
+                        </a>
                     </div>
                 </div>
             </nav>
