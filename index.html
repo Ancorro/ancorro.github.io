@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Steven Cleasby-Mayeda — AI / ML Engineer</title>
-    <meta name="description" content="Steven Cleasby-Mayeda — M.Eng. Computer Science (AI) at Oregon State University. Machine learning, transformer architectures, and agentic systems. Projects and portfolio.">
+    <meta name="description" content="Steven Cleasby-Mayeda — M.Eng. Computer Science (AI) at Oregon State University. Machine learning, transformer architectures, and agentic systems.">
     <meta name="author" content="Steven Cleasby-Mayeda">
 
-    <!-- Open Graph -->
     <meta property="og:title" content="Steven Cleasby-Mayeda — AI / ML Engineer">
-    <meta property="og:description" content="M.Eng. CS (AI) at Oregon State. ML, transformer architectures, and agentic systems.">
+    <meta property="og:description" content="M.Eng. CS (AI) at Oregon State. Machine learning, transformer architectures, and agentic systems.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ancorro.github.io/">
 
@@ -18,118 +17,92 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="bg-glow"></div>
+    <div class="fog"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
 
     <!-- Navigation -->
     <nav class="nav">
         <div class="wrap nav-inner">
             <a href="#top" class="nav-brand">
                 <img src="assets/images/favicon.svg" alt="">
-                <span>Steven Cleasby-Mayeda</span>
+                <span>S · C · M</span>
             </a>
             <div class="nav-links">
-                <a href="#projects">Projects</a>
+                <a href="#works">Works</a>
                 <a href="#experience">Experience</a>
                 <a href="#skills">Skills</a>
-                <a href="https://github.com/Ancorro" class="nav-cta" target="_blank" rel="noopener">
-                    <i class="fab fa-github"></i> GitHub
-                </a>
+                <a href="https://github.com/Ancorro" class="nav-cta" target="_blank" rel="noopener">GitHub</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero -->
     <header id="top" class="hero">
-        <div class="wrap reveal">
-            <p class="eyebrow">AI / ML Engineer · Oregon State University</p>
-            <h1>Steven<br>Cleasby-Mayeda</h1>
-            <p class="lede">I build and study machine learning systems, focused on transformer architectures and agentic pipelines.</p>
-            <p class="sub">M.Eng. Computer Science (AI focus) candidate at Oregon State University, with a B.S. in Applied Computer Science. Work covers model architecture design, training and evaluation, and ablation studies.</p>
-            <div class="hero-actions">
-                <a href="#projects" class="btn btn-primary"><i class="fas fa-arrow-down"></i> View projects</a>
-                <a href="https://github.com/Ancorro" class="btn btn-ghost" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
-                <a href="mailto:stevencleasbymayeda@gmail.com" class="btn btn-ghost"><i class="fas fa-envelope"></i> Email</a>
+        <div class="wrap">
+            <div class="hero-inner reveal">
+                <p class="eyebrow">AI / ML Engineer · Oregon State University</p>
+                <h1>Steven<br>Cleasby-Mayeda</h1>
+                <p class="lede">I build and study machine learning systems, focused on transformer architectures and agentic pipelines.</p>
+                <p class="sub">M.Eng. Computer Science (AI focus) candidate at Oregon State University, with a B.S. in Applied Computer Science. Work covers model architecture design, training and evaluation, and ablation studies.</p>
+                <div class="hero-actions">
+                    <a href="#works" class="btn btn-primary">Selected Works</a>
+                    <a href="https://github.com/Ancorro" class="btn btn-ghost" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
+                    <a href="mailto:stevencleasbymayeda@gmail.com" class="btn btn-ghost"><i class="fas fa-envelope"></i> Email</a>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Projects -->
-    <section id="projects">
+    <!-- Works -->
+    <section id="works">
         <div class="wrap">
             <div class="section-head">
-                <span class="num">01</span>
-                <h2>Featured Projects</h2>
-                <span class="section-rule"></span>
+                <div class="kicker">I.</div>
+                <h2>Selected Works</h2>
+                <div class="ornament"><i></i><i></i></div>
             </div>
 
             <div class="projects">
 
-                <!-- Logic Expert -->
-                <article class="card">
-                    <div class="card-top">
-                        <h3>Parallel Logic Expert with Operator Routing</h3>
-                    </div>
-                    <div class="badges">
-                        <span class="badge">Course Project · AI 535</span>
-                        <span class="badge tech">PyTorch</span>
-                        <span class="badge tech">Transformers</span>
-                    </div>
-                    <p>A logic-augmented transformer pathway that routes token representations through differentiable fuzzy AND/OR/NOT operators with learned operator routing and backbone cross-attention. Built a full PyTorch training/evaluation pipeline, ran matched-budget ablations, and analyzed routing diagnostics — with empirical gains over baseline transformers on logical-reasoning benchmarks.</p>
-                    <div class="card-links">
-                        <a href="https://ancorro.github.io/logic-expert-public/" target="_blank" rel="noopener"><i class="fas fa-globe"></i> Interactive page</a>
+                <article class="plate">
+                    <h3>Parallel Logic Expert with Operator Routing</h3>
+                    <div class="tools">PyTorch · Transformers</div>
+                    <p>A logic-augmented transformer pathway that routes token representations through differentiable fuzzy AND/OR/NOT operators, with learned operator routing and backbone cross-attention. A full PyTorch training and evaluation pipeline with matched-budget ablations, showing gains over baseline transformers on logical-reasoning benchmarks.</p>
+                    <div class="plate-links">
+                        <a href="https://ancorro.github.io/logic-expert-public/" target="_blank" rel="noopener"><i class="fas fa-feather"></i> Project page</a>
                         <a href="https://github.com/Ancorro/logic-expert-public" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>
                     </div>
                 </article>
 
-                <!-- Guidance / BeaverHacks -->
-                <article class="card">
-                    <div class="card-top">
-                        <h3>Guidance: Agentic Field Technician Assistant</h3>
-                    </div>
-                    <div class="badges">
-                        <span class="badge win">1st Place · BeaverHacks 2026</span>
-                        <span class="badge tech">Gemini</span>
-                        <span class="badge tech">Python</span>
-                        <span class="badge tech">RAG</span>
-                    </div>
-                    <p>A multimodal Gemini agent that helps field technicians work through equipment manuals. Image/audio input, transcription, local RAG, function calling, and image editing combine to return step-by-step instructions, with QR-scoped retrieval to speed inference. Built end-to-end in 24 hours; won the beginner track (1st of 20 teams).</p>
-                    <div class="card-links">
+                <article class="plate">
+                    <span class="laurel">First Place · BeaverHacks 2026</span>
+                    <h3>Guidance: Agentic Field Technician Assistant</h3>
+                    <div class="tools">Gemini · Python · RAG</div>
+                    <p>A multimodal agent for field technicians, combining image and audio input, transcription, local retrieval-augmented generation, function calling, and image editing to return step-by-step guidance from equipment manuals. Built end to end in 24 hours; first in the beginner track of 20 teams.</p>
+                    <div class="plate-links">
                         <a href="https://github.com/ekanshArora123/beaverhacks2026" target="_blank" rel="noopener"><i class="fab fa-github"></i> Code</a>
-                        <a href="https://lnkd.in/gCfc3Sih" target="_blank" rel="noopener"><i class="fas fa-video"></i> Demo video</a>
-                        <a href="https://lnkd.in/gMxyVKYR" target="_blank" rel="noopener"><i class="fas fa-award"></i> Submission</a>
+                        <a href="https://lnkd.in/gCfc3Sih" target="_blank" rel="noopener"><i class="fas fa-film"></i> Demo</a>
+                        <a href="https://lnkd.in/gMxyVKYR" target="_blank" rel="noopener"><i class="fas fa-scroll"></i> Submission</a>
                     </div>
                 </article>
 
-                <!-- Hanford capstone -->
-                <article class="card">
-                    <div class="card-top">
-                        <h3>Hanford Waste-Glass Vitrification Tool</h3>
-                    </div>
-                    <div class="badges">
-                        <span class="badge">Senior Capstone · Lead Engineer</span>
-                        <span class="badge tech">Python</span>
-                        <span class="badge tech">Data Pipelines</span>
-                    </div>
-                    <p>Lead technical developer on a Python application that processes safety-critical calculations for Hanford radioactive-waste vitrification (Waste Treatment Completion Company). Built data-analysis pipelines focused on auditability, consistency, and maintainability, authored the developer handover documentation, and managed the student engineering team.</p>
-                    <div class="card-links">
-                        <a href="https://hlwa-portfolio.github.io/" target="_blank" rel="noopener"><i class="fas fa-globe"></i> Project page</a>
-                        <span class="card-note">Source private (client work)</span>
+                <article class="plate">
+                    <h3>Hanford Waste-Glass Vitrification Tool</h3>
+                    <div class="tools">Python · Data Pipelines</div>
+                    <p>Lead engineer on a senior capstone building a Python application for safety-critical waste-vitrification calculations. Built auditable, maintainable data-analysis pipelines, authored the developer handover documentation, and managed the student engineering team.</p>
+                    <div class="plate-links">
+                        <a href="https://hlwa-portfolio.github.io/" target="_blank" rel="noopener"><i class="fas fa-feather"></i> Project page</a>
+                        <span class="plate-note">Source private (client work)</span>
                     </div>
                 </article>
 
-                <!-- Eye tracking (no links) -->
-                <article class="card">
-                    <div class="card-top">
-                        <h3>Real-Time Eye Tracking</h3>
-                    </div>
-                    <div class="badges">
-                        <span class="badge tech">Python</span>
-                        <span class="badge tech">MediaPipe</span>
-                        <span class="badge tech">Computer Vision</span>
-                    </div>
+                <article class="plate">
+                    <h3>Real-Time Eye Tracking</h3>
+                    <div class="tools">Python · MediaPipe</div>
                     <p>A real-time eye-landmark extraction prototype built with Google MediaPipe and FaceMesh, mapping facial mesh points to gaze-relevant features for downstream tracking experiments.</p>
-                    <div class="card-links">
-                        <span class="card-note">Private prototype</span>
+                    <div class="plate-links">
+                        <span class="plate-note">Private prototype</span>
                     </div>
                 </article>
 
@@ -137,18 +110,26 @@
         </div>
     </section>
 
+    <!-- Quote band -->
+    <div class="band">
+        <div class="wrap">
+            <blockquote>The artist should paint not only what he sees before him, but also what he sees within him.</blockquote>
+            <cite>Caspar David Friedrich</cite>
+        </div>
+    </div>
+
     <!-- Experience -->
     <section id="experience">
         <div class="wrap">
             <div class="section-head">
-                <span class="num">02</span>
+                <div class="kicker">II.</div>
                 <h2>Experience &amp; Research</h2>
-                <span class="section-rule"></span>
+                <div class="ornament"><i></i><i></i></div>
             </div>
             <div class="stack">
                 <div class="entry">
                     <div>
-                        <div class="role">Leading Software Engineer <span style="color:var(--text-muted);font-weight:400">· Senior Capstone</span></div>
+                        <div class="role">Leading Software Engineer <span class="soft">· Senior Capstone</span></div>
                         <div class="org">Waste Treatment Completion Company — Richland, WA (Remote)</div>
                     </div>
                     <div class="meta">Sep 2025 – Jun 2026</div>
@@ -178,14 +159,14 @@
     <section id="education">
         <div class="wrap">
             <div class="section-head">
-                <span class="num">03</span>
+                <div class="kicker">III.</div>
                 <h2>Education</h2>
-                <span class="section-rule"></span>
+                <div class="ornament"><i></i><i></i></div>
             </div>
             <div class="stack">
                 <div class="entry">
                     <div>
-                        <div class="role">M.Eng. Computer Science <span style="color:var(--text-muted);font-weight:400">· AI focus</span></div>
+                        <div class="role">M.Eng. Computer Science <span class="soft">· AI focus</span></div>
                         <div class="org">Oregon State University — GPA 3.74</div>
                     </div>
                     <div class="meta">Expected Jun 2027</div>
@@ -193,7 +174,7 @@
                 </div>
                 <div class="entry">
                     <div>
-                        <div class="role">B.S. Applied Computer Science <span style="color:var(--text-muted);font-weight:400">· AI focus</span></div>
+                        <div class="role">B.S. Applied Computer Science <span class="soft">· AI focus</span></div>
                         <div class="org">Oregon State University — GPA 3.63 · Honor Roll (7 terms)</div>
                     </div>
                     <div class="meta">Jun 2026</div>
@@ -207,44 +188,33 @@
     <section id="skills">
         <div class="wrap">
             <div class="section-head">
-                <span class="num">04</span>
-                <h2>Technical Skills</h2>
-                <span class="section-rule"></span>
+                <div class="kicker">IV.</div>
+                <h2>Skills</h2>
+                <div class="ornament"><i></i><i></i></div>
             </div>
-            <div class="skills">
-                <div class="skill-group">
-                    <h4>Languages</h4>
-                    <div class="items"><span class="chip">Python</span><span class="chip">C</span></div>
-                </div>
-                <div class="skill-group">
-                    <h4>Machine Learning</h4>
-                    <div class="items"><span class="chip">PyTorch</span><span class="chip">HuggingFace Transformers</span><span class="chip">Architecture design</span><span class="chip">Training &amp; evaluation</span><span class="chip">Ablation studies</span></div>
-                </div>
-                <div class="skill-group">
-                    <h4>Agents</h4>
-                    <div class="items"><span class="chip">Agentic systems</span><span class="chip">Multimodal pipelines</span><span class="chip">RAG</span></div>
-                </div>
-                <div class="skill-group">
-                    <h4>Data</h4>
-                    <div class="items"><span class="chip">NumPy</span><span class="chip">Optimization</span><span class="chip">Statistics</span><span class="chip">Feature engineering</span><span class="chip">Cleaning &amp; viz</span></div>
-                </div>
-                <div class="skill-group">
-                    <h4>Systems</h4>
-                    <div class="items"><span class="chip">Linux</span><span class="chip">CUDA</span><span class="chip">Git</span></div>
-                </div>
-            </div>
+            <dl class="skills">
+                <div class="skill-row"><dt>Languages</dt><dd>Python, C</dd></div>
+                <div class="skill-row"><dt>Machine Learning</dt><dd>PyTorch, Hugging Face Transformers, architecture design, training and evaluation, ablation studies</dd></div>
+                <div class="skill-row"><dt>Agents</dt><dd>Agentic systems, multimodal pipelines, retrieval-augmented generation</dd></div>
+                <div class="skill-row"><dt>Data</dt><dd>NumPy, optimization, statistics, feature engineering, data cleaning and visualization</dd></div>
+                <div class="skill-row"><dt>Systems</dt><dd>Linux, CUDA, Git</dd></div>
+            </dl>
         </div>
     </section>
 
-    <!-- Footer / Contact -->
+    <!-- Footer -->
     <footer>
-        <div class="wrap footer-inner">
+        <div class="wrap">
+            <div class="sig">Steven Cleasby-Mayeda</div>
             <div class="footer-links">
                 <a href="https://github.com/Ancorro" target="_blank" rel="noopener"><i class="fab fa-github"></i> github.com/Ancorro</a>
                 <a href="mailto:stevencleasbymayeda@gmail.com"><i class="fas fa-envelope"></i> Email</a>
-                <span class="footer-meta"><i class="fas fa-location-dot"></i> Corvallis, OR</span>
+                <span><i class="fas fa-location-dot"></i> Corvallis, OR</span>
             </div>
-            <span class="footer-meta">© 2026 Steven Cleasby-Mayeda</span>
+            <p class="footer-meta">
+                © 2026 Steven Cleasby-Mayeda<br>
+                Artwork by Caspar David Friedrich (1774–1840) — <i>The Abbey in the Oakwood</i>, <i>Wanderer above the Sea of Fog</i>, <i>Moonrise over the Sea</i>. Public domain, via <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener">Wikimedia Commons</a>.
+            </p>
         </div>
     </footer>
 </body>
