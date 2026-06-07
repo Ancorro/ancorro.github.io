@@ -230,4 +230,20 @@ site-nav {
     .nav-link:not(.mobile-link) {
         display: none;
     }
+
+    /* Compact mobile layout tweaks */
+    .nav-emails {
+        display: none;
+    }
+
+    .nav-desc,
+    .nav-brand-text small,
+    .nav-link-stack small {
+        display: none;
+    }
+
+    .nav-local,
+    .nav-link {
+        font-size: 12px;
+    }
 }
