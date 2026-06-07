@@ -18,7 +18,10 @@ class SiteNav extends HTMLElement {
                     <a href="${root}logic-expert/" class="nav-local nav-local-multiline">Transformers Research<br>Logic Expert</a>
                     <a href="${root}photography/" class="nav-local">Photography</a>
                     <div class="nav-links">
-                        <a href="https://hlwa-portfolio.github.io/" target="_blank" rel="noopener">Hanford</a>
+                        <a href="https://hlwa-portfolio.github.io/" class="nav-link-stack" target="_blank" rel="noopener">
+                            Hanford
+                            <small>Nuclear Waste Vitrification</small>
+                        </a>
                         <a href="${root}assets/pdf/main_ML_class.pdf" class="mobile-link" target="_blank" rel="noopener">Resume PDF</a>
                         <a href="https://github.com/Ancorro" class="mobile-link" target="_blank" rel="noopener">GitHub</a>
                         <span class="nav-link-stack nav-emails">
