@@ -52,8 +52,8 @@ body::before {
     inset: -3rem;
     z-index: -1;
     background: var(--bg-image, url('assets/art/backgrounds/pdia-f946ecc9-50e9-4f46-9b6c-9f757559b043.jpg')) center top / cover no-repeat;
-    filter: contrast(0.95);
-    opacity: 0.3;
+    filter: contrast(0.5);
+    opacity: 0.28;
 }
 
 ::selection {
