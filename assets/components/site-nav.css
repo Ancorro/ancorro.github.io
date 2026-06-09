@@ -10,6 +10,10 @@ site-nav {
     --art-height-large: 89px;
     --art-height-delta: 33px;
     --nav-gap: clamp(10px, 1.2vw, 22px);
+    --nav-link-size: 11.5px;
+    --nav-sub-size: 9.86px;
+    --nav-sub-gap: 2px;
+    --nav-label-size: 9.86px;
     display: block;
     min-height: var(--nav-height-large);
 }
@@ -89,7 +93,7 @@ site-nav {
 
 .nav-menu {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     flex-wrap: wrap;
     justify-content: flex-end;
     column-gap: var(--nav-gap);
@@ -97,10 +101,35 @@ site-nav {
     margin-left: auto;
 }
 
-/* Clustered link groups */
-.nav-research {
+/* Section rail — label sits left of links on one row */
+.nav-section {
     display: inline-flex;
-    align-items: center;
+    align-items: flex-end;
+    gap: 10px;
+    padding-right: calc(var(--nav-gap) * 0.9);
+    margin-right: calc(var(--nav-gap) * 0.25);
+    border-right: 1px solid rgba(0, 0, 0, 0.09);
+    flex-shrink: 0;
+}
+
+.nav-section-label {
+    font-family: 'LINE Seed JP', sans-serif;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #a0a09e;
+    line-height: 1.15;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    padding: 2px 0 4px;
+    flex-shrink: 0;
+    user-select: none;
+}
+
+.nav-section-links {
+    display: inline-flex;
+    align-items: flex-end;
     flex-wrap: wrap;
     column-gap: calc(var(--nav-gap) * 0.55);
     row-gap: 4px;
@@ -292,7 +321,19 @@ site-nav {
         font-size: 8px;
     }
 
-    .nav-research {
+    .nav-section {
+        gap: 6px;
+        margin-right: 8px;
+        padding-right: 8px;
+    }
+
+    .nav-section-label {
+        font-size: 8px;
+        letter-spacing: 0.12em;
+        padding-bottom: 2px;
+    }
+
+    .nav-section-links {
         column-gap: 10px;
     }
 
@@ -346,5 +387,15 @@ site-nav {
     .nav-local-stack small {
         display: block;
         font-size: 7.5px;
+    }
+
+    .nav-section-label {
+        display: none;
+    }
+
+    .nav-section {
+        border-right: 0;
+        padding-right: 0;
+        margin-right: 0;
     }
 }

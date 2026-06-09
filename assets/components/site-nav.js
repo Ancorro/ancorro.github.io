@@ -22,21 +22,32 @@ class SiteNav extends HTMLElement {
                         </span>
                     </a>
                     <div class="nav-menu">
-                        <div class="nav-research" aria-label="Research projects">
-                            <a href="${root}logic-expert/" class="nav-local nav-local-stack">
-                                Logic Expert
-                                <small>Transformers Research</small>
-                            </a>
-                            <a href="${root}esm3-banb/" class="nav-local nav-local-stack">
-                                ESM3 bnAb
-                                <small>Foundation Models</small>
-                            </a>
+                        <div class="nav-section" aria-label="Research projects">
+                            <span class="nav-section-label">Research</span>
+                            <div class="nav-section-links">
+                                <a href="${root}logic-expert/" class="nav-local nav-local-stack">
+                                    Logic Expert
+                                    <small>Transformers Research</small>
+                                </a>
+                                <a href="${root}esm3-banb/" class="nav-local nav-local-stack">
+                                    ESM3 bnAb
+                                    <small>Foundation Models</small>
+                                </a>
+                            </div>
                         </div>
-                        <a href="https://hlwa-portfolio.github.io/" class="nav-link nav-link-stack nav-hanford" target="_blank" rel="noopener">
-                            Hanford
-                            <small>Nuclear Waste Vitrification</small>
+                        <div class="nav-section" aria-label="Experience">
+                            <span class="nav-section-label">Experience</span>
+                            <div class="nav-section-links">
+                                <a href="https://hlwa-portfolio.github.io/" class="nav-link nav-link-stack nav-hanford" target="_blank" rel="noopener">
+                                    Hanford
+                                    <small>Nuclear Waste Vitrification</small>
+                                </a>
+                            </div>
+                        </div>
+                        <a href="${root}photography/" class="nav-local nav-local-stack">
+                            Photography
+                            <small>Gallery</small>
                         </a>
-                        <a href="${root}photography/" class="nav-local">Photography</a>
                         <a href="${root}assets/pdf/main_ML_class.pdf" class="nav-link nav-link-stack nav-resume" target="_blank" rel="noopener">
                             Resume
                             <small>PDF</small>
