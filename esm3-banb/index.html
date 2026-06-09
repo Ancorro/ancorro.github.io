@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ESM3 Representations for HIV bnAb Modeling | Full Paper</title>
+    <title>ESM3 Representations for HIV bnAb Modeling</title>
     <meta name="description"
         content="Evaluating frozen and antibody-adapted ESM3 representations for HIV broadly neutralizing antibody classification and breadth regression under lineage-held-out validation.">
     <meta name="author" content="Steven Cleasby-Mayeda">
@@ -42,7 +42,6 @@
                 <span>ESM3 bnAb Modeling</span>
             </a>
             <div class="nav-buttons">
-                <a href="index.html" class="btn btn-active btn-sm" aria-current="page">Full Paper</a>
                 <a href="assets/pdf/ESM3_bnAb.pdf" class="btn btn-secondary btn-sm" download>
                     <i class="fas fa-file-pdf"></i> Download Paper
                 </a>
@@ -67,6 +66,7 @@
                     <li><a href="#results">5. Results</a></li>
                     <li><a href="#limitations">6. Limitations</a></li>
                     <li><a href="#conclusion">7. Conclusion</a></li>
+                    <li><a href="#appendix">Appendix</a></li>
                 </ul>
             </div>
         </aside>
@@ -129,10 +129,19 @@
                             href="#ref-oas" class="citation-link">[5]</a> improves transfer.
                     </p>
                     <p>
-                        Because antibody datasets contain somatically related variants, naive random splits leak lineage
-                        information across folds. We implement metadata-derived lineage grouping with group-resampled
-                        uncertainty analysis on CATNAP <a href="#ref-catnap" class="citation-link">[6]</a>, then compare
-                        handcrafted features, frozen ESM3, and OAS-tuned ESM3 (LoRA) under identical folds and heads.
+                        Because antibody datasets contain somatically related variants, naive random splits can place
+                        members of the same clonal lineage in both training and validation folds. We implement
+                        metadata-derived lineage grouping with group-resampled uncertainty analysis on CATNAP <a
+                            href="#ref-catnap" class="citation-link">[6]</a>. Because the study compares multiple heads
+                        and pooling schemes on the same folds, cross-validation scores represent model-selection
+                        estimates rather than fully locked confirmatory performance.
+                    </p>
+                    <p>
+                        We organize the study around three contributions: (1) metadata-derived lineage grouping and
+                        group-resampled uncertainty for classification and regression on CATNAP; (2) matched evaluation
+                        of sequence features, frozen ESM3, and OAS-tuned ESM3 (LoRA) under identical downstream folds
+                        and heads; and (3) a controlled analysis of VAE interpolation on residue-resolution embeddings,
+                        separating observations from unsupported manifold claims.
                     </p>
                     <figure class="paper-figure span-both-columns" id="fig-pgt121">
                         <img src="assets/figures/pgt121_lineage.png"
@@ -147,35 +156,45 @@
             <section id="related-work">
                 <h2>2. Related Work</h2>
                 <div class="paper-content-columns">
+                    <h3>2.1. HIV bnAb measurement and development</h3>
                     <p>
-                        CATNAP standardizes antibody–virus neutralization panels and metadata <a href="#ref-catnap"
-                            class="citation-link">[6]</a>. Longitudinal lineage studies show breadth can change
-                        substantially as somatic variants accumulate <a href="#ref-doria" class="citation-link">[7]</a><a
-                            href="#ref-bhiman" class="citation-link">[8]</a>, motivating lineage-held-out evaluation.
+                        CATNAP standardizes antibody-by-virus neutralization panels and metadata <a href="#ref-catnap"
+                            class="citation-link">[6]</a>, curating IC50 measurements across antibody-virus pairs.
+                        Longitudinal lineage studies show breadth can change substantially as somatic variants
+                        accumulate, including within the CAP256/VRC26 lineage <a href="#ref-doria"
+                            class="citation-link">[7]</a><a href="#ref-bhiman" class="citation-link">[8]</a>. These
+                        observations motivate lineage-held-out evaluation: high sequence similarity does not imply
+                        identical breadth, and lineage membership is a strong shortcut under naive random splits.
                     </p>
+                    <h3>2.2. Machine learning for HIV neutralization</h3>
                     <p>
-                        Most computational HIV neutralization work predicts <em>virus</em> resistance to a fixed antibody
-                        panel rather than antibody breadth from sequence <a href="#ref-danaila"
-                            class="citation-link">[9]</a>. Recent methods such as BRAVE couple ESM2 embeddings of antibody
-                        and virus sequences to predict resistance across many bnAbs <a href="#ref-brave"
-                            class="citation-link">[10]</a>. We evaluate the converse: antibody-centric breadth
-                        estimation from heavy-chain sequence.
+                        Most computational work predicts <em>virus</em> resistance to a fixed antibody panel rather than
+                        scoring antibody breadth from sequence <a href="#ref-danaila" class="citation-link">[9]</a>.
+                        Multi-task learning across antibodies mitigates subtype bias <a href="#ref-igiraneza"
+                            class="citation-link">[22]</a>, and BRAVE couples ESM2 embeddings of antibody and virus
+                        sequences to predict resistance across 33 bnAbs <a href="#ref-brave"
+                            class="citation-link">[10]</a>. We evaluate the converse: whether ESM3 embeddings of
+                        heavy-chain sequence support antibody-centric breadth estimation.
                     </p>
+                    <h3>2.3. Protein and antibody language models</h3>
                     <p>
                         ESM2 demonstrated evolutionary-scale representation learning <a href="#ref-esm2"
-                            class="citation-link">[11]</a>; ESM3 extends multimodal reasoning <a href="#ref-hayes2025"
-                            class="citation-link">[3]</a>. Antibody-specific models (AntiBERTy, AbLang, IgBERT) train on
-                        immunoglobulin repertoires <a href="#ref-antiberty" class="citation-link">[12]</a><a
-                            href="#ref-ablang" class="citation-link">[13]</a><a href="#ref-igbert"
-                            class="citation-link">[14]</a>, yet surveys find general protein LMs can match domain models
-                        when size and layer selection are controlled <a href="#ref-deutschmann"
-                            class="citation-link">[15]</a>.
+                            class="citation-link">[11]</a>; ESM3 extends multimodal reasoning over sequence, structure,
+                        and function <a href="#ref-hayes2025" class="citation-link">[3]</a>. Antibody-specific models
+                        including AntiBERTy, AbLang, and IgBERT train on immunoglobulin repertoires <a
+                            href="#ref-antiberty" class="citation-link">[12]</a><a href="#ref-ablang"
+                            class="citation-link">[13]</a><a href="#ref-igbert" class="citation-link">[14]</a><a
+                            href="#ref-ablang2" class="citation-link">[23]</a>. Surveys find general protein language
+                        models can match domain-specific models when size and layer selection are controlled <a
+                            href="#ref-deutschmann" class="citation-link">[15]</a>.
                     </p>
+                    <h3>2.4. Adaptation and latent interpolation</h3>
                     <p>
                         We adapt ESM3 with LoRA <a href="#ref-lora" class="citation-link">[16]</a> on OAS via masked
-                        language modeling, then compare frozen versus adapted embeddings. We also test whether VAE latent
-                        interpolation <a href="#ref-vae" class="citation-link">[17]</a> outperforms straight-line
-                        interpolation in raw ESM3 embedding space along maturation trajectories.
+                        language modeling <a href="#ref-bert" class="citation-link">[19]</a>, without supervised bnAb
+                        labels during adaptation. We also compare VAE latent interpolation <a href="#ref-vae"
+                            class="citation-link">[17]</a> with straight-line interpolation in raw ESM3 embedding space
+                        along maturation trajectories.
                     </p>
                 </div>
             </section>
@@ -496,7 +515,10 @@
     <footer>
         <div class="container">
             <p>&copy; 2026 Steven Cleasby-Mayeda</p>
-            <p class="footer-email">steven.cleasby.mayeda@gmail.com</p>
+            <div class="footer-emails">
+                <a href="mailto:steven.cleasby.mayeda@gmail.com" class="footer-email">steven.cleasby.mayeda@gmail.com</a>
+                <a href="mailto:cleasbys@oregonstate.edu" class="footer-email">cleasbys@oregonstate.edu</a>
+            </div>
             <div class="social-links">
                 <a href="https://github.com/Ancorro" aria-label="GitHub"><i class="fab fa-github"></i><span>GitHub</span></a>
                 <a href="https://linkedin.com/in/stevencm" aria-label="LinkedIn"><i class="fab fa-linkedin"></i><span>LinkedIn</span></a>

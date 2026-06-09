@@ -1,0 +1,98 @@
+\section{Related Work}
+\label{sec:related}
+
+\subsection{HIV bnAb measurement and development}
+CATNAP standardizes antibody-by-virus neutralization panels and associated
+metadata~\cite{yoon2015catnap}, curating IC50 and IC80 measurements from
+pseudovirus neutralization assays across antibody-virus pairs and
+providing the consistent numerical labels for our regression target.
+Longitudinal lineage studies show that breadth can change substantially as
+somatic variants accumulate, including within the CAP256/VRC26
+lineage~\cite{doriarose2014developmental,bhiman2015cap256}, where members share
+high sequence identity yet span a wide range of neutralization phenotypes.
+These observations motivate lineage-held-out evaluation: high sequence
+similarity does not imply identical breadth, and lineage membership is itself a
+strong shortcut that a naive random split that a model could exploit without
+learning generalizable features.
+
+\subsection{Machine learning for HIV neutralization}
+Most computational work on HIV bnAbs predicts \emph{virus} resistance to a fixed
+antibody panel rather than scoring antibody breadth from sequence; this
+review surveys this literature~\cite{danaila2022review}. In this framing the model
+input is typically viral envelope[is viral envelope explained?]
+features and the output is a binary or
+continuous resistance label for a specific antibody.
+Not as useful for ranking which antibody to deploy for diverse
+populations. Some recent methods sharpen the virus centered view.
+Multi-task learning across antibodies mitigates HIV-1 subtype bias and captures
+co-resistance patterns shared across the antibody panel~\cite{igiraneza2024multitask},
+and BRAVE[was the BRAVE acronym written?]
+couples ESM2 embeddings of both antibody and virus sequences with a
+random-forest classifier to predict resistance across 33
+bnAbs~\cite{elanbari2025brave}. We evaluate the converse, antibody centered
+task, if ESM3 embeddings provide a richer representation
+antibody neutralization breadth, from their heavy-chain sequences.
+
+
+\subsection{Protein and antibody language models}
+ESM2 showed large-scale protein representation learning via masked
+language modeling on evolutionary-scale sequence corpora, yielding embeddings
+competitive with structure prediction benchmarks~\cite{lin2023esm2}. ESM3 extended
+this approach across protein sequence, structure, and function features.
+through generative, transformer, with a robust masking algorithm.
+The novel feature modeling enabled joint reasoning over
+residue, 3D coordinates, and functional annotations~\cite{hayes2025esm3}.
+In contrast, antibody models use sequence corpora tailored to
+the unusual statistics of the immunoglobulin variable regions.
+AntiBERTy was trained it on hundreds of millions of natural antibody sequences,
+this and showed the representation space can cover maturation
+trajectories~\cite{ruffolo2021antiberty}.[was this shhown?]
+AbLang trained separate models
+for heavy and light chains using OAS, reflecting the distinct mutational
+statistics of each chain, and demonstrates an antibody-specific advantage for
+sequence restoration~\cite{olsen2022ablang}. More recent antibody-specific
+models scale further and target known biases: IgBert and IgT5 use
+over two billion unpaired and two million paired OAS
+sequences~\cite{kenlay2024igbert}, while AbLang-2 targets
+germline bias, where antibody models tend to be
+dominated by proximity to the germline sequence rather than functional
+features that might not generalize to downstream tasks~\cite{olsen2024ablang2}.
+Observed Antibody Space provides clean and annotated repertoire sequences
+used in pre-training and often tuning~\cite{olsen2022oas}.
+
+\subsection{General versus domain-specific representations}
+Whether antibody-specific pretraining is needed is unclear. Across
+diverse immune tasks, general protein language models can match or exceed
+domain-specific models when comparisons control for model size, training corpus
+scale, and layer selection~\cite{deutschmann2024domain}.
+This result is non-obvious because
+antibody sequences violate the distribution of general protein data,
+they are defined by the somatic hypermutation and V(D)J
+recombinations that produce sequences rare or absent from other sets.
+Large general models may compensate through rich, learned representation.
+We prop this application of general protein models such as ESM3 against
+antibody feature extracted from the sequences.
+We compare
+adaptation on the functional task of neutralization breadth, rather than a structural 
+task tested in prior surveys.
+
+\subsection{Adaptation and latent interpolation}
+Low-Rank Adaptation (LoRA) allows tuning of a frozen model through trainable low-rank
+decompositions of the attention weights.
+This freezes over 99\% of parameters allowing 
+some adaptation a new/shifted distribution~\cite{hu2022lora}. 
+We use it on the masked self-supervised decoding task to 
+tune ESM3 on 
+OAS antibody sequences. We do not use LoRA for tuning on bnAb sampples,
+thus, theoretically ESM3 is tuned for antibody sequence.
+Variational
+autoencoders (VAEs)~\cite{kingma2014vae} learn a regularized Gaussian 
+latent space via a KL-divergence penalty on the autoencoder.
+This learned latent representation with regularization
+theoretically allows linear paths in the embedded space to correspond to 
+semantically smooth interpolations between data points, creating the manifold.
+However, whether this holds for a given modality depends on the representation quality,
+decoder fidelity, and of course, the quality and amount of data.
+Our VAE experiment compares latent interpolation with a straight-line in the
+VAE latent space, with a similar interpolation in the 
+ESM3 embedding space.

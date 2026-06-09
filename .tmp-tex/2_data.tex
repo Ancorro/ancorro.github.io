@@ -1,0 +1,116 @@
+\section{Data and Evaluation Protocol}
+\label{sec:data}
+
+\subsection{CATNAP cohort and labels}
+
+We compile a dataset from the CATNAP database, which aggregates antibody
+sequences and quantitative viral neutralizations. The half-maximal
+inhibitory concentration ($\text{IC}_{50}$) measures an antibody's potency
+against a specific viral isolate: it gives the concentration of antibody
+needed to neutralize 50\% of the virus (lower values indicate
+higher antibody potency). 
+We evaluate each antibody--virus as neutralized,
+if it is neutralized at the resistance threshold of $50\,\mu\mathrm{g/mL}$. 
+Neutralization breadth
+$b_i$, for an antibody $i$, is the ratio of of tested antibody--virus
+measurements neutralized below the threshold, also given here:
+\begin{equation}
+    b_i = \frac{\#\{\text{measurements with IC}_{50}\leq
+    50\,\mu\mathrm{g/mL}\}}{\#\{\text{tested antibody--virus measurements}\}},
+\end{equation}
+We restrict our analysis to antibodies tested against at least 20 virus
+strains for decreased variance in selection. For a binary classification
+task, we assign the "broad" label ($1$) where $b_i\geq0.50$, amd the narrow/weak label
+($0$) where $b_i\leq0.20$. We exclude the middle band to establish
+a distinct boundary between the binary classes.
+[cite a reason for the choice of the middle band region, size]
+We check structural variable-heavy-region ($V_H$)
+completeness by requiring conserved cysteine residues and framework
+markers to isolate the variable domain[explain this, and CDR in the intro.]
+(Figure~\ref{fig:antibody_structure} shows the $V_H$ domain
+within the overall antibody structure)
+while retaining somatic mutations.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.8\linewidth]{figures/antibody_structure.png}
+  \caption{Schematic diagram of IgG antibody structure, highlighting the heavy and light chains, variable and constant domains, antigen-binding site, and disulfide bonds (reproduced from Mamahdi14~\cite{Mamahdi2016Antibody}).}
+  \label{fig:antibody_structure}
+\end{figure}
+
+The final labeled set contains the 300 unique $V_H$ sequences (202 broad and 98
+weak), with sequence lengths ranging from 116 to 146 amino acids.
+For continuous-breadth regression, we predict the ratio $b_i$ directly for
+the 300 selected assays.
+
+\subsection{Lineage grouping and split}
+
+To prevent data leakage of closely related sequences,
+we group antibodies by distinct lineages, we do a robust 
+hierarchical sorting to
+ensure lineage stratificaton. The hierarchical sort uses
+CATNAP clonal-lineage metadata (216 antibodies), patient
+metadata indicating the same donor (70), sequence-level clustering via
+single-linkage clustering at a threshold of $\geq 80\%$ Levenshtein sequence
+identity (2 antibodies), and the remaining individual singletons (12). This
+produces 113 unique group IDs. The tiers are not cross-merged, leaving nine
+near-duplicate pairs that span a group boundary, which we audit but
+intentionally do not merge (Appendix~\ref{app:grouping_audit}).
+Across 774 in-group pairs, median pairwise
+sequence identity is $0.779$ (Interquartile Range [IQR] $0.704$--$0.885$);
+across 44,076 out-group pairs, the median is $0.424$ (IQR $0.377$--$0.504$).
+
+Both classification and regression tasks utilize a single 5-fold
+\texttt{StratifiedGroupKFold} split. This partitioning scheme guarantees that
+all antibodies belonging to any of the 113 lineage groups remain together in
+either the training or the validation set (unseen group evaluation), while
+simultaneously stratifying folds to maintain the overall binary label ratio
+(broad vs. narrow) in each split.
+
+\subsection{Metrics, selection, and uncertainty}
+
+We evaluate classification performance using the Area Under the Receiver
+Operating Characteristic curve (AUROC) and Area Under the Precision-Recall Curve
+(AUPRC, or average precision). AUROC measures the probability that the
+classifier ranks a random positive instance higher than a random negative one.
+AUPRC evaluates the precision-recall trade-off, this is informative
+under class imbalances. For regression on the continuous breadth metric,
+we report: the
+Pearson correlation coefficient ($r$), which measures linear correlation; the
+Spearman rank correlation ($\rho$), which evaluates monotonic but non-linear
+relationships; and the coefficient of determination ($R^2$), representing the
+proportion of target variance explained by the model compared to a simple mean
+baseline.
+
+For hyperparameter tuning and configuration selection, we use the mean
+score
+across the 5 validation folds (mean AUROC for classification; mean Spearman
+$\rho$ for regression). After selecting a configuration, we report the primary
+performance metrics on pooled out-of-fold (OOF) predictions
+(concatenating the held-out predictions from all folds). This pooling prevents
+bias from differing fold sizes and class compositions. To estimate prediction
+variance, we calculate 95\% uncertainty intervals using 10,000 bootstrap draws,
+resampling complete lineage groups with replacement rather than individual
+sequences. To compute paired deltas that evaluate model differences, we
+resample the groups and calculate the metric difference on aligned OOF
+predictions. These intervals quantify sensitivity to lineage composition but do
+not account for configuration-selection bias.
+
+\subsection{OAS adaptation corpus}
+
+The executed domain-adaptation run uses 219,837 globally deduplicated human
+heavy-chain sequences from 11 OAS data units (108,675 clonotypes), with the
+largest unit contributing 20,000 sequences (9.1\%). Whole data units that are
+systematically 5$'$ truncated do not enter the corpus. A clonotype-aware split produces
+198,130 training and 21,707 validation sequences. OAS supplies repertoire data
+for adaptation only; we neither label OAS sequences as HIV bnAbs nor include them
+in downstream test folds~\cite{olsen2022oas}.
+
+\subsection{Lineage-interpolation cohort}
+
+The interpolation track unions the 300 labeled antibodies with 11 trajectory
+rows; four trajectory IDs already occur in the labeled cohort, yielding 307
+unique sequences and 39,129 residue embeddings. The VAE training split contains
+214 antibodies (27,490 residues), a group-held validation split contains 46
+antibodies (5,738 residues), and the complete VRC34, VRC01, DH270, and DH511
+lineages form the holdout set (47 antibodies; 5,901 residues).

@@ -1,0 +1,317 @@
+\section{Verification and Reproducibility Details}
+\label{app:verification}
+
+
+\subsection{Candidate configurations}
+\label{app:hyperparameters}
+
+\noindent Table~\ref{tab:hyperparameters} records the compared model families
+and the fixed settings that materially affect interpretation, including Logistic
+Regression (LR), Random Forest (RF), XGBoost (XGB), Multilayer Perceptron (MLP),
+and Principal Component Analysis (PCA). Figure~\ref{fig:feature_importances}
+shows the relative importances of the handcrafted biophysical features in the
+baseline XGBoost classifier.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{../plots/fixed/feature_importances.png}
+\caption{Handcrafted feature importances for the baseline XGBoost classifier.}
+\label{fig:feature_importances}
+\end{figure}
+
+
+\begin{table}[!htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{p{0.25\columnwidth}p{0.67\columnwidth}}
+\toprule
+Component & Candidates and fixed settings \\
+\midrule
+Handcrafted classifier & LR, RF, XGB; seven features; RF/XGB depth 3; grouped five-fold CV \\
+Frozen/LoRA classifier & L1/L2 LR, RF, XGB, MLP; mean or mean+max+std pooling; RF 300 trees/depth 3; XGB 200 trees/depth 3; MLP after PCA-50 \\
+Attention classifier & Additive token attention; masked pooling, dropout 0.4, weight decay $10^{-2}$, 120 epochs \\
+Frozen/LoRA regressor & Ridge, RF, XGB; mean or mean+max+std; RF 300 trees/depth 4; XGB 200 trees/depth 3 \\
+OAS adaptation & One rank-16 LoRA run; $\alpha=32$, dropout 0.05, learning rate $10^{-4}$, one epoch, effective batch 32 \\
+Per-residue VAE & One run per representation; 1536--512--256--32 encoder, mirrored decoder, dropout 0.1, $\beta=0.005$, 25-epoch warm-up, 300 epochs \\
+\bottomrule
+\end{tabular}
+\caption{Evaluated configurations. Because these candidates share reporting
+folds, selected cross-validation estimates remain exploratory.}
+\label{tab:hyperparameters}
+\end{table}
+
+\subsection{Classification detail}
+
+\noindent Table~\ref{tab:classification_detail} reconciles the configuration
+selection score with the pooled estimates used in the main text.
+
+\begin{table}[!htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrr}
+\toprule
+Representation & AUROC & AUPRC & Fold AUROC \\
+\midrule
+Handcrafted XGB & 0.625 & 0.742 & $0.644\pm0.086$ \\
+Frozen ESM3 XGB & 0.746 & 0.859 & $0.761\pm0.131$ \\
+OAS LoRA ESM3 RF & 0.726 & 0.829 & $0.745\pm0.140$ \\
+\bottomrule
+\end{tabular}
+\caption{Classification metrics reconciled from aligned OOF predictions.
+Frozen XGB uses mean+max+std pooling; LoRA RF uses mean pooling. Configurations
+maximize mean-fold AUROC.}
+\label{tab:classification_detail}
+\end{table}
+
+\subsection{Regression detail}
+
+\noindent The fixed, mean-fold-selected regression configurations give the
+pooled estimates in Table~\ref{tab:regression_detail}.
+
+\begin{table}[!htbp]
+\centering
+\small
+\begin{tabular}{lrrr}
+\toprule
+Representation & Spearman & Pearson & $R^2$ \\
+\midrule
+Frozen ESM3 & 0.366 & 0.357 & 0.114 \\
+OAS LoRA ESM3 & 0.319 & 0.310 & 0.036 \\
+Length-only Ridge & 0.004 & $-0.059$ & $-0.046$ \\
+\bottomrule
+\end{tabular}
+\caption{Pooled OOF breadth-regression metrics. Frozen and LoRA configurations
+maximize mean-fold Spearman.}
+\label{tab:regression_detail}
+\end{table}
+
+\subsection{Lineage-group leakage audit}
+\label{app:grouping_audit}
+
+\noindent The fallback grouping (Section~\ref{sec:data}) does not cross-merge
+tiers, so an antibody can resemble a member of a different group. We surface
+every such case with \texttt{find\_cross\_group\_near\_duplicates}: across all
+$\binom{300}{2}$ antibody pairs, nine span a group boundary while exceeding the
+$80\%$ Levenshtein-identity threshold (Table~\ref{tab:grouping_audit}). Several
+involve inferred ancestral sequences (unmutated common ancestors and
+intermediates, e.g.\ \texttt{VRC34-UCA}, \texttt{DH270 UCA/IA4}) or
+germline-reverted variants that share a $V_H$ germline across lineages or donors.
+They are deliberately \emph{not} auto-merged; the count quantifies the residual
+leakage left after grouping rather than eliminating it silently.
+
+\begin{table}[!htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{llp{0.20\columnwidth}p{0.20\columnwidth}r}
+\toprule
+Antibody A & Antibody B & Group A & Group B & Id. \\
+\midrule
+1361      & D5\_AR        & patient:donor\_Gorny2012 & cluster:10       & 0.811 \\
+1361      & PGZL1\_gVmDmJ & patient:donor\_Gorny2012 & lineage:PGZL1    & 0.839 \\
+1393A     & D5\_AR        & patient:donor\_Gorny2012 & cluster:10       & 0.803 \\
+1393A     & PGZL1\_gVmDmJ & patient:donor\_Gorny2012 & lineage:PGZL1    & 0.855 \\
+D5\_AR    & PGZL1\_gVmDmJ & cluster:10               & lineage:PGZL1    & 0.815 \\
+D5\_FI    & PGZL1\_gVmDmJ & cluster:10               & lineage:PGZL1    & 0.806 \\
+DH270 IA4 & VRC34-UCA     & lineage:DH270            & lineage:VRC34    & 0.843 \\
+DH270 UCA & VRC34-UCA     & lineage:DH270            & lineage:VRC34    & 0.874 \\
+PGDM1400  & PGDM1401      & lineage:PGDM1400         & patient:Donor 84 & 0.816 \\
+\bottomrule
+\end{tabular}
+\caption{Residual cross-group near-duplicates: antibody pairs with
+$\geq 80\%$ Levenshtein identity assigned to different lineage groups. Group
+labels carry their fallback tier (\texttt{lineage}, \texttt{patient},
+\texttt{cluster}). These pairs are intentionally not merged, so the table
+measures the leakage remaining after the hierarchical grouping.}
+\label{tab:grouping_audit}
+\end{table}
+
+\subsection{Maturation correlation sensitivity}
+
+\noindent Small lineage sizes make the Fisher-$z$ sensitivity intervals in
+Table~\ref{tab:tier2} wide, especially for DH270 and DH511.
+
+\begin{table}[!htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrr}
+\toprule
+Lineage & $n$ & Frozen $r$ [interval] & LoRA $r$ [interval] \\
+\midrule
+VRC34 & 14 & 0.651 [0.184, 0.878] & 0.923 [0.768, 0.976] \\
+VRC01 & 15 & 0.759 [0.404, 0.915] & 0.960 [0.881, 0.987] \\
+DH270 & 6  & 0.771 [$-0.108$, 0.973] & 0.995 [0.950, 0.999] \\
+DH511 & 8  & 0.084 [$-0.660$, 0.745] & 0.409 [$-0.415$, 0.865] \\
+\bottomrule
+\end{tabular}
+\caption{Descriptive Pearson correlations and Fisher-$z$ sensitivity intervals (maturation correlation analysis). These are not independent estimates of a causal adaptation effect.}
+\label{tab:tier2}
+\end{table}
+
+\subsection{Interpretation rules}
+
+The paper uses ``interval'' rather than ``confidence interval'' where the
+resampling assumptions are especially limited. It avoids significance claims for
+the VAE evaluations, does not treat non-overlap or interval sign as proof of a
+biological mechanism, and distinguishes direct observations from causal
+interpretation. Project history retains random-split and earlier name-grouped
+scores, but the main result narrative excludes them because their
+current prediction artifacts are not part of the verified canonical bundle.
+
+\subsection{Per-configuration discriminative results}
+
+Tables~\ref{tab:all_classification} and~\ref{tab:all_regression} report every
+fixed-pooling configuration compared for the frozen and LoRA representations.
+The entries are not independent experiments: all candidates reuse the same five
+reporting folds. Selection uses the mean-fold column, even when a different
+configuration has a larger pooled estimate. The complete classification
+performance across all heads and pooling schemes appears in
+Figure~\ref{fig:all_classification_auroc}, while
+Figure~\ref{fig:all_regression_spearman} details the regression Spearman
+correlations.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{../plots/lora/classification_auroc_by_head.png}
+\caption{Mean grouped-fold AUROC (with standard deviation) for all evaluated classifier heads and pooling configurations under frozen and LoRA representations.}
+\label{fig:all_classification_auroc}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{../plots/lora/regression_spearman_by_config.png}
+\caption{Regression Spearman correlation across different model configurations, comparing frozen and LoRA representations.}
+\label{fig:all_regression_spearman}
+\end{figure}
+
+\begin{table}[!htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrrr}
+\toprule
+& \multicolumn{2}{c}{Frozen} & \multicolumn{2}{c}{LoRA} \\
+Configuration & AUROC & AUPRC & AUROC & AUPRC \\
+\midrule
+XGB, mean+max+std & 0.761 & 0.878 & 0.668 & 0.794 \\
+RF, mean+max+std & 0.759 & 0.874 & 0.740 & 0.855 \\
+RF, mean & 0.759 & 0.875 & \textbf{0.745} & 0.858 \\
+XGB, mean & 0.744 & 0.864 & 0.692 & 0.808 \\
+L1 LR, mean+max+std & 0.732 & 0.858 & 0.667 & 0.805 \\
+L2 LR, mean+max+std & 0.702 & 0.836 & 0.670 & 0.797 \\
+L1 LR, mean & 0.697 & 0.827 & 0.741 & 0.834 \\
+MLP, mean & 0.696 & 0.836 & 0.700 & 0.803 \\
+L2 LR, mean & 0.677 & 0.822 & 0.723 & 0.833 \\
+MLP, mean+max+std & 0.668 & 0.804 & 0.679 & 0.783 \\
+\bottomrule
+\end{tabular}
+\caption{Mean grouped-fold classification results for all frozen and LoRA
+fixed-pooling candidates. Bold marks the selected LoRA configuration; the
+selected frozen configuration is the first row.}
+\label{tab:all_classification}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrrr}
+\toprule
+& \multicolumn{2}{c}{Frozen Spearman} &
+\multicolumn{2}{c}{LoRA Spearman} \\
+Configuration & Fold & Pooled & Fold & Pooled \\
+\midrule
+RF, mean+max+std & \textbf{0.380} & 0.366 & 0.304 & 0.276 \\
+RF, mean & 0.342 & 0.344 & \textbf{0.357} & 0.319 \\
+XGB, mean+max+std & 0.341 & 0.354 & 0.292 & 0.272 \\
+XGB, mean & 0.329 & 0.340 & 0.353 & 0.333 \\
+Ridge, mean+max+std & 0.200 & 0.233 & 0.226 & 0.235 \\
+Ridge, mean & 0.149 & 0.171 & 0.208 & 0.236 \\
+Length-only Ridge & 0.155 & 0.004 & 0.155 & 0.004 \\
+\bottomrule
+\end{tabular}
+\caption{Mean-fold and pooled-OOF regression Spearman correlations for all
+candidates. Bold marks the configurations selected by mean-fold Spearman.}
+\label{tab:all_regression}
+\end{table}
+
+\subsection{Paired resampling results}
+
+The verification script aligns predictions by antibody ID and resamples complete
+\texttt{group\_id} units. Table~\ref{tab:paired_deltas} gives the resulting
+paired differences; 10,000 valid resamples produce every interval.
+
+\begin{table}[!htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llrrr}
+\toprule
+Comparison & Metric & $\Delta$ & Low & High \\
+\midrule
+Frozen--handcrafted & AUROC & 0.121 & 0.012 & 0.228 \\
+Frozen--handcrafted & AUPRC & 0.117 & 0.028 & 0.207 \\
+LoRA--frozen & AUROC & $-0.020$ & $-0.096$ & 0.059 \\
+LoRA--frozen & AUPRC & $-0.031$ & $-0.075$ & 0.024 \\
+LoRA--frozen & Spearman & $-0.047$ & $-0.169$ & 0.064 \\
+LoRA--frozen & Pearson & $-0.047$ & $-0.173$ & 0.071 \\
+LoRA--frozen & $R^2$ & $-0.078$ & $-0.228$ & 0.053 \\
+\bottomrule
+\end{tabular}
+\caption{Paired group-bootstrap differences for the selected configurations.
+Intervals quantify sensitivity to the observed lineage groups and do not
+correct for configuration selection.}
+\label{tab:paired_deltas}
+\end{table}
+
+\subsection{VAE reconstruction and geometry summary}
+
+The two VAEs use identical split membership and architecture, but we train them
+in separate single runs. The frozen and LoRA best epochs are 299 and 296,
+respectively; their best validation total/reconstruction/KL losses are
+$0.2599/0.1859/14.80$ and $0.2834/0.2045/15.79$. Each run uses 27,490 training,
+5,738 validation, and 5,901 held-out residue embeddings. The detailed VAE
+geometry checks and verification metrics appear in Table~\ref{tab:vae_verification}.
+
+\begin{table}[!htbp]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrr}
+\toprule
+Verified VAE quantity & Frozen & LoRA \\
+\midrule
+Mean Pearson correlation (maturation analysis) & 0.566 & 0.822 \\
+Mean Spearman correlation (maturation analysis) & 0.384 & 0.692 \\
+Mean VAE--line MAE (geometry check) & 0.041 & 0.076 \\
+Standard deviation (geometry check) & 0.274 & 0.237 \\
+Median (geometry check) & 0.004 & 0.018 \\
+Positive fraction (geometry check) & 0.573 & 0.693 \\
+Lineage bootstrap low (geometry check) & $-0.016$ & 0.023 \\
+Lineage bootstrap high (geometry check) & 0.109 & 0.142 \\
+\bottomrule
+\end{tabular}
+\caption{Descriptive VAE geometry summaries. Positive VAE--line
+differences (geometry check) favor the reconstructed straight-line control.}
+\label{tab:vae_verification}
+\end{table}
+
+
+\subsection{Reproducibility limits}
+
+The CPU verification script reconstructs claims from saved OOF predictions and
+evaluation artifacts; it does not retrain ESM3, the LoRA adapter, or either
+VAE\@. Therefore, it verifies internal consistency and reported calculations,
+not bitwise reproducibility of the GPU training runs. Similarly, the group
+bootstrap resamples the observed 113 metadata-derived groups. It does not
+represent a new external cohort, and its intervals remain conditional on the
+selected model configurations.
+
+Confirmatory evidence would require a locked external lineage cohort or nested
+grouped model selection, repeated adapter and VAE seeds, and raw-embedding
+directionality controls for every lineage. Those missing experiments are
+limitations of the current evidence, not tasks silently replaced by the claim
+verification.

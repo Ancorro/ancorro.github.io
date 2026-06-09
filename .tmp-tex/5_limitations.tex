@@ -1,0 +1,60 @@
+\section{Limitations}
+\label{sec:limitations}
+
+\subsection{Exploratory model selection}
+We compare heads and pooling schemes on the same five grouped folds that we use
+for reporting. Selecting the best mean-fold configuration makes its reported
+cross-validation performance optimistic due to hyperparameter and
+model-selection leak. Group-bootstrap intervals condition on the selected
+predictions and do not account for that selection process. A future confirmatory
+evaluation requires nested grouped cross-validation or a fully locked external
+lineage holdout.
+
+\subsection{Cohort and target construction}
+The dataset is extremely small (300 sequences total across 113 lineage groups),
+making downstream models highly susceptible to overfitting and limiting the
+statistical power of our architectural comparisons. Only variable heavy chains
+($V_H$) enter the models, so the analysis completely neglects light-chain ($V_L$) contributions and
+heavy-light pairing, which are biochemically known to be critical for the
+folding, stability, and neutralization breadth of many HIV-1 bnAbs. Furthermore,
+CATNAP narrow/weak antibodies are not equivalent to arbitrary non-bnAbs, and the
+analysis treats neutralization breadth as a simple, unweighted fraction over viral
+panels that vary in size and strain composition, without accounting for
+laboratory-specific or panel-level effects.
+
+\subsection{Grouping assumptions}
+While metadata-derived clonal lineage is the strongest available grouping key,
+patient-level fallback groups may merge unrelated antibodies from the same
+donor, while singletons may mask unrecorded genetic relationships. The
+sequence-identity clustering heuristic ($\geq 80\%$ identity) supports
+separation in aggregate but cannot biologically prove complete developmental
+independence or rule out convergent evolution.
+
+\subsection{Adaptation and ESM3 constraints}
+We evaluate the LoRA domain adaptation experiment on a single dataset with one
+adapter configuration and one training run. Because the adaptation is
+unsupervised (using unlabeled OAS sequences), the model may align
+representations toward general repertoire characteristics at the expense of
+capturing specific somatic hypermutation features required for HIV-1 gp120/gp41
+binding. Additionally, using a 1.4B parameter model like ESM3 introduces
+substantial computational overhead for inference and adaptation compared to
+simpler sequence-based models, and its non-commercial licensing constraints
+limit downstream translation.
+
+\subsection{Interpolation and VAE constraints}
+The per-residue VAE treats residues as independent training examples and lacks
+an antibody-level encoder. By treating residues independently, the model ignores
+sequence order, tertiary structural contacts, and global cooperative folding
+constraints. This constitutes a severe biophysical simplification. Furthermore,
+the VAE failed our round-trip sequence decoding test-gate, meaning the latent
+spaces learned at the residue level cannot be reliably mapped back to
+constructible antibody sequences. Any claims of sequence design or maturation
+interpolation are therefore speculative and physically unvalidated.
+
+\subsection{Reproducibility boundary}
+Our verification script validates pre-computed predictions and fails on cohort
+or alignment mismatches, but the massive embedding caches and LoRA adapter
+weights come from external GPU clusters (Google Colab), and the local
+verification run does not recreate them. The saved prediction and evaluation
+artifacts therefore reproduce the paper's claims, but a full, local,
+from-scratch retraining pipeline does not.

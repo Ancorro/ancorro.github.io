@@ -1,0 +1,54 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+With lineage-grouped evaluation, frozen ESM3 representations show an
+improvement over sequence features for CATNAP bnAb
+classification and show a modest increase in breadth performance. However,
+absolute breadth prediction remains weak, indicating that heavy-chain sequence
+features alone, even from large PLMs, are insufficient for accurately modeling
+functional neutralization breadth. Furthermore, our unsupervised OAS LoRA
+adaptation run did not improve downstream performance, suggesting that
+general-repertoire adaptation without target-specific supervision is
+insufficient for capturing the complex somatic hypermutation patterns critical
+to HIV-1 neutralization.
+
+To our knowledge the framing itself is novel: prior machine learning for HIV
+neutralization is predominantly \emph{virus-centric}, scoring envelope
+resistance against a fixed antibody
+panel~\cite{danaila2022review,igiraneza2024multitask,elanbari2025brave}, and the
+closest antibody-centric breadth estimator infers breadth by molecular modeling
+onto a template antibody--antigen complex for a single epitope
+class~\cite{conti2019breadth}. We instead classify breadth directly from
+heavy-chain sequence (rather than from a modeled structure), epitope-agnostically,
+and under a lineage-held-out split. In
+that out-of-lineage setting frozen ESM3 raises pooled AUROC from $0.625$ for a
+handcrafted biophysical baseline to $0.746$ (paired $+0.121$, group-bootstrap
+interval $[0.012,0.228]$ excluding zero). Because no published benchmark shares
+this sequence-only, epitope-agnostic, lineage-held-out protocol, external AUROCs
+from random-split or virus-side tasks are not directly comparable; the
+meaningful baseline is our own handcrafted-feature model, over which ESM3 shows a
+credible out-of-lineage gain.
+
+The residue-level VAE interpolation analysis shows cautionary results. The
+per-residue VAE model introduces substantial reconstruction error and fails to
+outperform simpler midpoint controls on the VRC34 lineage, likely
+due to the obvious lack of bnAb data. Due to that fact, we cannot draw
+strong conclusions on weither a VAE would meaningfully
+support the generation or design of functional antibodies, or
+about VAE-space interpolation.
+While the LoRA maturation correlations were higher,
+the limited exploratoon of this tuning
+does not establish a negative causal effect. 
+
+Ultimately, our strongest contribution is methodological; implementing
+lineage-aware splits, pooled-versus-fold validation reporting, and
+group-resampled uncertainty estimation changes the interpretation
+of these experiments.
+
+Our results motivate natural next steps. Because
+heavy-chain sequence alone proved insufficient for breadth, richer inputs such
+as paired heavy/light chains or explicit structure are worth exploring.
+Additionally,
+the results of the VAE and adaptation analyses were limited primarily by the scarcity
+of labeled bnAb data, larger cohorts and external validation on held-out
+lineages are needed before stronger conclusions can be drawn.

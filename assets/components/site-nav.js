@@ -38,7 +38,7 @@ class SiteNav extends HTMLElement {
                         <div class="nav-section" aria-label="Experience">
                             <span class="nav-section-label">Experience</span>
                             <div class="nav-section-links">
-                                <a href="https://hlwa-portfolio.github.io/" class="nav-link nav-link-stack nav-hanford" target="_blank" rel="noopener">
+                                <a href="https://hlwa-portfolio.github.io/" class="nav-local nav-local-stack nav-hanford" target="_blank" rel="noopener">
                                     Hanford
                                     <small>Nuclear Waste Vitrification</small>
                                 </a>
@@ -48,7 +48,7 @@ class SiteNav extends HTMLElement {
                             Photography
                             <small>Gallery</small>
                         </a>
-                        <a href="${root}assets/pdf/main_ML_class.pdf" class="nav-link nav-link-stack nav-resume" target="_blank" rel="noopener">
+                        <a href="${root}assets/pdf/main_ML_class.pdf" class="nav-local nav-local-stack nav-resume" target="_blank" rel="noopener">
                             Resume
                             <small>PDF</small>
                         </a>
@@ -60,7 +60,6 @@ class SiteNav extends HTMLElement {
                             </div>
                             <div class="nav-emails">
                                 <a href="mailto:steven.cleasby.mayeda@gmail.com">steven.cleasby.mayeda@gmail.com</a>
-                                <a href="mailto:cleasbys@oregonstate.edu">cleasbys@oregonstate.edu</a>
                             </div>
                         </div>
                     </div>

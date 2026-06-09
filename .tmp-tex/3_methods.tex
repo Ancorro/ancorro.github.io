@@ -1,0 +1,86 @@
+\section{Representations and Models}
+\label{sec:methods}
+
+\subsection{Handcrafted baseline}
+
+The baseline represents each $V_H$ sequence with seven features: length;
+charged, hydrophobic, aromatic, and cysteine fractions; cysteine count; and
+$N$-glycosylation-motif count. We evaluate logistic regression, random
+forest~\cite{breiman2001random}, and XGBoost~\cite{chen2016xgboost} heads.
+We select XGBoost as the baseline and retain a length-only logistic regression
+as a simple diagnostic.
+
+\subsection{Frozen ESM3 and downstream heads}
+
+We represent each sequence with residue embeddings from the frozen, open-weights
+\texttt{esm3-sm-open-v1}
+model~\cite{evolutionaryscale2024esm3open}. ESM3 is a 1.4-billion-parameter
+transformer model that learns from public protein databases. We pass each amino acid
+sequence through the model, extract the 1536-dimensional representation for each
+residue (excluding start-of-sequence BOS and end-of-sequence EOS tokens),
+resulting in a matrix of size $L \times 1536$ for a sequence of length $L$. To
+convert these variable-length representations into a fixed-size feature vector
+for downstream modeling, we compare two pooling schemes: (1) simple mean pooling
+across the sequence length, yielding a 1536-dimensional vector, and (2) a
+concatenated representation of the mean, maximum, and standard deviation across
+the sequence, yielding a 4608-dimensional vector. Downstream models fit their
+preprocessing steps (standard scaling and Principal Component Analysis [PCA] for
+dimensionality reduction) strictly inside each training fold to avoid target
+leakage. All downstream classifier and regressor heads, scaling, and PCA steps
+use the scikit-learn library~\cite{scikit-learn}.
+
+Classification candidates are L1/L2 logistic regression (using the SAGA
+solver~\cite{defazio2014saga} for L1), random forest~\cite{breiman2001random},
+XGBoost, and a PCA-50 multilayer perceptron. A separately trained additive
+attention-pooling classifier is an additional capacity test. Regression
+candidates are Ridge, random forest~\cite{breiman2001random}, and XGBoost, with
+a length-only Ridge floor. Appendix~\ref{app:hyperparameters} lists the
+hyperparameters.
+
+\subsection{OAS LoRA adaptation}
+
+To align general-protein representations with the specific statistical
+distribution of human antibodies, we perform domain adaptation using Low-Rank
+Adaptation (LoRA)~\cite{hu2022lora}. LoRA freezes the base model parameters and
+injects trainable low-rank decomposition matrices into the transformer's
+attention and feed-forward layers, drastically reducing the parameter space. We
+configure rank-16 adapters ($\alpha=32$, dropout $0.05$), training 18,874,368
+parameters out of 1.42 billion total parameters (1.33\%). Adaptation uses a
+self-supervised Masked Language Modeling (MLM)
+objective~\cite{devlin-etal-2019-bert}: we randomly mask or corrupt 15\% of amino
+acid tokens, and the model learns to predict the original residues from
+the surrounding context. We train for one epoch using the AdamW
+optimizer~\cite{LoshchilovH19} with an effective batch size of 32. Performance
+evaluation uses cross-entropy loss and perplexity (the exponential of the
+loss, representing the effective branching factor when predicting residues). Our
+run achieves a clonotype-held-out validation loss of $0.5025$ and a perplexity
+of $1.653$. We merge the learned adapter weights directly into the base model
+parameters before extracting embeddings.
+
+\subsection{Per-residue VAE and controls}
+\label{sec:vae_methods}
+
+To analyze sequence maturation and interpolation, we train a Variational
+Autoencoder (VAE) to compress 1536-dimensional residue-level embeddings into a
+smooth, lower-dimensional latent space. Variational autoencoders are generative
+models consisting of an encoder that maps input vectors to a latent probability
+distribution, and a decoder that reconstructs the inputs from samples drawn from
+this distribution. Our VAE architecture uses fully connected layers with hidden
+dimensions of 512 and 256, compressing the input to a 32-dimensional latent
+variable $z$. The loss function balances reconstruction error (Mean Squared
+Error) with a regularization term (Kullback-Leibler [KL] divergence) that
+penalizes deviation from a standard normal prior distribution to ensure a smooth
+latent space. We scale the KL penalty by $\beta=0.005$ using a 25-epoch linear
+warm-up to prevent posterior collapse, wherein the model ignores the latent
+codes. We fit the standard scaler on training residue vectors only.
+We train separate frozen-embedding and LoRA-embedding VAEs with this same
+architecture for 300 epochs.
+
+We globally align endpoint sequences with the Needleman-Wunsch
+algorithm~\cite{needleman1970general} through the Biopython
+library~\cite{cock2009biopython} before residue-wise interpolation. For a UCA
+latent $z_u$ and mature latent $z_m$, the VAE path is
+\begin{equation} z(\alpha)=(1-\alpha)z_u+\alpha z_m,\qquad \alpha\in[0,1]. \end{equation}
+We evaluate three embedding-space paths: the decoded VAE latent path; a straight line between VAE-reconstructed endpoints (\texttt{sl\_rec}), which controls for reconstruction; and a straight line between raw ESM3 endpoints (\texttt{sl\_raw}), which avoids the VAE bottleneck.
+
+We perform four evaluations of the latent space geometry. The first evaluation (inferred intermediate search) searches an 11-step VRC34 UCA-to-mature path for the closest point to each of seven inferred intermediates (inferred ancestral sequences representing discrete evolutionary steps during maturation). The second evaluation (maturation midpoint test) tests four exact midpoints of ordered VRC34 triples. The third evaluation (maturation correlation analysis) correlates a VAE latent-axis coordinate with the sequence edit distance (the number of single-amino-acid substitutions, insertions, or deletions) from the UCA for four held-out lineages, serving as a proxy for evolutionary time. The fourth evaluation (latent space geometry check) compares VAE and reconstructed-line midpoints (geometric centers of the interpolation paths) for 75 sampled triples across 15 lineages to evaluate latent space smoothness. The maturation correlation analysis lacks a raw-embedding projection control and therefore cannot isolate a VAE or LoRA effect.

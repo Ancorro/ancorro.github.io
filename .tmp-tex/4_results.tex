@@ -1,0 +1,164 @@
+\section{Results}
+\label{sec:results}
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lccc}
+\toprule
+Representation & Fold AUROC & Pooled AUROC & 95\% interval \\
+\midrule
+Handcrafted XGB & $0.644\pm0.086$ & 0.625 & [0.518, 0.744] \\
+Frozen ESM3     & $0.761\pm0.131$ & \textbf{0.746} & [0.653, 0.837] \\
+OAS LoRA ESM3   & $0.745\pm0.140$ & 0.726 & [0.626, 0.825] \\
+\bottomrule
+\end{tabular}
+}
+\caption{Classification performance for the selected handcrafted, frozen, and LoRA ESM3 configurations. A group bootstrap produces the intervals.}
+\label{tab:main_classification}
+\end{table}
+
+\subsection{Classification}
+
+Table~\ref{tab:main_classification} separates the configuration-selection score
+(mean over folds) from the pooled OOF estimate and group-bootstrap interval.
+Frozen ESM3 improves pooled AUROC from $0.625$ to $0.746$ and pooled AUPRC from
+$0.742$ to $0.859$. On aligned predictions, the paired frozen-minus-handcrafted
+difference is $+0.121$ AUROC ($[0.012,0.228]$) and $+0.117$ AUPRC
+($[0.028,0.207]$). The intervals describe sensitivity to held-out lineage
+composition; they do not remove model-selection optimism.
+
+LoRA's selected classifier reaches pooled AUROC $0.726$, below frozen by
+$-0.020$ with paired interval $[-0.096,0.059]$. The corresponding AUPRC
+difference is $-0.031$ $[-0.075,0.024]$. These data do not establish a
+downstream classification improvement from the single adaptation run. The
+receiver operating characteristic and precision--recall curves for these
+classifiers appear in Figure~\ref{fig:classification_curves}.
+
+\begin{figure}[b]
+    \centering
+    \includegraphics[width=\linewidth]{../plots/lora/classification_roc_pr.png}
+    \caption{Pooled OOF ROC and precision--recall curves for the selected classifiers.}
+    \label{fig:classification_curves}
+\end{figure}
+
+The learned attention pool reaches mean-fold AUROC $0.702\pm0.100$, below the
+best fixed-pooling frozen model. This is a negative capacity result on the
+observed cohort, not evidence that learned pooling is generally inferior.
+
+\subsection{Continuous breadth regression}
+\label{sec:regression_results}
+
+Regression uses the same 300 threshold-selected antibodies. As summarized in
+Table~\ref{tab:regression}, frozen ESM3 reaches pooled Spearman $\rho=0.366$
+($[0.126,0.585]$), Pearson $r=0.357$ ($[0.129,0.580]$), and $R^2=0.114$
+($[-0.134,0.313]$). The length-only pooled Spearman floor is $0.004$. Thus the
+selected representation contains ranking information, while its absolute breadth
+predictions remain weak and sensitive to lineage composition. The scatter plots
+of predicted versus true breadth values appear in
+Figure~\ref{fig:regression_scatter}, illustrating the prediction variance.
+
+Selecting LoRA configurations by mean-fold Spearman chooses random forest with
+mean pooling, not the previously pooled-selected XGBoost configuration. Its
+pooled Spearman is $0.319$ ($[0.059,0.561]$). The paired LoRA-minus-frozen
+Spearman difference is $-0.047$ ($[-0.169,0.064]$).
+
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lccc}
+\toprule
+Representation & Fold $\rho$ & Pooled $\rho$ & 95\% interval \\
+\midrule
+Frozen ESM3   & $0.380\pm0.312$ & \textbf{0.366} & [0.126, 0.585] \\
+OAS LoRA ESM3 & $0.357\pm0.320$ & 0.319 & [0.059, 0.561] \\
+Length only   & --- & 0.004 & --- \\
+\bottomrule
+\end{tabular}
+\caption{Continuous-breadth regression performance. Pooled OOF metrics and group-bootstrap intervals evaluate the selected configurations.}
+\label{tab:regression}
+\end{table}
+
+\begin{figure}[b]
+    \centering
+    \includegraphics[width=\linewidth]{../plots/lora/regression_pred_vs_true.png}
+    \caption{Pooled OOF predicted versus observed breadth for frozen and LoRA configurations.}
+    \label{fig:regression_scatter}
+\end{figure}
+
+\subsection{Reconstruction dominates VAE interpolation}
+\label{sec:vae_results}
+
+The frozen-embedding VAE's best epoch has validation total loss $0.2599$,
+reconstruction loss $0.1859$, and KL loss $14.80$. These values document the
+saved run; they do not by themselves establish useful interpolation geometry.
+
+In the inferred intermediate search (detailed in Table~\ref{tab:tier1}), raw
+ESM3 interpolation is closer than the VAE path for six of seven VRC34 inferred
+intermediates. Raw-line Mean Absolute Error (MAE) ranges from $8.51$ to $46.55$
+(mean $20.77$), while VAE-path MAE ranges from $34.54$ to $44.30$ (mean
+$37.47$). The exception is \texttt{pI3'}, for which the raw-line MAE is $46.55$
+and the VAE MAE is $44.30$. The VAE-minus-\texttt{sl\_rec} difference averages
+only $-0.0069$ (range $-0.0196$ to approximately zero), so the saved case study
+does not demonstrate practically meaningful curvature beyond reconstruction.
+
+The maturation midpoint test provides the cleanest direct midpoint comparison.
+Across four ordered VRC34 triples, raw-line midpoint MAE ranges from $8.24$ to
+$13.35$, versus $35.20$ to $37.95$ for the VAE midpoint. The per-residue VAE
+bottleneck therefore adds much more error than the midpoint-control differences
+under study.
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrr}
+\toprule
+Inferred intermediate & VAE MAE & Raw-line MAE & VAE--rec.\ line \\
+\midrule
+\texttt{pI1}      & 37.96 & 8.51  & $-0.0000$ \\
+\texttt{pI2}      & 34.54 & 15.54 & $-0.0106$ \\
+\texttt{pI2'}     & 38.28 & 32.48 & $-0.0196$ \\
+\texttt{pI2 H33P} & 35.29 & 17.14 & $-0.0179$ \\
+\texttt{pI3}      & 36.56 & 15.53 & $\phantom{-}0.0000$ \\
+\texttt{pI3'}     & 44.30 & 46.55 & $-0.0000$ \\
+\texttt{pI4}      & 35.38 & 9.63  & $-0.0000$ \\
+\bottomrule
+\end{tabular}
+}
+\caption{Exact embedding-space MAE per dimension/residue for VRC34 intermediates (inferred intermediate search). The reconstructed straight-line control provides the comparison for VAE performance.}
+\label{tab:tier1}
+\end{table}
+
+\subsection{LoRA and descriptive maturation directionality}
+\label{sec:lora_geometry}
+
+For the maturation correlation analysis, mean Pearson correlation across the
+four held-out lineages increases from $0.566$ for the frozen-embedding VAE to
+$0.822$ for the LoRA-embedding VAE; mean Spearman increases from $0.384$ to
+$0.692$. All four Pearson point estimates increase
+(Figure~\ref{fig:directionality}), but sensitivity intervals are wide for small
+lineages. For example, DH511 changes from $0.084$ to $0.409$, while its
+approximate LoRA Pearson interval is $[-0.415,0.865]$.
+
+This comparison is descriptive. It contrasts two separately trained, single-seed
+VAEs, uses one LoRA adapter, covers four lineages, and lacks a raw-embedding
+projection control. It therefore cannot establish that OAS adaptation caused
+improved maturation organization.
+
+The latent space geometry check does not provide supporting interpolation
+evidence. Frozen VAE-minus-line MAE has mean $0.041$, standard deviation
+$0.274$, and lineage-bootstrap interval $[-0.016,0.109]$; LoRA has mean $0.076$,
+standard deviation $0.237$, and interval $[0.023,0.142]$. Positive differences
+favor the reconstructed straight-line control.
+
+\begin{figure}[b]
+    \centering
+    \includegraphics[width=\linewidth]{../plots/lora/vae_directionality_by_lineage.png}
+    \caption{Pearson maturation correlation for four held-out lineages (maturation correlation analysis).}
+    \label{fig:directionality}
+\end{figure}

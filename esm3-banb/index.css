@@ -26,6 +26,7 @@
     --font-heading: 'Source Serif 4', Georgia, serif;
     --font-body: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --font-mono: 'JetBrains Mono', 'Courier New', Courier, monospace;
+    --font-nav: 'LINE Seed JP', sans-serif;
     
     /* Transitions */
     --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -162,9 +163,10 @@ header .paper-container {
 }
 
 .logo {
-    font-family: 'Source Serif 4', Georgia, serif;
-    font-size: clamp(0.92rem, 0.65rem + 0.9vw, 1.25rem);
-    font-weight: 500;
+    font-family: var(--font-nav);
+    font-size: clamp(0.92rem, 0.65rem + 0.9vw, 1.15rem);
+    font-weight: 800;
+    letter-spacing: 0.08em;
     color: var(--text-primary);
     text-decoration: none;
     display: flex;
@@ -314,6 +316,9 @@ nav:not(.nav) a:hover::after {
 }
 
 .nav-buttons .btn {
+    font-family: var(--font-nav);
+    font-weight: 700;
+    letter-spacing: 0.06em;
     white-space: nowrap;
 }
 
@@ -1015,11 +1020,25 @@ footer p {
     margin-bottom: 1.25rem;
 }
 
+.footer-emails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: -0.35rem;
+    margin-bottom: 1.1rem;
+}
+
 .footer-email {
     font-family: var(--font-mono);
     font-size: 0.84rem;
-    margin-top: -0.35rem;
-    margin-bottom: 1.1rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-email:hover {
+    color: var(--text-primary);
 }
 
 .social-links {
