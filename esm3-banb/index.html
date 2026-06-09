@@ -8,7 +8,7 @@
     <meta name="description"
         content="Evaluating frozen and antibody-adapted ESM3 representations for HIV broadly neutralizing antibody classification and breadth regression under lineage-held-out validation.">
     <meta name="author" content="Steven Cleasby-Mayeda">
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
     <link rel="stylesheet" href="../assets/components/site-nav.css">
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -30,19 +30,22 @@
 
 <body class="paper-page">
 
+    <!-- Background glow elements -->
     <div class="bg-glow"></div>
+
     <site-nav root="../"></site-nav>
 
+    <!-- Navigation Header -->
     <header>
         <div class="paper-container">
-            <a href="index.html" class="logo">
+            <a href="index.html" class="logo" id="nav-logo">
                 <span class="logo-mark" aria-hidden="true">
-                    <img src="assets/images/favicon.svg" alt="">
+                    <img src="../assets/images/favicon.svg" alt="">
                 </span>
-                <span>ESM3 bnAb Modeling</span>
+                <span>ESM3 bnAb Research</span>
             </a>
             <div class="nav-buttons">
-                <a href="assets/pdf/ESM3_bnAb.pdf" class="btn btn-secondary btn-sm" download>
+                <a href="assets/pdf/ESM3_bnAb.pdf" class="btn btn-secondary btn-sm" id="btn-nav-download" download>
                     <i class="fas fa-file-pdf"></i> Download Paper
                 </a>
                 <span class="btn btn-secondary btn-sm btn-unavailable" title="Repository is private">
@@ -52,8 +55,10 @@
         </div>
     </header>
 
+    <!-- Main Content Area -->
     <main class="paper-layout paper-container">
 
+        <!-- Sidebar Table of Contents -->
         <aside class="paper-toc">
             <div class="toc-sticky">
                 <h3>Paper Sections</h3>
@@ -66,13 +71,14 @@
                     <li><a href="#results">5. Results</a></li>
                     <li><a href="#limitations">6. Limitations</a></li>
                     <li><a href="#conclusion">7. Conclusion</a></li>
-                    <li><a href="#appendix">Appendix</a></li>
                 </ul>
             </div>
         </aside>
 
+        <!-- Paper Body (Academic Sheet) -->
         <article class="paper-sheet">
 
+            <!-- Paper Title Block -->
             <div class="paper-title-section">
                 <h1>Evaluating Frozen and Antibody-Adapted ESM3 Representations for HIV Broadly Neutralizing Antibody
                     Modeling</h1>
@@ -88,6 +94,7 @@
                 <div class="paper-date">June 2026</div>
             </div>
 
+            <!-- Abstract -->
             <section id="abstract" class="abstract-box">
                 <h3>Abstract</h3>
                 <p>
@@ -609,9 +616,89 @@
                 </div>
             </section>
 
-            <section id="appendix">
-                <h2>Appendix: Verification and Reproducibility Details</h2>
+            <!-- References (inside columns) -->
+            <section id="references" class="references-section">
+                <h2>References</h2>
                 <div class="paper-content-columns">
+                    <ol class="references-list">
+                        <li id="ref-sok2018">[1] Devin Sok and Dennis R. Burton. <em>Recent progress in broadly
+                                neutralizing antibodies to HIV</em>. <em>Nature Immunology</em>, 19(11):1179–1188, 2018.
+                        </li>
+                        <li id="ref-liu2020">[2] Yubin Liu et al. <em>Broadly neutralizing antibodies for HIV-1:
+                                efficacies, challenges and opportunities</em>. <em>Emerging Microbes &amp;
+                                Infections</em>, 9(1):194–206, 2020.</li>
+                        <li id="ref-hayes2025">[3] Thomas Hayes et al. <em>Simulating 500 million years of evolution with
+                                a language model</em>. <em>Science</em>, 387(6736):850–858, 2025.</li>
+                        <li id="ref-esm3open">[4] EvolutionaryScale Team. <em>ESM3: open model weights
+                                (esm3-sm-open-v1)</em>. 2024.</li>
+                        <li id="ref-oas">[5] Tobias H. Olsen et al. <em>Observed Antibody Space</em>. <em>Protein
+                                Science</em>, 31(1):141–146, 2022.</li>
+                        <li id="ref-catnap">[6] Hyejin Yoon et al. <em>CATNAP: a tool to compile, analyze and tally
+                                neutralizing antibody panels</em>. <em>Nucleic Acids Research</em>, 43(W1):W213–W219,
+                            2015.</li>
+                        <li id="ref-doria">[7] Nicole A. Doria-Rose et al. <em>Developmental pathway for potent V1V2-directed
+                                HIV-neutralizing antibodies</em>. <em>Nature</em>, 509:55–62, 2014.</li>
+                        <li id="ref-bhiman">[8] Jinal N. Bhiman et al. <em>New member of the V1V2-directed CAP256-VRC26
+                                lineage</em>. <em>Journal of Virology</em>, 90(1):76–91, 2016.</li>
+                        <li id="ref-danaila">[9] Vlad-Rareș Dănăilă et al. <em>Machine learning in HIV neutralizing
+                                antibodies research—a systematic review</em>. <em>Artificial Intelligence in
+                                Medicine</em>, 134:102429, 2022.</li>
+                        <li id="ref-brave">[10] Mohammed El Anbari et al. <em>BRAVE: predicting HIV-1 antibody resistance
+                                with protein language models</em>. <em>bioRxiv</em>, 2025.</li>
+                        <li id="ref-esm2">[11] Zeming Lin et al. <em>Evolutionary-scale prediction of atomic-level protein
+                                structure with a language model</em>. <em>Science</em>, 379(6637):1123–1130, 2023.</li>
+                        <li id="ref-antiberty">[12] Jeffrey A. Ruffolo et al. <em>Deciphering antibody affinity
+                                maturation with language models</em>. arXiv:2112.07782, 2021.</li>
+                        <li id="ref-ablang">[13] Tobias H. Olsen et al. <em>AbLang: an antibody language model</em>.
+                            <em>Bioinformatics Advances</em>, 2(1):vbac046, 2022.</li>
+                        <li id="ref-igbert">[14] Henry Kenlay et al. <em>Large scale paired antibody language models</em>.
+                            <em>PLOS Computational Biology</em>, 20(12):e1012646, 2024.</li>
+                        <li id="ref-deutschmann">[15] Nicolas Deutschmann et al. <em>Do domain-specific protein language
+                                models outperform general models on immunology tasks?</em> <em>ImmunoInformatics</em>,
+                            14:100036, 2024.</li>
+                        <li id="ref-lora">[16] Edward J. Hu et al. <em>LoRA: Low-Rank Adaptation of Large Language
+                                Models</em>. ICLR, 2022.</li>
+                        <li id="ref-vae">[17] Diederik P. Kingma and Max Welling. <em>Auto-Encoding Variational
+                                Bayes</em>. ICLR, 2014.</li>
+                        <li id="ref-xgboost">[18] Tianqi Chen and Carlos Guestrin. <em>XGBoost: A scalable tree boosting
+                                system</em>. KDD, 2016.</li>
+                        <li id="ref-bert">[19] Jacob Devlin et al. <em>BERT: Pre-training of Deep Bidirectional
+                                Transformers</em>. NAACL, 2019.</li>
+                        <li id="ref-adamw">[20] Ilya Loshchilov and Frank Hutter. <em>Decoupled weight decay
+                                regularization</em>. ICLR, 2019.</li>
+                        <li id="ref-needleman">[21] Saul B. Needleman and Christian D. Wunsch. <em>A general method
+                                applicable to the search for similarities in amino acid sequences</em>. <em>Journal of
+                                Molecular Biology</em>, 48(3):443–453, 1970.</li>
+                        <li id="ref-igiraneza">[22] Aime Bienfait Igiraneza et al. <em>Learning patterns of HIV-1
+                                resistance to broadly neutralizing antibodies with reduced subtype bias using multi-task
+                                learning</em>. <em>PLOS Computational Biology</em>, 20(11):e1012618, 2024.</li>
+                        <li id="ref-ablang2">[23] Tobias H. Olsen et al. <em>Addressing the antibody germline bias and its
+                                effect on language models for improved antibody design</em>. <em>Bioinformatics</em>,
+                            40(11):btae618, 2024.</li>
+                        <li id="ref-mamahdi">[24] Mamahdi14. <em>Antibody Structure</em>. Wikimedia Commons, 2016.
+                            CC BY-SA 4.0.</li>
+                        <li id="ref-breiman">[25] Leo Breiman. <em>Random Forests</em>. <em>Machine Learning</em>, 45(1):5–32,
+                            2001.</li>
+                        <li id="ref-sklearn">[26] F. Pedregosa et al. <em>Scikit-learn: Machine Learning in Python</em>.
+                            <em>Journal of Machine Learning Research</em>, 12:2825–2830, 2011.</li>
+                        <li id="ref-saga">[27] Aaron Defazio, Francis Bach, and Simon Lacoste-Julien. <em>SAGA: A Fast
+                                Incremental Gradient Method With Support for Non-Strongly Convex Composite
+                                Objectives</em>. NeurIPS, 27:1646–1654, 2014.</li>
+                        <li id="ref-biopython">[28] Peter J. A. Cock et al. <em>Biopython: freely available Python tools for
+                                computational molecular biology and bioinformatics</em>. <em>Bioinformatics</em>,
+                            25(11):1422–1423, 2009.</li>
+                        <li id="ref-conti">[29] Simone Conti and Martin Karplus. <em>Estimation of the breadth of CD4bs
+                                targeting HIV antibodies by molecular modeling and machine learning</em>. <em>PLOS
+                                Computational Biology</em>, 15(4):e1006954, 2019.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Appendix (Spans both columns) -->
+            <section id="appendix" class="span-both-columns">
+                <h2>Appendix</h2>
+
+                <div style="column-count: 2; column-gap: 2.25rem;">
                     <h3>A.1. Candidate configurations</h3>
                     <p>
                         Table&nbsp;A1 records compared model families and fixed settings that materially affect
@@ -915,85 +1002,9 @@
                 </div>
             </section>
 
-            <section id="references" class="references-section">
-                <h2>References</h2>
-                <div class="paper-content-columns">
-                    <ol class="references-list">
-                        <li id="ref-sok2018">[1] Devin Sok and Dennis R. Burton. <em>Recent progress in broadly
-                                neutralizing antibodies to HIV</em>. <em>Nature Immunology</em>, 19(11):1179–1188, 2018.
-                        </li>
-                        <li id="ref-liu2020">[2] Yubin Liu et al. <em>Broadly neutralizing antibodies for HIV-1:
-                                efficacies, challenges and opportunities</em>. <em>Emerging Microbes &amp;
-                                Infections</em>, 9(1):194–206, 2020.</li>
-                        <li id="ref-hayes2025">[3] Thomas Hayes et al. <em>Simulating 500 million years of evolution with
-                                a language model</em>. <em>Science</em>, 387(6736):850–858, 2025.</li>
-                        <li id="ref-esm3open">[4] EvolutionaryScale Team. <em>ESM3: open model weights
-                                (esm3-sm-open-v1)</em>. 2024.</li>
-                        <li id="ref-oas">[5] Tobias H. Olsen et al. <em>Observed Antibody Space</em>. <em>Protein
-                                Science</em>, 31(1):141–146, 2022.</li>
-                        <li id="ref-catnap">[6] Hyejin Yoon et al. <em>CATNAP: a tool to compile, analyze and tally
-                                neutralizing antibody panels</em>. <em>Nucleic Acids Research</em>, 43(W1):W213–W219,
-                            2015.</li>
-                        <li id="ref-doria">[7] Nicole A. Doria-Rose et al. <em>Developmental pathway for potent V1V2-directed
-                                HIV-neutralizing antibodies</em>. <em>Nature</em>, 509:55–62, 2014.</li>
-                        <li id="ref-bhiman">[8] Jinal N. Bhiman et al. <em>New member of the V1V2-directed CAP256-VRC26
-                                lineage</em>. <em>Journal of Virology</em>, 90(1):76–91, 2016.</li>
-                        <li id="ref-danaila">[9] Vlad-Rareș Dănăilă et al. <em>Machine learning in HIV neutralizing
-                                antibodies research—a systematic review</em>. <em>Artificial Intelligence in
-                                Medicine</em>, 134:102429, 2022.</li>
-                        <li id="ref-brave">[10] Mohammed El Anbari et al. <em>BRAVE: predicting HIV-1 antibody resistance
-                                with protein language models</em>. <em>bioRxiv</em>, 2025.</li>
-                        <li id="ref-esm2">[11] Zeming Lin et al. <em>Evolutionary-scale prediction of atomic-level protein
-                                structure with a language model</em>. <em>Science</em>, 379(6637):1123–1130, 2023.</li>
-                        <li id="ref-antiberty">[12] Jeffrey A. Ruffolo et al. <em>Deciphering antibody affinity
-                                maturation with language models</em>. arXiv:2112.07782, 2021.</li>
-                        <li id="ref-ablang">[13] Tobias H. Olsen et al. <em>AbLang: an antibody language model</em>.
-                            <em>Bioinformatics Advances</em>, 2(1):vbac046, 2022.</li>
-                        <li id="ref-igbert">[14] Henry Kenlay et al. <em>Large scale paired antibody language models</em>.
-                            <em>PLOS Computational Biology</em>, 20(12):e1012646, 2024.</li>
-                        <li id="ref-deutschmann">[15] Nicolas Deutschmann et al. <em>Do domain-specific protein language
-                                models outperform general models on immunology tasks?</em> <em>ImmunoInformatics</em>,
-                            14:100036, 2024.</li>
-                        <li id="ref-lora">[16] Edward J. Hu et al. <em>LoRA: Low-Rank Adaptation of Large Language
-                                Models</em>. ICLR, 2022.</li>
-                        <li id="ref-vae">[17] Diederik P. Kingma and Max Welling. <em>Auto-Encoding Variational
-                                Bayes</em>. ICLR, 2014.</li>
-                        <li id="ref-xgboost">[18] Tianqi Chen and Carlos Guestrin. <em>XGBoost: A scalable tree boosting
-                                system</em>. KDD, 2016.</li>
-                        <li id="ref-bert">[19] Jacob Devlin et al. <em>BERT: Pre-training of Deep Bidirectional
-                                Transformers</em>. NAACL, 2019.</li>
-                        <li id="ref-adamw">[20] Ilya Loshchilov and Frank Hutter. <em>Decoupled weight decay
-                                regularization</em>. ICLR, 2019.</li>
-                        <li id="ref-needleman">[21] Saul B. Needleman and Christian D. Wunsch. <em>A general method
-                                applicable to the search for similarities in amino acid sequences</em>. <em>Journal of
-                                Molecular Biology</em>, 48(3):443–453, 1970.</li>
-                        <li id="ref-igiraneza">[22] Aime Bienfait Igiraneza et al. <em>Learning patterns of HIV-1
-                                resistance to broadly neutralizing antibodies with reduced subtype bias using multi-task
-                                learning</em>. <em>PLOS Computational Biology</em>, 20(11):e1012618, 2024.</li>
-                        <li id="ref-ablang2">[23] Tobias H. Olsen et al. <em>Addressing the antibody germline bias and its
-                                effect on language models for improved antibody design</em>. <em>Bioinformatics</em>,
-                            40(11):btae618, 2024.</li>
-                        <li id="ref-mamahdi">[24] Mamahdi14. <em>Antibody Structure</em>. Wikimedia Commons, 2016.
-                            CC BY-SA 4.0.</li>
-                        <li id="ref-breiman">[25] Leo Breiman. <em>Random Forests</em>. <em>Machine Learning</em>, 45(1):5–32,
-                            2001.</li>
-                        <li id="ref-sklearn">[26] F. Pedregosa et al. <em>Scikit-learn: Machine Learning in Python</em>.
-                            <em>Journal of Machine Learning Research</em>, 12:2825–2830, 2011.</li>
-                        <li id="ref-saga">[27] Aaron Defazio, Francis Bach, and Simon Lacoste-Julien. <em>SAGA: A Fast
-                                Incremental Gradient Method With Support for Non-Strongly Convex Composite
-                                Objectives</em>. NeurIPS, 27:1646–1654, 2014.</li>
-                        <li id="ref-biopython">[28] Peter J. A. Cock et al. <em>Biopython: freely available Python tools for
-                                computational molecular biology and bioinformatics</em>. <em>Bioinformatics</em>,
-                            25(11):1422–1423, 2009.</li>
-                        <li id="ref-conti">[29] Simone Conti and Martin Karplus. <em>Estimation of the breadth of CD4bs
-                                targeting HIV antibodies by molecular modeling and machine learning</em>. <em>PLOS
-                                Computational Biology</em>, 15(4):e1006954, 2019.</li>
-                    </ol>
-                </div>
-            </section>
-
         </article>
 
+        <!-- Right References Sidebar -->
         <aside class="paper-refs-sidebar">
             <h3>References</h3>
             <ul>

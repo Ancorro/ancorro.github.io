@@ -63,11 +63,13 @@
                 <!-- Project 1 -->
                 <article id="proj-esm3" class="work">
                     <h3>ESM3 Representations for HIV bnAb Modeling</h3>
-                    <div class="tools">Course Project · ESM3 · LoRA · PyTorch</div>
-                    <p>Evaluated frozen and OAS-adapted ESM3 embeddings for broadly neutralizing antibody classification
-                        and breadth regression on CATNAP, with lineage-held-out splits and group-bootstrap uncertainty.
-                        Frozen ESM3 outperformed handcrafted baselines; unsupervised LoRA did not improve downstream
-                        performance in a single adaptation run.</p>
+                    <div class="tools">Course Project · ESM3 · LoRA · CATNAP</div>
+                    <p>Evaluated whether frozen and OAS-adapted ESM3 embeddings support antibody-centric HIV bnAb modeling
+                        from heavy-chain sequence alone on CATNAP. Under lineage-held-out splits with group-bootstrap
+                        uncertainty, frozen ESM3 improved broad-vs-narrow classification (pooled AUROC 0.746 vs 0.625
+                        handcrafted) and showed modest breadth regression; unsupervised OAS LoRA did not improve
+                        downstream performance in a single adaptation run. Raw embedding interpolation matched or beat
+                        per-residue VAE paths along maturation trajectories.</p>
                     <div class="links">
                         <a href="esm3-banb/" target="_blank" rel="noopener"><i
                                 class="fas fa-arrow-up-right-from-square"></i> Project page</a>
