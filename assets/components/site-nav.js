@@ -30,6 +30,10 @@ class SiteNav extends HTMLElement {
                             GitHub
                             <small>ancorro</small>
                         </a>
+                        <a href="https://linkedin.com/in/stevencm" class="nav-link nav-link-stack mobile-link" target="_blank" rel="noopener">
+                            LinkedIn
+                            <small>stevencm</small>
+                        </a>
                     </div>
                     <span class="nav-link-stack nav-emails">
                         <span>Email</span>
