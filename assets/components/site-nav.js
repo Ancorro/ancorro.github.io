@@ -23,14 +23,20 @@ class SiteNav extends HTMLElement {
                     </a>
                     <div class="nav-menu">
                         <div class="nav-research" aria-label="Research projects">
-                            <a href="${root}logic-expert/" class="nav-local">Logic Expert</a>
-                            <a href="${root}esm3-banb/" class="nav-local">ESM3 bnAb</a>
+                            <a href="${root}logic-expert/" class="nav-local nav-local-stack">
+                                Logic Expert
+                                <small>Transformers Research</small>
+                            </a>
+                            <a href="${root}esm3-banb/" class="nav-local nav-local-stack">
+                                ESM3 bnAb
+                                <small>Foundation Models</small>
+                            </a>
                         </div>
-                        <a href="${root}photography/" class="nav-local">Photography</a>
                         <a href="https://hlwa-portfolio.github.io/" class="nav-link nav-link-stack nav-hanford" target="_blank" rel="noopener">
                             Hanford
                             <small>Nuclear Waste Vitrification</small>
                         </a>
+                        <a href="${root}photography/" class="nav-local">Photography</a>
                         <a href="${root}assets/pdf/main_ML_class.pdf" class="nav-link nav-link-stack nav-resume" target="_blank" rel="noopener">
                             Resume
                             <small>PDF</small>

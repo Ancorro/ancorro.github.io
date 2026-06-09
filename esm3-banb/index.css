@@ -298,6 +298,15 @@ nav:not(.nav) a:hover::after {
     pointer-events: none;
 }
 
+.btn-unavailable {
+    color: var(--text-muted);
+    background: rgba(15, 45, 55, 0.04);
+    border-bottom-color: rgba(15, 45, 55, 0.08);
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.72;
+}
+
 .btn-sm {
     padding: 0.28rem 0.62rem;
     font-size: 0.76rem;
