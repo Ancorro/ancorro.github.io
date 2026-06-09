@@ -1,24 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=LINE+Seed+JP:wght@400;700;800&display=swap');
 
-/* Shared site nav.
-   - Sizing is pinned to fixed px (not rem) so the bar renders identically on
-     every page regardless of each page's root font-size.
-   - Layout is two regions: a brand (left) and a single nav-menu (right). The
-     menu owns all its spacing through one consistent `gap` token and wraps with
-     flexbox, so there are no hand-tuned per-item gaps or width breakpoints.
-   - The host <site-nav> is an in-flow spacer; its height is kept in sync with
-     the fixed bar by site-nav.js (see syncHeight), so wrapping never hides
-     page content underneath the bar. */
+/* Shared site nav — compact single-row layout where possible. */
 site-nav {
     --nav-progress: 0;
-    --nav-height-large: 153px;
-    --nav-height-delta: 42.5px;
-    --art-width-large: 108.375px;
-    --art-width-delta: 36.125px;
-    --art-height-large: 127.5px;
-    --art-height-delta: 42.5px;
-    /* spacing token used between every nav-menu item */
-    --nav-gap: clamp(20px, 2vw, 40px);
+    --nav-height-large: 108px;
+    --nav-height-delta: 36px;
+    --art-width-large: 76px;
+    --art-width-delta: 28px;
+    --art-height-large: 89px;
+    --art-height-delta: 33px;
+    --nav-gap: clamp(10px, 1.2vw, 22px);
     display: block;
     min-height: var(--nav-height-large);
 }
@@ -47,41 +38,42 @@ site-nav {
     align-items: center;
     flex-wrap: wrap;
     column-gap: var(--nav-gap);
-    row-gap: 12px;
+    row-gap: 8px;
     min-height: calc(var(--nav-height-large) - (var(--nav-progress) * var(--nav-height-delta)));
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding-top: 6px;
+    padding-bottom: 6px;
 }
 
 .nav-brand {
     display: inline-flex;
     align-items: center;
-    gap: 17px;
+    gap: 12px;
     color: #000;
     font-family: 'LINE Seed JP', sans-serif;
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 800;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     text-decoration: none;
     border: 0;
+    flex-shrink: 0;
 }
 
 .nav-brand-text {
     display: flex;
     flex-direction: column;
-    gap: 3.06px;
-    line-height: 1.15;
+    gap: 2px;
+    line-height: 1.12;
 }
 
 .nav-brand-text strong {
-    font-size: 17px;
+    font-size: 15px;
 }
 
 .nav-brand-text small {
     color: #8a8a8a;
-    font-size: 9.86px;
+    font-size: 9px;
     font-weight: 400;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     white-space: nowrap;
 }
 
@@ -95,32 +87,66 @@ site-nav {
     filter: grayscale(1) contrast(1.08);
 }
 
-/* The single right-hand region holding every link + the contact block.
-   margin-left:auto pins it to the right on one row and keeps it right-aligned
-   when it wraps onto its own row(s). */
 .nav-menu {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     justify-content: flex-end;
     column-gap: var(--nav-gap);
-    row-gap: 12px;
+    row-gap: 8px;
     margin-left: auto;
 }
 
-/* Local page links (Logic Expert, Photography) — persistent underline. */
-.nav-local {
+/* Clustered link groups */
+.nav-research {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    column-gap: calc(var(--nav-gap) * 0.55);
+    row-gap: 4px;
+    padding-right: calc(var(--nav-gap) * 0.4);
+    margin-right: calc(var(--nav-gap) * 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav-link-stack {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    line-height: 1.1;
+}
+
+.nav-link-stack small {
+    color: #929292;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    white-space: nowrap;
+}
+
+.nav-hanford {
+    flex-shrink: 0;
+}
+
+.nav-local,
+.nav-link {
     font-family: 'LINE Seed JP', sans-serif;
-    font-size: 13.26px;
+    font-size: 11.5px;
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #5c5c5c;
     text-decoration: none;
     border: 0;
-    border-bottom: 1.5px solid rgba(0, 0, 0, 0.15);
-    padding-bottom: 1.7px;
+    padding-bottom: 1px;
+    white-space: nowrap;
     transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.nav-local {
+    color: #5c5c5c;
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.15);
 }
 
 .nav-local:hover {
@@ -128,27 +154,9 @@ site-nav {
     border-color: rgba(0, 0, 0, 0.4);
 }
 
-.nav-local-multiline {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: flex-start;
-    line-height: 1.35;
-    text-align: left;
-}
-
-/* External / utility links (Hanford, Resume, GitHub) — underline on hover. */
 .nav-link {
     color: #252525;
-    font-family: 'LINE Seed JP', sans-serif;
-    font-size: 13.26px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-decoration: none;
-    text-transform: uppercase;
-    border: 0;
     border-bottom: 1.5px solid transparent;
-    padding-bottom: 1.7px;
-    transition: color 0.25s ease, border-color 0.25s ease;
 }
 
 .nav-link:hover {
@@ -156,59 +164,67 @@ site-nav {
     border-color: rgba(0, 0, 0, 0.4);
 }
 
-/* Two-line label (main text + small descriptor), used by Hanford and emails. */
-.nav-link-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 2.38px;
-    line-height: 1.1;
+/* Social: icon row + stacked emails */
+.nav-social {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
 }
 
-.nav-link-stack small {
-    color: #929292;
-    font-size: 9.86px;
-    font-weight: 400;
-    letter-spacing: 0.025em;
-    text-transform: none;
-    white-space: nowrap;
+.nav-social-icons {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    color: #4a4a4a;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: color 0.2s ease, background 0.2s ease;
+}
+
+.nav-icon:hover {
+    color: #000;
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.nav-icon-svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+.nav-emails {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1px;
+    line-height: 1.2;
+    user-select: text;
 }
 
 .nav-emails a {
-    color: inherit;
+    color: #5c5c5c;
+    font-family: 'LINE Seed JP', sans-serif;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
     text-decoration: none;
-    transition: color 0.25s ease;
-    cursor: pointer;
+    text-transform: none;
+    white-space: nowrap;
+    transition: color 0.2s ease;
 }
 
 .nav-emails a:hover {
     color: #000;
     text-decoration: underline;
-}
-
-.nav-emails {
-    color: #252525;
-    font-family: 'LINE Seed JP', sans-serif;
-    text-align: right;
-    align-items: flex-end;
-    user-select: text;
-    cursor: default;
-    order: 1;
-}
-
-.nav-emails>span {
-    font-size: 9.52px;
-    font-weight: 400;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #a0a09e;
-}
-
-.nav-emails>small {
-    font-size: 12.24px;
-    color: #252525;
-    letter-spacing: 0.02em;
-    text-transform: none;
-    white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -217,86 +233,118 @@ site-nav {
     }
 }
 
-/* Intermediate widths: brand wraps above the menu. Move emails onto the
-   brand row (order 0) and force the menu to its own full-width row below. */
-@media (max-width: 1440px) and (min-width: 900px) {
-
+/* Mid widths: menu may wrap to second row */
+@media (max-width: 1280px) {
     site-nav {
-        --nav-height-large: 96px;
-        --nav-height-delta: 10px;
-        --art-width-large: 66px;
-        --art-width-delta: 6px;
-        --art-height-large: 78px;
-        --art-height-delta: 8px;
-        --nav-gap: 12px;
+        --nav-height-large: 88px;
+        --nav-gap: 10px;
     }
-
 
     .nav-emails {
-        order: 0;
-        margin-left: auto;
+        display: none;
     }
 
-    .nav-menu {
-        order: 1;
-        width: 100%;
-        margin-left: 0;
+    .nav-icon-mail {
+        display: inline-flex;
     }
 }
 
-/* Small screens: tighten spacing, shrink the brand art, and drop the
-   secondary external links (those without .mobile-link). Wrapping itself is
-   already handled by the base flexbox layout above. */
-@media (max-width: 900px) {
-    site-nav {
-        --nav-height-large: 72px;
-        --nav-height-delta: 10px;
-        --art-width-large: 46px;
-        --art-width-delta: 6px;
-        --art-height-large: 54px;
-        --art-height-delta: 8px;
-        --nav-gap: 12px;
-    }
-
+@media (max-width: 1280px) and (min-width: 901px) {
     .nav-menu {
         width: 100%;
         margin-left: 0;
-        row-gap: 8px;
+        justify-content: flex-start;
+    }
+}
+
+/* Small screens */
+@media (max-width: 900px) {
+    site-nav {
+        --nav-height-large: 64px;
+        --nav-height-delta: 8px;
+        --art-width-large: 42px;
+        --art-width-delta: 4px;
+        --art-height-large: 49px;
+        --art-height-delta: 6px;
+        --nav-gap: 10px;
     }
 
     .nav-inner {
         position: relative;
-        padding-top: 6px;
-        padding-bottom: 6px;
+        padding-top: 5px;
+        padding-bottom: 5px;
     }
 
-    .nav-link:not(.mobile-link) {
+    .nav-menu {
+        width: auto;
+        margin-left: auto;
+        flex-wrap: nowrap;
+        gap: 8px;
+    }
+
+    .nav-resume {
         display: none;
     }
 
-    /* Compact mobile layout tweaks */
-    .nav-emails {
-        position: absolute;
-        top: calc(20px - (var(--nav-progress) * 3px));
-        right: clamp(11.9px, 6vw, 79.9px);
-        margin-left: 0;
+    .nav-hanford small {
+        display: block;
     }
 
-    .nav-emails>span {
-        display: none;
-    }
-
-    .nav-emails small {
-        font-size: 10.5px;
-    }
-
-    .nav-desc,
-    .nav-link-stack:not(.nav-emails) small {
-        display: none;
+    .nav-research {
+        border-right: 0;
+        margin-right: 0;
+        padding-right: 0;
+        column-gap: 10px;
     }
 
     .nav-local,
     .nav-link {
-        font-size: 12px;
+        font-size: 10.5px;
+    }
+
+    .nav-social {
+        gap: 6px;
+    }
+
+    .nav-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    .nav-icon-svg {
+        width: 15px;
+        height: 15px;
+    }
+
+    /* One email line on mobile; mail icon opens primary address */
+    .nav-emails {
+        display: block;
+    }
+
+    .nav-emails a:last-child {
+        display: none;
+    }
+
+    .nav-emails a {
+        font-size: 9.5px;
+        max-width: 42vw;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+@media (max-width: 520px) {
+    .nav-brand-text small {
+        display: none;
+    }
+
+    .nav-emails {
+        display: none;
+    }
+
+    /* Keep Hanford subtitle visible — do not collapse to single-line */
+    .nav-hanford small {
+        display: block;
+        font-size: 8px;
     }
 }

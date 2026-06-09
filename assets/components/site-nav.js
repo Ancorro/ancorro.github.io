@@ -1,5 +1,11 @@
 'use strict';
 
+const NAV_ICONS = {
+    github: '<svg class="nav-icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.52 2.87 8.36 6.84 9.72.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.36-3.37-1.36-.45-1.17-1.12-1.48-1.12-1.48-.92-.64.07-.63.07-.63 1.02.07 1.55 1.06 1.55 1.06.9 1.56 2.36 1.11 2.94.85.09-.67.35-1.11.64-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.27 2.75 1.05A9.2 9.2 0 0 1 12 6.84c.85.004 1.71.12 2.51.34 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.07.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.8 0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>',
+    linkedin: '<svg class="nav-icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>',
+    mail: '<svg class="nav-icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>'
+};
+
 class SiteNav extends HTMLElement {
     connectedCallback() {
         const root = this.getAttribute('root') || '';
@@ -16,30 +22,31 @@ class SiteNav extends HTMLElement {
                         </span>
                     </a>
                     <div class="nav-menu">
-                        <a href="${root}logic-expert/" class="nav-local nav-local-multiline"><span class="nav-desc">Transformers Research<br></span>Logic Expert</a>
+                        <div class="nav-research" aria-label="Research projects">
+                            <a href="${root}logic-expert/" class="nav-local">Logic Expert</a>
+                            <a href="${root}esm3-banb/" class="nav-local">ESM3 bnAb</a>
+                        </div>
                         <a href="${root}photography/" class="nav-local">Photography</a>
-                        <a href="https://hlwa-portfolio.github.io/" class="nav-link nav-link-stack mobile-link" target="_blank" rel="noopener">
+                        <a href="https://hlwa-portfolio.github.io/" class="nav-link nav-link-stack nav-hanford" target="_blank" rel="noopener">
                             Hanford
                             <small>Nuclear Waste Vitrification</small>
                         </a>
-                        <a href="${root}assets/pdf/main_ML_class.pdf" class="nav-link nav-link-stack mobile-link" target="_blank" rel="noopener">
+                        <a href="${root}assets/pdf/main_ML_class.pdf" class="nav-link nav-link-stack nav-resume" target="_blank" rel="noopener">
                             Resume
                             <small>PDF</small>
                         </a>
-                        <a href="https://github.com/Ancorro" class="nav-link nav-link-stack mobile-link" target="_blank" rel="noopener">
-                            GitHub
-                            <small>ancorro</small>
-                        </a>
-                        <a href="https://linkedin.com/in/stevencm" class="nav-link nav-link-stack mobile-link" target="_blank" rel="noopener">
-                            LinkedIn
-                            <small>stevencm</small>
-                        </a>
+                        <div class="nav-social" aria-label="Contact and profiles">
+                            <div class="nav-social-icons">
+                                <a href="https://github.com/Ancorro" class="nav-icon" target="_blank" rel="noopener" aria-label="GitHub — Ancorro">${NAV_ICONS.github}</a>
+                                <a href="https://linkedin.com/in/stevencm" class="nav-icon" target="_blank" rel="noopener" aria-label="LinkedIn — stevencm">${NAV_ICONS.linkedin}</a>
+                                <a href="mailto:steven.cleasby.mayeda@gmail.com" class="nav-icon nav-icon-mail" aria-label="Email Steven">${NAV_ICONS.mail}</a>
+                            </div>
+                            <div class="nav-emails">
+                                <a href="mailto:steven.cleasby.mayeda@gmail.com">steven.cleasby.mayeda@gmail.com</a>
+                                <a href="mailto:cleasbys@oregonstate.edu">cleasbys@oregonstate.edu</a>
+                            </div>
+                        </div>
                     </div>
-                    <span class="nav-link-stack nav-emails">
-                        <span>Email</span>
-                        <a href="mailto:steven.cleasby.mayeda@gmail.com"><small>steven.cleasby.mayeda@gmail.com</small></a>
-                        <a href="mailto:cleasbys@oregonstate.edu"><small>cleasbys@oregonstate.edu</small></a>
-                    </span>
                 </div>
             </nav>
         `;
@@ -52,8 +59,6 @@ class SiteNav extends HTMLElement {
         window.addEventListener('scroll', this.updateScrollProgress, { passive: true });
         window.addEventListener('resize', this.syncHeight);
 
-        // Keep the in-flow spacer (this host element) the same height as the
-        // fixed bar, so content below is never hidden when the bar wraps.
         if (typeof ResizeObserver !== 'undefined') {
             this.resizeObserver = new ResizeObserver(this.syncHeight);
             this.resizeObserver.observe(this.navEl);
@@ -62,9 +67,6 @@ class SiteNav extends HTMLElement {
         this.syncHeight();
         this.updateScrollProgress();
 
-        // Re-measure after async reflows that change wrapping (and thus height):
-        // the next frame, full load (images), and web-font load — the menu
-        // widens once 'LINE Seed JP' replaces the fallback font.
         requestAnimationFrame(this.syncHeight);
         window.addEventListener('load', this.syncHeight);
         if (document.fonts && document.fonts.ready) {
@@ -80,9 +82,6 @@ class SiteNav extends HTMLElement {
     }
 
     syncHeight() {
-        // Reserve the bar's un-scrolled height. We only measure near the top of
-        // the page; the scroll-shrink animation would otherwise feed its own
-        // height changes back into the reservation and cause layout jitter.
         if (window.scrollY > 8) return;
         this.style.height = this.navEl.offsetHeight + 'px';
     }

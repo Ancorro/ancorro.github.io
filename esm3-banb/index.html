@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESM3 Representations for HIV bnAb Modeling | Full Paper</title>
+    <meta name="description"
+        content="Evaluating frozen and antibody-adapted ESM3 representations for HIV broadly neutralizing antibody classification and breadth regression under lineage-held-out validation.">
+    <meta name="author" content="Steven Cleasby-Mayeda">
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="stylesheet" href="../assets/components/site-nav.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../assets/components/site-nav.js" defer></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body class="paper-page">
+
+    <div class="bg-glow"></div>
+    <site-nav root="../"></site-nav>
+
+    <header>
+        <div class="paper-container">
+            <a href="index.html" class="logo">
+                <span class="logo-mark" aria-hidden="true">
+                    <img src="assets/images/favicon.svg" alt="">
+                </span>
+                <span>ESM3 bnAb Modeling</span>
+            </a>
+            <div class="nav-buttons">
+                <a href="index.html" class="btn btn-active btn-sm" aria-current="page">Full Paper</a>
+                <a href="https://github.com/Ancorro/ESM3-project" class="btn btn-secondary btn-sm" target="_blank"
+                    rel="noopener">
+                    <i class="fab fa-github"></i> Private Repo
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="paper-layout paper-container">
+
+        <aside class="paper-toc">
+            <div class="toc-sticky">
+                <h3>Paper Sections</h3>
+                <ul>
+                    <li><a href="#abstract">Abstract</a></li>
+                    <li><a href="#introduction">1. Introduction</a></li>
+                    <li><a href="#related-work">2. Related Work</a></li>
+                    <li><a href="#data">3. Data &amp; Protocol</a></li>
+                    <li><a href="#methods">4. Methods</a></li>
+                    <li><a href="#results">5. Results</a></li>
+                    <li><a href="#limitations">6. Limitations</a></li>
+                    <li><a href="#conclusion">7. Conclusion</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <article class="paper-sheet">
+
+            <div class="paper-title-section">
+                <h1>Evaluating Frozen and Antibody-Adapted ESM3 Representations for HIV Broadly Neutralizing Antibody
+                    Modeling</h1>
+                <div class="paper-authors">
+                    <div class="author-block">
+                        <strong>Steven Cleasby-Mayeda</strong>
+                        <span>Oregon State University</span>
+                        <a href="mailto:cleasbys@oregonstate.edu" class="author-email">cleasbys@oregonstate.edu</a>
+                        <a href="mailto:steven.cleasby.mayeda@gmail.com" class="author-email">steven.cleasby.mayeda@gmail.com</a>
+                    </div>
+                </div>
+                <div class="paper-course">AI539 — Scientific Foundation Models</div>
+                <div class="paper-date">June 2026</div>
+            </div>
+
+            <section id="abstract" class="abstract-box">
+                <h3>Abstract</h3>
+                <p>
+                    We evaluate whether representations from the ESM3 protein foundation model transfer to
+                    sequence-only modeling of HIV broadly neutralizing antibodies (bnAbs), and whether domain
+                    adaptation via parameter-efficient fine-tuning alters that transfer. We partition heavy-chain
+                    sequences into lineage groups and evaluate frozen ESM3 and domain-adapted representations on
+                    classification and regression tasks. Frozen ESM3 representations effectively predict bnAb
+                    neutralization breadth and classify broad versus narrow neutralizers, outperforming handcrafted
+                    baseline features. Unsupervised domain adaptation on antibody repertoires does not yield
+                    significant downstream improvements. Representation interpolation along lineage maturation
+                    pathways shows that raw embedding-space interpolation is comparable to specialized variational
+                    autoencoder paths. These findings support frozen ESM3 as a viable exploratory representation for
+                    antibody modeling, while highlighting the importance of robust validation controls.
+                </p>
+            </section>
+
+            <section id="introduction">
+                <h2>1. Introduction</h2>
+                <div class="paper-content-columns">
+                    <p>
+                        HIV-1 broadly neutralizing antibodies (bnAbs) neutralize diverse viral variants by binding
+                        conserved envelope glycoprotein regions <a href="#ref-sok2018" class="citation-link">[1]</a><a
+                            href="#ref-liu2020" class="citation-link">[2]</a>. Unlike ordinary antibodies, bnAbs mature
+                        over years through somatic hypermutation, producing clonal lineages that share an unmutated
+                        common ancestor (UCA) but diverge in sequence and function (Figure&nbsp;1).
+                    </p>
+                    <p>
+                        Predicting neutralization breadth from variable heavy-chain ($V_H$) sequence alone is difficult
+                        because functional readouts depend on heterogeneous virus panels and inconsistent laboratory
+                        assays.
+                    </p>
+                    <p>
+                        Protein language models learn contextual sequence representations from large unlabeled corpora.
+                        ESM3 reasons jointly over sequence, structure, and function <a href="#ref-hayes2025"
+                            class="citation-link">[3]</a><a href="#ref-esm3open" class="citation-link">[4]</a>. We ask
+                        whether general-protein ESM3 embeddings support out-of-lineage bnAb modeling from heavy-chain
+                        sequence alone, and whether unsupervised adaptation on the Observed Antibody Space (OAS) <a
+                            href="#ref-oas" class="citation-link">[5]</a> improves transfer.
+                    </p>
+                    <p>
+                        Because antibody datasets contain somatically related variants, naive random splits leak lineage
+                        information across folds. We implement metadata-derived lineage grouping with group-resampled
+                        uncertainty analysis on CATNAP <a href="#ref-catnap" class="citation-link">[6]</a>, then compare
+                        handcrafted features, frozen ESM3, and OAS-tuned ESM3 (LoRA) under identical folds and heads.
+                    </p>
+                    <figure class="paper-figure span-both-columns" id="fig-pgt121">
+                        <img src="assets/figures/pgt121_lineage.png"
+                            alt="PGT121 clonal lineage maturation tree from germline to mature variants">
+                        <figcaption><strong>Figure 1:</strong> Clonal maturation tree for the PGT121 bnAb family,
+                            illustrating somatic hypermutation from the germline precursor through intermediates to
+                            mature variants.</figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <section id="related-work">
+                <h2>2. Related Work</h2>
+                <div class="paper-content-columns">
+                    <p>
+                        CATNAP standardizes antibody–virus neutralization panels and metadata <a href="#ref-catnap"
+                            class="citation-link">[6]</a>. Longitudinal lineage studies show breadth can change
+                        substantially as somatic variants accumulate <a href="#ref-doria" class="citation-link">[7]</a><a
+                            href="#ref-bhiman" class="citation-link">[8]</a>, motivating lineage-held-out evaluation.
+                    </p>
+                    <p>
+                        Most computational HIV neutralization work predicts <em>virus</em> resistance to a fixed antibody
+                        panel rather than antibody breadth from sequence <a href="#ref-danaila"
+                            class="citation-link">[9]</a>. Recent methods such as BRAVE couple ESM2 embeddings of antibody
+                        and virus sequences to predict resistance across many bnAbs <a href="#ref-brave"
+                            class="citation-link">[10]</a>. We evaluate the converse: antibody-centric breadth
+                        estimation from heavy-chain sequence.
+                    </p>
+                    <p>
+                        ESM2 demonstrated evolutionary-scale representation learning <a href="#ref-esm2"
+                            class="citation-link">[11]</a>; ESM3 extends multimodal reasoning <a href="#ref-hayes2025"
+                            class="citation-link">[3]</a>. Antibody-specific models (AntiBERTy, AbLang, IgBERT) train on
+                        immunoglobulin repertoires <a href="#ref-antiberty" class="citation-link">[12]</a><a
+                            href="#ref-ablang" class="citation-link">[13]</a><a href="#ref-igbert"
+                            class="citation-link">[14]</a>, yet surveys find general protein LMs can match domain models
+                        when size and layer selection are controlled <a href="#ref-deutschmann"
+                            class="citation-link">[15]</a>.
+                    </p>
+                    <p>
+                        We adapt ESM3 with LoRA <a href="#ref-lora" class="citation-link">[16]</a> on OAS via masked
+                        language modeling, then compare frozen versus adapted embeddings. We also test whether VAE latent
+                        interpolation <a href="#ref-vae" class="citation-link">[17]</a> outperforms straight-line
+                        interpolation in raw ESM3 embedding space along maturation trajectories.
+                    </p>
+                </div>
+            </section>
+
+            <section id="data">
+                <h2>3. Data and Evaluation Protocol</h2>
+                <div class="paper-content-columns">
+                    <p>
+                        From CATNAP we compile $V_H$ sequences with quantitative neutralization labels. Breadth for
+                        antibody $i$ is the fraction of tested antibody–virus pairs neutralized below
+                        $\text{IC}_{50} \leq 50\,\mu\mathrm{g/mL}$:
+                    </p>
+                    <div class="equation-row span-both-columns">
+                        <div class="equation-math">$$b_i = \frac{\#\{\text{measurements with IC}_{50}\leq 50\,\mu\mathrm{g/mL}\}}{\#\{\text{tested antibody--virus measurements}\}}$$</div>
+                    </div>
+                    <p>
+                        We require at least 20 tested strains per antibody. Binary labels assign broad ($1$) when
+                        $b_i \geq 0.50$ and narrow ($0$) when $b_i \leq 0.20$, excluding the intermediate band.
+                        The labeled cohort contains 300 unique $V_H$ sequences (202 broad, 98 narrow), length 116–146
+                        residues (Figure&nbsp;2).
+                    </p>
+                    <figure class="paper-figure span-both-columns" id="fig-antibody">
+                        <img src="assets/figures/antibody_structure.png" alt="IgG antibody structure schematic">
+                        <figcaption><strong>Figure 2:</strong> IgG schematic highlighting heavy and light chains, variable
+                            domains, and the antigen-binding site.</figcaption>
+                    </figure>
+                    <p>
+                        Lineage groups combine CATNAP clonal metadata (216 antibodies), shared-donor metadata (70),
+                        single-linkage clustering at $\geq 80\%$ Levenshtein identity (2), and singletons (12), yielding
+                        113 group IDs. Both tasks use one 5-fold <code>StratifiedGroupKFold</code> split so entire
+                        lineages remain in train or validation.
+                    </p>
+                    <p>
+                        Classification metrics: AUROC and AUPRC. Regression metrics: Pearson $r$, Spearman $\rho$, and
+                        $R^2$. Configuration selection uses mean fold score; reporting uses pooled out-of-fold (OOF)
+                        predictions with 95% intervals from 10,000 lineage-group bootstrap resamples.
+                    </p>
+                    <p>
+                        OAS adaptation uses 219,837 deduplicated human heavy-chain sequences (108,675 clonotypes) from 11
+                        data units, with clonotype-held-out train/validation splits. OAS supplies adaptation data only—it
+                        is not labeled for bnAb breadth and does not enter downstream test folds.
+                    </p>
+                </div>
+            </section>
+
+            <section id="methods">
+                <h2>4. Representations and Models</h2>
+                <div class="paper-content-columns">
+                    <h3>4.1. Handcrafted baseline</h3>
+                    <p>
+                        Seven features per sequence: length; charged, hydrophobic, aromatic, and cysteine fractions;
+                        cysteine count; and $N$-glycosylation-motif count. XGBoost <a href="#ref-xgboost"
+                            class="citation-link">[18]</a> is the selected baseline head.
+                    </p>
+                    <h3>4.2. Frozen ESM3</h3>
+                    <p>
+                        Residue embeddings from frozen <code>esm3-sm-open-v1</code> (1.4B parameters) <a
+                            href="#ref-esm3open" class="citation-link">[4]</a> yield $L \times 1536$ matrices per
+                        sequence. We compare mean pooling (1536-d) and concatenated mean/max/std pooling (4608-d).
+                        Scaling and PCA fit strictly inside each training fold.
+                    </p>
+                    <h3>4.3. OAS LoRA adaptation</h3>
+                    <p>
+                        Rank-16 LoRA ($\alpha=32$, dropout 0.05) trains 18.9M parameters (1.33%) on masked language
+                        modeling <a href="#ref-bert" class="citation-link">[19]</a> for one epoch (AdamW <a
+                            href="#ref-adamw" class="citation-link">[20]</a>). Clonotype-held-out validation reaches
+                        loss $0.5025$ (perplexity $1.653$). Adapters merge into the base model before embedding
+                        extraction.
+                    </p>
+                    <h3>4.4. Per-residue VAE</h3>
+                    <p>
+                        A VAE compresses 1536-d residue embeddings to 32-d latents (hidden 512/256, $\beta=0.005$ KL
+                        warmup). Endpoints align with Needleman–Wunsch <a href="#ref-needleman"
+                            class="citation-link">[21]</a> before interpolating VAE latents, reconstructed straight lines,
+                        and raw ESM3 straight lines along UCA-to-mature paths.
+                    </p>
+                </div>
+            </section>
+
+            <section id="results">
+                <h2>5. Results</h2>
+                <div class="paper-content-columns">
+                    <h3>5.1. Classification</h3>
+                    <p>
+                        Frozen ESM3 improves pooled AUROC from $0.625$ (handcrafted XGB) to $0.746$ and pooled AUPRC from
+                        $0.742$ to $0.859$ (Table&nbsp;1). Paired frozen-minus-handcrafted difference is $+0.121$ AUROC
+                        ($[0.012, 0.228]$). LoRA reaches pooled AUROC $0.726$, below frozen by $-0.020$
+                        ($[-0.096, 0.059]$)—not establishing downstream benefit from the single adaptation run.
+                    </p>
+                    <div class="table-wrapper span-both-columns">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Representation</th>
+                                    <th>Fold AUROC</th>
+                                    <th>Pooled AUROC</th>
+                                    <th>95% interval</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Handcrafted XGB</td>
+                                    <td>$0.644 \pm 0.086$</td>
+                                    <td>0.625</td>
+                                    <td>[0.518, 0.744]</td>
+                                </tr>
+                                <tr>
+                                    <td>Frozen ESM3</td>
+                                    <td>$0.761 \pm 0.131$</td>
+                                    <td class="highlight-cell">0.746</td>
+                                    <td>[0.653, 0.837]</td>
+                                </tr>
+                                <tr>
+                                    <td>OAS LoRA ESM3</td>
+                                    <td>$0.745 \pm 0.140$</td>
+                                    <td>0.726</td>
+                                    <td>[0.626, 0.825]</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="table-caption"><strong>Table 1:</strong> Broad-vs-narrow classification. Intervals from
+                            lineage-group bootstrap.</p>
+                    </div>
+                    <figure class="paper-figure span-both-columns">
+                        <img src="assets/images/classification_roc_pr.png" alt="ROC and precision-recall curves">
+                        <figcaption><strong>Figure 3:</strong> Pooled OOF ROC and precision–recall curves for selected
+                            classifiers.</figcaption>
+                    </figure>
+                    <h3>5.2. Continuous breadth regression</h3>
+                    <p>
+                        Frozen ESM3 reaches pooled Spearman $\rho = 0.366$ ($[0.126, 0.585]$), Pearson $r = 0.357$, and
+                        $R^2 = 0.114$; the length-only Spearman floor is $0.004$ (Table&nbsp;2). LoRA-selected random
+                        forest with mean pooling yields pooled $\rho = 0.319$; paired LoRA-minus-frozen difference is
+                        $-0.047$ ($[-0.169, 0.064]$).
+                    </p>
+                    <div class="table-wrapper span-both-columns">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Representation</th>
+                                    <th>Fold $\rho$</th>
+                                    <th>Pooled $\rho$</th>
+                                    <th>95% interval</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Frozen ESM3</td>
+                                    <td>$0.380 \pm 0.312$</td>
+                                    <td class="highlight-cell">0.366</td>
+                                    <td>[0.126, 0.585]</td>
+                                </tr>
+                                <tr>
+                                    <td>OAS LoRA ESM3</td>
+                                    <td>$0.357 \pm 0.320$</td>
+                                    <td>0.319</td>
+                                    <td>[0.059, 0.561]</td>
+                                </tr>
+                                <tr>
+                                    <td>Length only</td>
+                                    <td>—</td>
+                                    <td>0.004</td>
+                                    <td>—</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="table-caption"><strong>Table 2:</strong> Continuous breadth regression on pooled OOF
+                            predictions.</p>
+                    </div>
+                    <figure class="paper-figure span-both-columns">
+                        <img src="assets/images/regression_pred_vs_true.png" alt="Predicted vs observed breadth scatter">
+                        <figcaption><strong>Figure 4:</strong> Pooled OOF predicted versus observed breadth.</figcaption>
+                    </figure>
+                    <h3>5.3. VAE interpolation</h3>
+                    <p>
+                        For seven VRC34 inferred intermediates, raw ESM3 interpolation is closer than the VAE path for six
+                        cases (raw MAE mean $20.77$ vs VAE $37.47$). Midpoint tests on four ordered triples show raw-line
+                        MAE $8.24$–$13.35$ versus VAE midpoint $35.20$–$37.95$. LoRA VAE maturation correlations rise
+                        descriptively (mean Pearson $0.566 \rightarrow 0.822$) but lack raw-embedding controls and cover
+                        only four lineages (Figure&nbsp;5).
+                    </p>
+                    <figure class="paper-figure span-both-columns">
+                        <img src="assets/images/vae_directionality_by_lineage.png"
+                            alt="Maturation correlation by lineage">
+                        <figcaption><strong>Figure 5:</strong> Pearson maturation correlation for four held-out lineages
+                            (descriptive; not causal evidence for LoRA).</figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <section id="limitations">
+                <h2>6. Limitations</h2>
+                <div class="paper-content-columns">
+                    <p>
+                        Heads and pooling were selected on the same grouped folds used for reporting, so cross-validation
+                        scores are optimistic; nested grouped CV or locked external holdouts are needed for confirmatory
+                        claims.
+                    </p>
+                    <p>
+                        The cohort is small (300 sequences, 113 groups). Only $V_H$ chains are modeled—light-chain pairing
+                        and structure are omitted. Grouping heuristics cannot guarantee complete developmental
+                        independence.
+                    </p>
+                    <p>
+                        LoRA adaptation was a single run with one configuration. The per-residue VAE ignores sequence
+                        order and tertiary contacts and failed round-trip sequence decoding, so interpolation claims remain
+                        speculative.
+                    </p>
+                </div>
+            </section>
+
+            <section id="conclusion">
+                <h2>7. Conclusion</h2>
+                <div class="paper-content-columns">
+                    <p>
+                        Under lineage-grouped evaluation, frozen ESM3 improves over handcrafted sequence features for
+                        CATNAP bnAb classification (pooled AUROC $0.746$ vs $0.625$) and shows modest breadth regression
+                        signal ($\rho = 0.366$), though absolute prediction remains weak. Unsupervised OAS LoRA did not
+                        improve downstream performance in this run.
+                    </p>
+                    <p>
+                        Prior HIV ML work is predominantly virus-centric; we instead classify breadth directly from
+                        heavy-chain sequence under epitope-agnostic, lineage-held-out splits. Raw embedding interpolation
+                        matched or beat VAE paths on VRC34 intermediates. The strongest contribution is methodological:
+                        lineage-aware splits, pooled-versus-fold reporting, and group-resampled uncertainty change how
+                        these experiments should be interpreted.
+                    </p>
+                </div>
+            </section>
+
+            <section id="references" class="references-section">
+                <h2>References</h2>
+                <div class="paper-content-columns">
+                    <ol class="references-list">
+                        <li id="ref-sok2018">[1] Devin Sok and Dennis R. Burton. <em>Recent progress in broadly
+                                neutralizing antibodies to HIV</em>. <em>Nature Immunology</em>, 19(11):1179–1188, 2018.
+                        </li>
+                        <li id="ref-liu2020">[2] Yubin Liu et al. <em>Broadly neutralizing antibodies for HIV-1:
+                                efficacies, challenges and opportunities</em>. <em>Emerging Microbes &amp;
+                                Infections</em>, 9(1):194–206, 2020.</li>
+                        <li id="ref-hayes2025">[3] Thomas Hayes et al. <em>Simulating 500 million years of evolution with
+                                a language model</em>. <em>Science</em>, 387(6736):850–858, 2025.</li>
+                        <li id="ref-esm3open">[4] EvolutionaryScale Team. <em>ESM3: open model weights
+                                (esm3-sm-open-v1)</em>. 2024.</li>
+                        <li id="ref-oas">[5] Tobias H. Olsen et al. <em>Observed Antibody Space</em>. <em>Protein
+                                Science</em>, 31(1):141–146, 2022.</li>
+                        <li id="ref-catnap">[6] Hyejin Yoon et al. <em>CATNAP: a tool to compile, analyze and tally
+                                neutralizing antibody panels</em>. <em>Nucleic Acids Research</em>, 43(W1):W213–W219,
+                            2015.</li>
+                        <li id="ref-doria">[7] Nicole A. Doria-Rose et al. <em>Developmental pathway for potent V1V2-directed
+                                HIV-neutralizing antibodies</em>. <em>Nature</em>, 509:55–62, 2014.</li>
+                        <li id="ref-bhiman">[8] Jinal N. Bhiman et al. <em>New member of the V1V2-directed CAP256-VRC26
+                                lineage</em>. <em>Journal of Virology</em>, 90(1):76–91, 2016.</li>
+                        <li id="ref-danaila">[9] Vlad-Rareș Dănăilă et al. <em>Machine learning in HIV neutralizing
+                                antibodies research—a systematic review</em>. <em>Artificial Intelligence in
+                                Medicine</em>, 134:102429, 2022.</li>
+                        <li id="ref-brave">[10] Mohammed El Anbari et al. <em>BRAVE: predicting HIV-1 antibody resistance
+                                with protein language models</em>. <em>bioRxiv</em>, 2025.</li>
+                        <li id="ref-esm2">[11] Zeming Lin et al. <em>Evolutionary-scale prediction of atomic-level protein
+                                structure with a language model</em>. <em>Science</em>, 379(6637):1123–1130, 2023.</li>
+                        <li id="ref-antiberty">[12] Jeffrey A. Ruffolo et al. <em>Deciphering antibody affinity
+                                maturation with language models</em>. arXiv:2112.07782, 2021.</li>
+                        <li id="ref-ablang">[13] Tobias H. Olsen et al. <em>AbLang: an antibody language model</em>.
+                            <em>Bioinformatics Advances</em>, 2(1):vbac046, 2022.</li>
+                        <li id="ref-igbert">[14] Henry Kenlay et al. <em>Large scale paired antibody language models</em>.
+                            <em>PLOS Computational Biology</em>, 20(12):e1012646, 2024.</li>
+                        <li id="ref-deutschmann">[15] Nicolas Deutschmann et al. <em>Do domain-specific protein language
+                                models outperform general models on immunology tasks?</em> <em>ImmunoInformatics</em>,
+                            14:100036, 2024.</li>
+                        <li id="ref-lora">[16] Edward J. Hu et al. <em>LoRA: Low-Rank Adaptation of Large Language
+                                Models</em>. ICLR, 2022.</li>
+                        <li id="ref-vae">[17] Diederik P. Kingma and Max Welling. <em>Auto-Encoding Variational
+                                Bayes</em>. ICLR, 2014.</li>
+                        <li id="ref-xgboost">[18] Tianqi Chen and Carlos Guestrin. <em>XGBoost: A scalable tree boosting
+                                system</em>. KDD, 2016.</li>
+                        <li id="ref-bert">[19] Jacob Devlin et al. <em>BERT: Pre-training of Deep Bidirectional
+                                Transformers</em>. NAACL, 2019.</li>
+                        <li id="ref-adamw">[20] Ilya Loshchilov and Frank Hutter. <em>Decoupled weight decay
+                                regularization</em>. ICLR, 2019.</li>
+                        <li id="ref-needleman">[21] Saul B. Needleman and Christian D. Wunsch. <em>A general method
+                                applicable to the search for similarities in amino acid sequences</em>. <em>Journal of
+                                Molecular Biology</em>, 48(3):443–453, 1970.</li>
+                    </ol>
+                </div>
+            </section>
+
+        </article>
+
+        <aside class="paper-refs-sidebar">
+            <h3>References</h3>
+            <ul>
+                <li data-ref="ref-sok2018"><a href="#ref-sok2018"><span class="ref-number">[1]</span> Sok &amp; Burton — HIV bnAbs</a></li>
+                <li data-ref="ref-liu2020"><a href="#ref-liu2020"><span class="ref-number">[2]</span> Liu et al. — bnAb opportunities</a></li>
+                <li data-ref="ref-hayes2025"><a href="#ref-hayes2025"><span class="ref-number">[3]</span> Hayes et al. — ESM3</a></li>
+                <li data-ref="ref-esm3open"><a href="#ref-esm3open"><span class="ref-number">[4]</span> EvolutionaryScale — ESM3 open weights</a></li>
+                <li data-ref="ref-oas"><a href="#ref-oas"><span class="ref-number">[5]</span> Olsen et al. — OAS</a></li>
+                <li data-ref="ref-catnap"><a href="#ref-catnap"><span class="ref-number">[6]</span> Yoon et al. — CATNAP</a></li>
+                <li data-ref="ref-doria"><a href="#ref-doria"><span class="ref-number">[7]</span> Doria-Rose et al. — V1V2 pathway</a></li>
+                <li data-ref="ref-bhiman"><a href="#ref-bhiman"><span class="ref-number">[8]</span> Bhiman et al. — CAP256-VRC26</a></li>
+                <li data-ref="ref-danaila"><a href="#ref-danaila"><span class="ref-number">[9]</span> Dănăilă et al. — ML review</a></li>
+                <li data-ref="ref-brave"><a href="#ref-brave"><span class="ref-number">[10]</span> El Anbari et al. — BRAVE</a></li>
+                <li data-ref="ref-esm2"><a href="#ref-esm2"><span class="ref-number">[11]</span> Lin et al. — ESM2</a></li>
+                <li data-ref="ref-antiberty"><a href="#ref-antiberty"><span class="ref-number">[12]</span> Ruffolo et al. — AntiBERTy</a></li>
+                <li data-ref="ref-ablang"><a href="#ref-ablang"><span class="ref-number">[13]</span> Olsen et al. — AbLang</a></li>
+                <li data-ref="ref-igbert"><a href="#ref-igbert"><span class="ref-number">[14]</span> Kenlay et al. — IgBERT</a></li>
+                <li data-ref="ref-deutschmann"><a href="#ref-deutschmann"><span class="ref-number">[15]</span> Deutschmann et al. — domain PLMs</a></li>
+                <li data-ref="ref-lora"><a href="#ref-lora"><span class="ref-number">[16]</span> Hu et al. — LoRA</a></li>
+                <li data-ref="ref-vae"><a href="#ref-vae"><span class="ref-number">[17]</span> Kingma &amp; Welling — VAE</a></li>
+                <li data-ref="ref-xgboost"><a href="#ref-xgboost"><span class="ref-number">[18]</span> Chen &amp; Guestrin — XGBoost</a></li>
+                <li data-ref="ref-bert"><a href="#ref-bert"><span class="ref-number">[19]</span> Devlin et al. — BERT</a></li>
+                <li data-ref="ref-adamw"><a href="#ref-adamw"><span class="ref-number">[20]</span> Loshchilov &amp; Hutter — AdamW</a></li>
+                <li data-ref="ref-needleman"><a href="#ref-needleman"><span class="ref-number">[21]</span> Needleman &amp; Wunsch — alignment</a></li>
+            </ul>
+        </aside>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Steven Cleasby-Mayeda</p>
+            <p class="footer-email">steven.cleasby.mayeda@gmail.com</p>
+            <div class="social-links">
+                <a href="https://github.com/Ancorro" aria-label="GitHub"><i class="fab fa-github"></i><span>GitHub</span></a>
+                <a href="https://linkedin.com/in/stevencm" aria-label="LinkedIn"><i class="fab fa-linkedin"></i><span>LinkedIn</span></a>
+                <a href="mailto:steven.cleasby.mayeda@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i><span>Email</span></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebar = document.querySelector('.paper-refs-sidebar');
+            const refLinkSelector = '.citation-link[href^="#ref-"], .paper-refs-sidebar a[href^="#ref-"]';
+
+            function getFullReferenceText(refId) {
+                const referenceItem = document.getElementById(refId);
+                if (!referenceItem) return '';
+                return referenceItem.textContent.replace(/\s+/g, ' ').trim();
+            }
+
+            function scrollSidebarToItem(sidebarItem) {
+                if (!sidebar || !sidebarItem) return;
+                const sidebarRect = sidebar.getBoundingClientRect();
+                const itemRect = sidebarItem.getBoundingClientRect();
+                const itemTop = itemRect.top - sidebarRect.top + sidebar.scrollTop;
+                const targetScrollTop = itemTop - (sidebar.clientHeight / 2) + (sidebarItem.offsetHeight / 2);
+                const maxScrollTop = Math.max(0, sidebar.scrollHeight - sidebar.clientHeight);
+                sidebar.scrollTo({ top: Math.min(Math.max(targetScrollTop, 0), maxScrollTop), behavior: 'smooth' });
+            }
+
+            function highlightSidebarItem(sidebarItem) {
+                sidebarItem.style.transition = 'background 0.3s ease';
+                sidebarItem.style.background = 'rgba(20, 120, 110, 0.15)';
+                sidebarItem.style.borderRadius = '6px';
+                sidebarItem.style.padding = '0.25rem 0.4rem';
+                sidebarItem.style.margin = '-0.25rem -0.4rem';
+                setTimeout(function () {
+                    sidebarItem.style.background = 'transparent';
+                    setTimeout(function () {
+                        sidebarItem.style.padding = '';
+                        sidebarItem.style.margin = '';
+                    }, 300);
+                }, 1500);
+            }
+
+            function preserveMainScroll(callback) {
+                const scrollX = window.scrollX;
+                const scrollY = window.scrollY;
+                function restoreScroll() {
+                    const originalScrollBehavior = document.documentElement.style.scrollBehavior;
+                    document.documentElement.style.scrollBehavior = 'auto';
+                    window.scrollTo(scrollX, scrollY);
+                    document.documentElement.style.scrollBehavior = originalScrollBehavior;
+                }
+                callback();
+                restoreScroll();
+                requestAnimationFrame(restoreScroll);
+                setTimeout(restoreScroll, 250);
+            }
+
+            function collapseExpandedReferences() {
+                sidebar.querySelectorAll('li.ref-expanded').forEach(function (item) {
+                    item.classList.remove('ref-expanded');
+                    const fullTextBlock = item.querySelector('.ref-full-text');
+                    if (fullTextBlock) fullTextBlock.remove();
+                });
+            }
+
+            function expandSidebarReference(sidebarItem, refId) {
+                const wasExpanded = sidebarItem.classList.contains('ref-expanded');
+                collapseExpandedReferences();
+                if (!wasExpanded) {
+                    const fullReferenceText = getFullReferenceText(refId);
+                    if (fullReferenceText) {
+                        const fullTextBlock = document.createElement('div');
+                        fullTextBlock.className = 'ref-full-text';
+                        fullTextBlock.textContent = fullReferenceText;
+                        sidebarItem.appendChild(fullTextBlock);
+                        sidebarItem.classList.add('ref-expanded');
+                    }
+                }
+            }
+
+            document.addEventListener('click', function (event) {
+                const clickedElement = event.target instanceof Element ? event.target : null;
+                const link = clickedElement ? clickedElement.closest(refLinkSelector) : null;
+                if (!link || !sidebar) return;
+                event.preventDefault();
+                event.stopPropagation();
+                const refId = link.getAttribute('href').replace('#', '');
+                const sidebarItem = sidebar.querySelector('li[data-ref="' + refId + '"]');
+                if (!sidebarItem) return;
+                preserveMainScroll(function () {
+                    if (sidebar.contains(link)) expandSidebarReference(sidebarItem, refId);
+                    scrollSidebarToItem(sidebarItem);
+                    highlightSidebarItem(sidebarItem);
+                });
+            }, true);
+        });
+    </script>
+
+</body>
+
+</html>
