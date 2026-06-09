@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700&family=Libre+Baskerville:wght@400;700&family=LINE+Seed+JP:wght@400;700;800&display=swap');
 
 :root {
     /* Color Palette - Refined Eggshell & Bitter Orange */
@@ -34,6 +34,7 @@
     --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-smooth: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
     --header-scroll-offset: 6.5rem;
+    --paper-local-header-height: 3.05rem;
     --paper-side-width: 260px;
     --paper-main-width: 850px;
 }
@@ -48,7 +49,7 @@
 html {
     scroll-behavior: smooth;
     font-size: 16px;
-    scroll-padding-top: var(--header-scroll-offset);
+    scroll-padding-top: calc(var(--site-nav-offset, var(--header-scroll-offset)) + var(--paper-local-header-height, 0px));
 }
 
 body {
@@ -133,7 +134,7 @@ p {
 /* Navigation Header */
 header {
     position: sticky;
-    top: var(--header-scroll-offset);
+    top: var(--site-nav-offset, var(--header-scroll-offset));
     left: 0;
     width: 100%;
     z-index: 40;
@@ -158,8 +159,8 @@ header .paper-container {
 .logo {
     font-family: var(--font-nav);
     font-size: clamp(0.92rem, 0.65rem + 0.9vw, 1.15rem);
-    font-weight: 800;
-    letter-spacing: 0.08em;
+    font-weight: 500;
+    letter-spacing: 0.04em;
     color: var(--text-primary);
     text-decoration: none;
     display: flex;
@@ -301,8 +302,9 @@ nav:not(.nav) a:hover::after {
 
 .nav-buttons .btn {
     font-family: var(--font-nav);
-    font-weight: 700;
-    letter-spacing: 0.06em;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     white-space: nowrap;
 }
 
@@ -1158,7 +1160,7 @@ footer p {
 /* Right References Sidebar */
 .paper-refs-sidebar {
     position: sticky;
-    top: 7.5rem;
+    top: calc(var(--site-nav-offset, var(--header-scroll-offset)) + var(--paper-local-header-height) + 0.4rem);
     background: rgba(255, 255, 255, 0.6);
     border: 1px solid var(--border-color);
     border-radius: 16px;
@@ -1246,7 +1248,7 @@ footer p {
 
 .paper-toc {
     position: sticky;
-    top: 7.5rem;
+    top: calc(var(--site-nav-offset, var(--header-scroll-offset)) + var(--paper-local-header-height) + 0.4rem);
     background: rgba(255, 255, 255, 0.6);
     border: 1px solid var(--border-color);
     border-radius: 16px;
@@ -1427,7 +1429,7 @@ footer p {
 
 .paper-sheet section[id],
 .references-list li[id] {
-    scroll-margin-top: var(--header-scroll-offset);
+    scroll-margin-top: calc(var(--site-nav-offset, var(--header-scroll-offset)) + var(--paper-local-header-height));
 }
 
 .abstract-box {

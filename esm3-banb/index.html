@@ -202,40 +202,78 @@
             <section id="data">
                 <h2>3. Data and Evaluation Protocol</h2>
                 <div class="paper-content-columns">
+                    <h3>3.1. CATNAP cohort and labels</h3>
                     <p>
-                        From CATNAP we compile $V_H$ sequences with quantitative neutralization labels. Breadth for
-                        antibody $i$ is the fraction of tested antibody–virus pairs neutralized below
-                        $\text{IC}_{50} \leq 50\,\mu\mathrm{g/mL}$:
+                        We compile a dataset from CATNAP, which aggregates antibody sequences and quantitative viral
+                        neutralizations. The half-maximal inhibitory concentration ($\text{IC}_{50}$) measures potency
+                        against a specific viral isolate: lower values indicate higher antibody potency. We evaluate each
+                        antibody–virus pair as neutralized when $\text{IC}_{50} \leq 50\,\mu\mathrm{g/mL}$. Neutralization
+                        breadth $b_i$ for antibody $i$ is the fraction of tested measurements below that threshold:
                     </p>
                     <div class="equation-row span-both-columns">
                         <div class="equation-math">$$b_i = \frac{\#\{\text{measurements with IC}_{50}\leq 50\,\mu\mathrm{g/mL}\}}{\#\{\text{tested antibody--virus measurements}\}}$$</div>
                     </div>
                     <p>
-                        We require at least 20 tested strains per antibody. Binary labels assign broad ($1$) when
-                        $b_i \geq 0.50$ and narrow ($0$) when $b_i \leq 0.20$, excluding the intermediate band.
-                        The labeled cohort contains 300 unique $V_H$ sequences (202 broad, 98 narrow), length 116–146
-                        residues (Figure&nbsp;2).
+                        We restrict analysis to antibodies tested against at least 20 virus strains. For binary
+                        classification, we assign broad ($1$) when $b_i \geq 0.50$ and narrow/weak ($0$) when
+                        $b_i \leq 0.20$, excluding the intermediate band to establish a distinct class boundary. We check
+                        $V_H$ completeness by requiring conserved cysteine residues and framework markers while
+                        retaining somatic mutations (Figure&nbsp;2).
                     </p>
                     <figure class="paper-figure span-both-columns" id="fig-antibody">
                         <img src="assets/figures/antibody_structure.png" alt="IgG antibody structure schematic">
-                        <figcaption><strong>Figure 2:</strong> IgG schematic highlighting heavy and light chains, variable
-                            domains, and the antigen-binding site.</figcaption>
+                        <figcaption><strong>Figure 2:</strong> IgG schematic highlighting heavy and light chains,
+                            variable and constant domains, antigen-binding site, and disulfide bonds (reproduced from
+                            Mamahdi14 <a href="#ref-mamahdi" class="citation-link">[24]</a>).</figcaption>
                     </figure>
                     <p>
-                        Lineage groups combine CATNAP clonal metadata (216 antibodies), shared-donor metadata (70),
+                        The final labeled set contains 300 unique $V_H$ sequences (202 broad, 98 weak), with lengths
+                        116–146 amino acids. For continuous-breadth regression, we predict $b_i$ directly for these 300
+                        assays.
+                    </p>
+                    <h3>3.2. Lineage grouping and split</h3>
+                    <p>
+                        To prevent leakage of closely related sequences, we group antibodies by lineage using a
+                        hierarchical sort: CATNAP clonal-lineage metadata (216 antibodies), shared-donor metadata (70),
                         single-linkage clustering at $\geq 80\%$ Levenshtein identity (2), and singletons (12), yielding
-                        113 group IDs. Both tasks use one 5-fold <code>StratifiedGroupKFold</code> split so entire
-                        lineages remain in train or validation.
+                        113 unique group IDs. Tiers are not cross-merged, leaving nine near-duplicate pairs across group
+                        boundaries that we audit but intentionally do not merge (Appendix, Table&nbsp;A4). Across 774
+                        in-group pairs, median sequence identity is $0.779$ (IQR $0.704$–$0.885$); across 44,076
+                        out-group pairs, median identity is $0.424$ (IQR $0.377$–$0.504$).
                     </p>
                     <p>
-                        Classification metrics: AUROC and AUPRC. Regression metrics: Pearson $r$, Spearman $\rho$, and
-                        $R^2$. Configuration selection uses mean fold score; reporting uses pooled out-of-fold (OOF)
-                        predictions with 95% intervals from 10,000 lineage-group bootstrap resamples.
+                        Both tasks use a single 5-fold <code>StratifiedGroupKFold</code> split so all antibodies in a
+                        lineage group remain in train or validation while stratifying the broad-vs-narrow ratio per fold.
+                    </p>
+                    <h3>3.3. Metrics, selection, and uncertainty</h3>
+                    <p>
+                        Classification metrics are AUROC and AUPRC (average precision). AUROC measures the probability
+                        that a random positive ranks above a random negative; AUPRC evaluates precision–recall trade-offs
+                        under class imbalance. Regression metrics are Pearson $r$, Spearman $\rho$, and $R^2$.
                     </p>
                     <p>
-                        OAS adaptation uses 219,837 deduplicated human heavy-chain sequences (108,675 clonotypes) from 11
-                        data units, with clonotype-held-out train/validation splits. OAS supplies adaptation data only—it
-                        is not labeled for bnAb breadth and does not enter downstream test folds.
+                        Configuration selection uses mean validation-fold score (mean AUROC or mean Spearman $\rho$).
+                        Primary reporting uses pooled out-of-fold predictions from all folds. We estimate 95% intervals
+                        with 10,000 bootstrap draws resampling complete lineage groups. Paired deltas resample groups and
+                        compute metric differences on aligned OOF predictions. These intervals quantify sensitivity to
+                        lineage composition but do not correct for configuration-selection bias.
+                    </p>
+                    <h3>3.4. OAS adaptation corpus</h3>
+                    <p>
+                        Domain adaptation uses 219,837 globally deduplicated human heavy-chain sequences from 11 OAS data
+                        units (108,675 clonotypes); the largest unit contributes 20,000 sequences (9.1%). Systematically
+                        5$'$-truncated data units are excluded. A clonotype-aware split yields 198,130 training and
+                        21,707 validation sequences. OAS supplies adaptation data only—we neither label OAS sequences as
+                        HIV bnAbs nor include them in downstream test folds <a href="#ref-oas"
+                            class="citation-link">[5]</a>.
+                    </p>
+                    <h3>3.5. Lineage-interpolation cohort</h3>
+                    <p>
+                        The interpolation track unions the 300 labeled antibodies with 11 trajectory rows; four trajectory
+                        IDs already occur in the labeled cohort, yielding 307 unique sequences and 39,129 residue
+                        embeddings. VAE training uses 214 antibodies (27,490 residues), group-held validation uses 46
+                        antibodies (5,738 residues), and complete VRC34, VRC01, DH270, and DH511 lineages form the holdout
+                        set (47 antibodies; 5,901 residues).
                     </p>
                 </div>
             </section>
@@ -245,31 +283,54 @@
                 <div class="paper-content-columns">
                     <h3>4.1. Handcrafted baseline</h3>
                     <p>
-                        Seven features per sequence: length; charged, hydrophobic, aromatic, and cysteine fractions;
-                        cysteine count; and $N$-glycosylation-motif count. XGBoost <a href="#ref-xgboost"
-                            class="citation-link">[18]</a> is the selected baseline head.
+                        Seven features per $V_H$ sequence: length; charged, hydrophobic, aromatic, and cysteine
+                        fractions; cysteine count; and $N$-glycosylation-motif count. We evaluate logistic regression,
+                        random forest <a href="#ref-breiman" class="citation-link">[25]</a>, and XGBoost <a
+                            href="#ref-xgboost" class="citation-link">[18]</a>. XGBoost is the selected baseline; we
+                        retain length-only logistic regression as a diagnostic.
                     </p>
-                    <h3>4.2. Frozen ESM3</h3>
+                    <h3>4.2. Frozen ESM3 and downstream heads</h3>
                     <p>
                         Residue embeddings from frozen <code>esm3-sm-open-v1</code> (1.4B parameters) <a
                             href="#ref-esm3open" class="citation-link">[4]</a> yield $L \times 1536$ matrices per
-                        sequence. We compare mean pooling (1536-d) and concatenated mean/max/std pooling (4608-d).
-                        Scaling and PCA fit strictly inside each training fold.
+                        sequence (excluding BOS/EOS tokens). Pooling schemes are (1) mean pooling (1536-d) and (2)
+                        concatenated mean, max, and standard deviation (4608-d). Scaling and PCA fit strictly inside each
+                        training fold. All downstream heads use scikit-learn <a href="#ref-sklearn"
+                            class="citation-link">[26]</a>.
+                    </p>
+                    <p>
+                        Classification candidates are L1/L2 logistic regression (SAGA solver <a href="#ref-saga"
+                            class="citation-link">[27]</a> for L1), random forest, XGBoost, and a PCA-50 multilayer
+                        perceptron, plus a separately trained additive attention-pooling classifier. Regression
+                        candidates are Ridge, random forest, and XGBoost, with a length-only Ridge floor. Appendix
+                        Table&nbsp;A1 lists hyperparameters.
                     </p>
                     <h3>4.3. OAS LoRA adaptation</h3>
                     <p>
-                        Rank-16 LoRA ($\alpha=32$, dropout 0.05) trains 18.9M parameters (1.33%) on masked language
-                        modeling <a href="#ref-bert" class="citation-link">[19]</a> for one epoch (AdamW <a
-                            href="#ref-adamw" class="citation-link">[20]</a>). Clonotype-held-out validation reaches
-                        loss $0.5025$ (perplexity $1.653$). Adapters merge into the base model before embedding
-                        extraction.
+                        LoRA <a href="#ref-lora" class="citation-link">[16]</a> freezes base weights and injects
+                        rank-16 adapters ($\alpha=32$, dropout 0.05), training 18,874,368 parameters (1.33%). Adaptation
+                        uses masked language modeling <a href="#ref-bert" class="citation-link">[19]</a> on 15% corrupted
+                        tokens for one epoch with AdamW <a href="#ref-adamw" class="citation-link">[20]</a> (effective
+                        batch 32). Clonotype-held-out validation reaches loss $0.5025$ (perplexity $1.653$). Adapters
+                        merge into the base model before embedding extraction.
                     </p>
-                    <h3>4.4. Per-residue VAE</h3>
+                    <h3>4.4. Per-residue VAE and controls</h3>
                     <p>
-                        A VAE compresses 1536-d residue embeddings to 32-d latents (hidden 512/256, $\beta=0.005$ KL
-                        warmup). Endpoints align with Needleman–Wunsch <a href="#ref-needleman"
-                            class="citation-link">[21]</a> before interpolating VAE latents, reconstructed straight lines,
-                        and raw ESM3 straight lines along UCA-to-mature paths.
+                        A VAE compresses 1536-d residue embeddings to 32-d latents (hidden 512/256, dropout 0.1,
+                        $\beta=0.005$ KL with 25-epoch warmup). We train separate frozen- and LoRA-embedding VAEs for
+                        300 epochs. Endpoints align globally with Needleman–Wunsch <a href="#ref-needleman"
+                            class="citation-link">[21]</a> via Biopython <a href="#ref-biopython"
+                            class="citation-link">[28]</a>. For UCA latent $z_u$ and mature latent $z_m$, the VAE path
+                        is $z(\alpha)=(1-\alpha)z_u+\alpha z_m$, $\alpha\in[0,1]$.
+                    </p>
+                    <p>
+                        We compare three embedding-space paths: decoded VAE latent interpolation; straight lines between
+                        VAE-reconstructed endpoints (<code>sl_rec</code>); and straight lines between raw ESM3 endpoints
+                        (<code>sl_raw</code>). Four evaluations cover inferred-intermediate search (11-step VRC34 path vs
+                        seven inferred intermediates), maturation midpoint tests on four ordered triples, maturation
+                        correlation analysis on four held-out lineages, and a latent geometry check on 75 sampled triples
+                        across 15 lineages. Maturation correlation lacks a raw-embedding control and cannot isolate a VAE
+                        or LoRA effect.
                     </p>
                 </div>
             </section>
@@ -279,10 +340,22 @@
                 <div class="paper-content-columns">
                     <h3>5.1. Classification</h3>
                     <p>
-                        Frozen ESM3 improves pooled AUROC from $0.625$ (handcrafted XGB) to $0.746$ and pooled AUPRC from
-                        $0.742$ to $0.859$ (Table&nbsp;1). Paired frozen-minus-handcrafted difference is $+0.121$ AUROC
-                        ($[0.012, 0.228]$). LoRA reaches pooled AUROC $0.726$, below frozen by $-0.020$
-                        ($[-0.096, 0.059]$)—not establishing downstream benefit from the single adaptation run.
+                        Table&nbsp;1 separates configuration-selection score (mean over folds) from pooled OOF estimates
+                        and group-bootstrap intervals. Frozen ESM3 improves pooled AUROC from $0.625$ to $0.746$ and
+                        pooled AUPRC from $0.742$ to $0.859$. On aligned predictions, paired frozen-minus-handcrafted
+                        differences are $+0.121$ AUROC ($[0.012, 0.228]$) and $+0.117$ AUPRC ($[0.028, 0.207]$).
+                        Intervals describe sensitivity to held-out lineage composition; they do not remove
+                        model-selection optimism.
+                    </p>
+                    <p>
+                        LoRA's selected classifier reaches pooled AUROC $0.726$, below frozen by $-0.020$ (paired interval
+                        $[-0.096, 0.059]$). The corresponding AUPRC difference is $-0.031$ ($[-0.075, 0.024]$). These
+                        data do not establish downstream classification improvement from the single adaptation run.
+                    </p>
+                    <p>
+                        The learned attention pool reaches mean-fold AUROC $0.702 \pm 0.100$, below the best
+                        fixed-pooling frozen model—a negative capacity result on this cohort, not evidence that learned
+                        pooling is generally inferior.
                     </p>
                     <div class="table-wrapper span-both-columns">
                         <table>
@@ -325,10 +398,14 @@
                     </figure>
                     <h3>5.2. Continuous breadth regression</h3>
                     <p>
-                        Frozen ESM3 reaches pooled Spearman $\rho = 0.366$ ($[0.126, 0.585]$), Pearson $r = 0.357$, and
-                        $R^2 = 0.114$; the length-only Spearman floor is $0.004$ (Table&nbsp;2). LoRA-selected random
-                        forest with mean pooling yields pooled $\rho = 0.319$; paired LoRA-minus-frozen difference is
-                        $-0.047$ ($[-0.169, 0.064]$).
+                        Regression uses the same 300 threshold-selected antibodies. Frozen ESM3 reaches pooled Spearman
+                        $\rho = 0.366$ ($[0.126, 0.585]$), Pearson $r = 0.357$ ($[0.129, 0.580]$), and $R^2 = 0.114$
+                        ($[-0.134, 0.313]$). The length-only Spearman floor is $0.004$ (Table&nbsp;2). The selected
+                        representation contains ranking information, while absolute breadth predictions remain weak.
+                    </p>
+                    <p>
+                        Mean-fold Spearman selection chooses LoRA random forest with mean pooling (pooled $\rho = 0.319$,
+                        $[0.059, 0.561]$). Paired LoRA-minus-frozen Spearman difference is $-0.047$ ($[-0.169, 0.064]$).
                     </p>
                     <div class="table-wrapper span-both-columns">
                         <table>
@@ -368,19 +445,63 @@
                         <img src="assets/images/regression_pred_vs_true.png" alt="Predicted vs observed breadth scatter">
                         <figcaption><strong>Figure 4:</strong> Pooled OOF predicted versus observed breadth.</figcaption>
                     </figure>
-                    <h3>5.3. VAE interpolation</h3>
+                    <h3>5.3. Reconstruction dominates VAE interpolation</h3>
                     <p>
-                        For seven VRC34 inferred intermediates, raw ESM3 interpolation is closer than the VAE path for six
-                        cases (raw MAE mean $20.77$ vs VAE $37.47$). Midpoint tests on four ordered triples show raw-line
-                        MAE $8.24$–$13.35$ versus VAE midpoint $35.20$–$37.95$. LoRA VAE maturation correlations rise
-                        descriptively (mean Pearson $0.566 \rightarrow 0.822$) but lack raw-embedding controls and cover
-                        only four lineages (Figure&nbsp;5).
+                        The frozen-embedding VAE's best epoch has validation total loss $0.2599$, reconstruction loss
+                        $0.1859$, and KL loss $14.80$. In the inferred-intermediate search (Table&nbsp;3), raw ESM3
+                        interpolation is closer than the VAE path for six of seven VRC34 inferred intermediates. Raw-line
+                        MAE ranges from $8.51$ to $46.55$ (mean $20.77$); VAE-path MAE ranges from $34.54$ to $44.30$
+                        (mean $37.47$). The exception is <code>pI3'</code> (raw $46.55$ vs VAE $44.30$). VAE-minus-<code>sl_rec</code>
+                        differences average $-0.0069$, so the case study does not demonstrate meaningful curvature beyond
+                        reconstruction.
+                    </p>
+                    <p>
+                        Across four ordered VRC34 triples, raw-line midpoint MAE ranges from $8.24$ to $13.35$ versus VAE
+                        midpoint $35.20$ to $37.95$. The per-residue VAE bottleneck adds much more error than the
+                        midpoint-control differences under study.
+                    </p>
+                    <div class="table-wrapper span-both-columns">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Inferred intermediate</th>
+                                    <th>VAE MAE</th>
+                                    <th>Raw-line MAE</th>
+                                    <th>VAE–rec. line</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>pI1</code></td><td>37.96</td><td>8.51</td><td>$-0.0000$</td></tr>
+                                <tr><td><code>pI2</code></td><td>34.54</td><td>15.54</td><td>$-0.0106$</td></tr>
+                                <tr><td><code>pI2'</code></td><td>38.28</td><td>32.48</td><td>$-0.0196$</td></tr>
+                                <tr><td><code>pI2 H33P</code></td><td>35.29</td><td>17.14</td><td>$-0.0179$</td></tr>
+                                <tr><td><code>pI3</code></td><td>36.56</td><td>15.53</td><td>$0.0000$</td></tr>
+                                <tr><td><code>pI3'</code></td><td>44.30</td><td>46.55</td><td>$-0.0000$</td></tr>
+                                <tr><td><code>pI4</code></td><td>35.38</td><td>9.63</td><td>$-0.0000$</td></tr>
+                            </tbody>
+                        </table>
+                        <p class="table-caption"><strong>Table 3:</strong> Embedding-space MAE per dimension for VRC34
+                            inferred intermediates.</p>
+                    </div>
+                    <h3>5.4. LoRA and descriptive maturation directionality</h3>
+                    <p>
+                        For maturation correlation analysis, mean Pearson across four held-out lineages increases from
+                        $0.566$ (frozen VAE) to $0.822$ (LoRA VAE); mean Spearman from $0.384$ to $0.692$
+                        (Figure&nbsp;5). All four Pearson point estimates rise, but sensitivity intervals are wide for
+                        small lineages (e.g., DH511: $0.084 \rightarrow 0.409$, approximate LoRA interval
+                        $[-0.415, 0.865]$). This comparison is descriptive: two single-seed VAEs, one LoRA adapter, four
+                        lineages, no raw-embedding control.
+                    </p>
+                    <p>
+                        The latent geometry check does not support interpolation evidence. Frozen VAE-minus-line MAE has
+                        mean $0.041$ (lineage-bootstrap interval $[-0.016, 0.109]$); LoRA mean $0.076$ (interval
+                        $[0.023, 0.142]$). Positive differences favor the reconstructed straight-line control.
                     </p>
                     <figure class="paper-figure span-both-columns">
                         <img src="assets/images/vae_directionality_by_lineage.png"
                             alt="Maturation correlation by lineage">
                         <figcaption><strong>Figure 5:</strong> Pearson maturation correlation for four held-out lineages
-                            (descriptive; not causal evidence for LoRA).</figcaption>
+                            (maturation correlation analysis).</figcaption>
                     </figure>
                 </div>
             </section>
@@ -388,20 +509,54 @@
             <section id="limitations">
                 <h2>6. Limitations</h2>
                 <div class="paper-content-columns">
+                    <h3>6.1. Exploratory model selection</h3>
                     <p>
-                        Heads and pooling were selected on the same grouped folds used for reporting, so cross-validation
-                        scores are optimistic; nested grouped CV or locked external holdouts are needed for confirmatory
-                        claims.
+                        We compare heads and pooling schemes on the same five grouped folds used for reporting. Selecting
+                        the best mean-fold configuration makes reported cross-validation performance optimistic due to
+                        hyperparameter and model-selection leak. Group-bootstrap intervals condition on the selected
+                        predictions and do not account for that selection process. Confirmatory evaluation requires nested
+                        grouped cross-validation or a fully locked external lineage holdout.
                     </p>
+                    <h3>6.2. Cohort and target construction</h3>
                     <p>
-                        The cohort is small (300 sequences, 113 groups). Only $V_H$ chains are modeled—light-chain pairing
-                        and structure are omitted. Grouping heuristics cannot guarantee complete developmental
-                        independence.
+                        The dataset is extremely small (300 sequences across 113 lineage groups), limiting statistical
+                        power and increasing overfitting risk. Only $V_H$ chains enter the models, neglecting light-chain
+                        ($V_L$) contributions and heavy–light pairing, which are biochemically critical for folding,
+                        stability, and neutralization breadth of many HIV-1 bnAbs. CATNAP narrow/weak antibodies are not
+                        equivalent to arbitrary non-bnAbs, and breadth is treated as an unweighted fraction over viral
+                        panels that vary in size and strain composition, without accounting for laboratory-specific or
+                        panel-level effects.
                     </p>
+                    <h3>6.3. Grouping assumptions</h3>
                     <p>
-                        LoRA adaptation was a single run with one configuration. The per-residue VAE ignores sequence
-                        order and tertiary contacts and failed round-trip sequence decoding, so interpolation claims remain
-                        speculative.
+                        Metadata-derived clonal lineage is the strongest available grouping key, but patient-level fallback
+                        groups may merge unrelated antibodies from the same donor, while singletons may mask unrecorded
+                        genetic relationships. The $\geq 80\%$ sequence-identity clustering heuristic supports separation
+                        in aggregate but cannot biologically prove complete developmental independence or rule out
+                        convergent evolution.
+                    </p>
+                    <h3>6.4. Adaptation and ESM3 constraints</h3>
+                    <p>
+                        LoRA domain adaptation was evaluated on a single dataset with one adapter configuration and one
+                        training run. Unsupervised adaptation on OAS may align representations toward general repertoire
+                        characteristics at the expense of somatic hypermutation features required for HIV-1 gp120/gp41
+                        binding. ESM3's 1.4B-parameter scale introduces substantial computational overhead compared to
+                        simpler sequence models, and non-commercial licensing constraints limit downstream translation.
+                    </p>
+                    <h3>6.5. Interpolation and VAE constraints</h3>
+                    <p>
+                        The per-residue VAE treats residues as independent training examples and lacks an antibody-level
+                        encoder, ignoring sequence order, tertiary contacts, and global folding constraints—a severe
+                        biophysical simplification. The VAE failed our round-trip sequence decoding test-gate, so latent
+                        spaces cannot be reliably mapped back to constructible antibody sequences. Claims of sequence
+                        design or maturation interpolation are therefore speculative and physically unvalidated.
+                    </p>
+                    <h3>6.6. Reproducibility boundary</h3>
+                    <p>
+                        Our verification script validates pre-computed predictions and fails on cohort or alignment
+                        mismatches, but embedding caches and LoRA adapter weights come from external GPU clusters
+                        (Google Colab), and local verification does not recreate them. Saved artifacts reproduce the
+                        paper's claims, but a full local from-scratch retraining pipeline does not.
                     </p>
                 </div>
             </section>
@@ -410,17 +565,352 @@
                 <h2>7. Conclusion</h2>
                 <div class="paper-content-columns">
                     <p>
-                        Under lineage-grouped evaluation, frozen ESM3 improves over handcrafted sequence features for
-                        CATNAP bnAb classification (pooled AUROC $0.746$ vs $0.625$) and shows modest breadth regression
-                        signal ($\rho = 0.366$), though absolute prediction remains weak. Unsupervised OAS LoRA did not
-                        improve downstream performance in this run.
+                        With lineage-grouped evaluation, frozen ESM3 representations improve over sequence features for
+                        CATNAP bnAb classification and show a modest increase in breadth performance. Absolute breadth
+                        prediction remains weak, indicating that heavy-chain sequence features alone—even from large
+                        protein language models—are insufficient for accurately modeling functional neutralization breadth.
+                        Unsupervised OAS LoRA adaptation did not improve downstream performance, suggesting that
+                        general-repertoire adaptation without target-specific supervision is insufficient for capturing
+                        somatic hypermutation patterns critical to HIV-1 neutralization.
                     </p>
                     <p>
-                        Prior HIV ML work is predominantly virus-centric; we instead classify breadth directly from
-                        heavy-chain sequence under epitope-agnostic, lineage-held-out splits. Raw embedding interpolation
-                        matched or beat VAE paths on VRC34 intermediates. The strongest contribution is methodological:
-                        lineage-aware splits, pooled-versus-fold reporting, and group-resampled uncertainty change how
-                        these experiments should be interpreted.
+                        To our knowledge the framing itself is novel: prior machine learning for HIV neutralization is
+                        predominantly <em>virus-centric</em>, scoring envelope resistance against a fixed antibody panel
+                        <a href="#ref-danaila" class="citation-link">[9]</a><a href="#ref-igiraneza"
+                            class="citation-link">[22]</a><a href="#ref-brave" class="citation-link">[10]</a>, and the
+                        closest antibody-centric breadth estimator infers breadth by molecular modeling onto a template
+                        antibody–antigen complex for a single epitope class <a href="#ref-conti"
+                            class="citation-link">[29]</a>. We instead classify breadth directly from heavy-chain
+                        sequence (rather than from a modeled structure), epitope-agnostically, and under a
+                        lineage-held-out split. In that setting frozen ESM3 raises pooled AUROC from $0.625$ for a
+                        handcrafted biophysical baseline to $0.746$ (paired $+0.121$, group-bootstrap interval
+                        $[0.012, 0.228]$ excluding zero). Because no published benchmark shares this sequence-only,
+                        epitope-agnostic, lineage-held-out protocol, external AUROCs from random-split or virus-side tasks
+                        are not directly comparable; the meaningful baseline is our handcrafted-feature model, over which
+                        ESM3 shows a credible out-of-lineage gain.
+                    </p>
+                    <p>
+                        The residue-level VAE interpolation analysis shows cautionary results. The per-residue VAE
+                        introduces substantial reconstruction error and fails to outperform simpler midpoint controls on
+                        the VRC34 lineage, likely due to limited bnAb data. We cannot draw strong conclusions on whether
+                        a VAE would meaningfully support generation or design of functional antibodies, or about
+                        VAE-space interpolation. While LoRA maturation correlations were higher, limited exploration of this
+                        tuning does not establish a causal adaptation effect.
+                    </p>
+                    <p>
+                        Ultimately, our strongest contribution is methodological: lineage-aware splits,
+                        pooled-versus-fold validation reporting, and group-resampled uncertainty estimation change how
+                        these experiments should be interpreted. Because heavy-chain sequence alone proved insufficient
+                        for breadth, richer inputs such as paired heavy/light chains or explicit structure are worth
+                        exploring. VAE and adaptation analyses were limited primarily by labeled bnAb scarcity; larger
+                        cohorts and external validation on held-out lineages are needed before stronger conclusions can
+                        be drawn.
+                    </p>
+                </div>
+            </section>
+
+            <section id="appendix">
+                <h2>Appendix: Verification and Reproducibility Details</h2>
+                <div class="paper-content-columns">
+                    <h3>A.1. Candidate configurations</h3>
+                    <p>
+                        Table&nbsp;A1 records compared model families and fixed settings that materially affect
+                        interpretation. Figure&nbsp;A1 shows relative importances of handcrafted biophysical features in
+                        the baseline XGBoost classifier.
+                    </p>
+                    <figure class="paper-figure span-both-columns">
+                        <img src="assets/images/feature_importances.png" alt="Handcrafted feature importances">
+                        <figcaption><strong>Figure A1:</strong> Handcrafted feature importances for the baseline XGBoost
+                            classifier.</figcaption>
+                    </figure>
+                    <div class="table-wrapper span-both-columns">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Candidates and fixed settings</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Handcrafted classifier</td>
+                                    <td>LR, RF, XGB; seven features; RF/XGB depth 3; grouped five-fold CV</td>
+                                </tr>
+                                <tr>
+                                    <td>Frozen/LoRA classifier</td>
+                                    <td>L1/L2 LR, RF, XGB, MLP; mean or mean+max+std pooling; RF 300 trees/depth 3; XGB 200 trees/depth 3; MLP after PCA-50</td>
+                                </tr>
+                                <tr>
+                                    <td>Attention classifier</td>
+                                    <td>Additive token attention; masked pooling, dropout 0.4, weight decay $10^{-2}$, 120 epochs</td>
+                                </tr>
+                                <tr>
+                                    <td>Frozen/LoRA regressor</td>
+                                    <td>Ridge, RF, XGB; mean or mean+max+std; RF 300 trees/depth 4; XGB 200 trees/depth 3</td>
+                                </tr>
+                                <tr>
+                                    <td>OAS adaptation</td>
+                                    <td>One rank-16 LoRA run; $\alpha=32$, dropout 0.05, learning rate $10^{-4}$, one epoch, effective batch 32</td>
+                                </tr>
+                                <tr>
+                                    <td>Per-residue VAE</td>
+                                    <td>One run per representation; 1536–512–256–32 encoder, mirrored decoder, dropout 0.1, $\beta=0.005$, 25-epoch warm-up, 300 epochs</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="table-caption"><strong>Table A1:</strong> Evaluated configurations. Selected
+                            cross-validation estimates remain exploratory because candidates share reporting folds.</p>
+                    </div>
+
+                    <h3>A.2. Classification detail</h3>
+                    <p>Table&nbsp;A2 reconciles configuration-selection scores with pooled estimates from the main text.</p>
+                    <div class="table-wrapper span-both-columns">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Representation</th>
+                                    <th>AUROC</th>
+                                    <th>AUPRC</th>
+                                    <th>Fold AUROC</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Handcrafted XGB</td><td>0.625</td><td>0.742</td><td>$0.644 \pm 0.086$</td></tr>
+                                <tr><td>Frozen ESM3 XGB</td><td>0.746</td><td>0.859</td><td>$0.761 \pm 0.131$</td></tr>
+                                <tr><td>OAS LoRA ESM3 RF</td><td>0.726</td><td>0.829</td><td>$0.745 \pm 0.140$</td></tr>
+                            </tbody>
+                        </table>
+                        <p class="table-caption"><strong>Table A2:</strong> Classification metrics from aligned OOF
+                            predictions. Frozen XGB uses mean+max+std pooling; LoRA RF uses mean pooling.</p>
+                    </div>
+
+                    <h3>A.3. Regression detail</h3>
+                    <div class="table-wrapper span-both-columns">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Representation</th>
+                                    <th>Spearman</th>
+                                    <th>Pearson</th>
+                                    <th>$R^2$</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Frozen ESM3</td><td>0.366</td><td>0.357</td><td>0.114</td></tr>
+                                <tr><td>OAS LoRA ESM3</td><td>0.319</td><td>0.310</td><td>0.036</td></tr>
+                                <tr><td>Length-only Ridge</td><td>0.004</td><td>$-0.059$</td><td>$-0.046$</td></tr>
+                            </tbody>
+                        </table>
+                        <p class="table-caption"><strong>Table A3:</strong> Pooled OOF breadth-regression metrics.</p>
+                    </div>
+
+                    <h3>A.4. Lineage-group leakage audit</h3>
+                    <p>
+                        The fallback grouping does not cross-merge tiers, so an antibody can resemble a member of a
+                        different group. Across all $\binom{300}{2}$ antibody pairs, nine span a group boundary while
+                        exceeding the $80\%$ Levenshtein-identity threshold (Table&nbsp;A4). Several involve inferred
+                        ancestral sequences or germline-reverted variants. They are deliberately not auto-merged; the
+                        count quantifies residual leakage after grouping.
+                    </p>
+                    <div class="table-wrapper span-both-columns">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Antibody A</th>
+                                    <th>Antibody B</th>
+                                    <th>Group A</th>
+                                    <th>Group B</th>
+                                    <th>Id.</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1361</td><td>D5_AR</td><td>patient:donor_Gorny2012</td><td>cluster:10</td><td>0.811</td></tr>
+                                <tr><td>1361</td><td>PGZL1_gVmDmJ</td><td>patient:donor_Gorny2012</td><td>lineage:PGZL1</td><td>0.839</td></tr>
+                                <tr><td>1393A</td><td>D5_AR</td><td>patient:donor_Gorny2012</td><td>cluster:10</td><td>0.803</td></tr>
+                                <tr><td>1393A</td><td>PGZL1_gVmDmJ</td><td>patient:donor_Gorny2012</td><td>lineage:PGZL1</td><td>0.855</td></tr>
+                                <tr><td>D5_AR</td><td>PGZL1_gVmDmJ</td><td>cluster:10</td><td>lineage:PGZL1</td><td>0.815</td></tr>
+                                <tr><td>D5_FI</td><td>PGZL1_gVmDmJ</td><td>cluster:10</td><td>lineage:PGZL1</td><td>0.806</td></tr>
+                                <tr><td>DH270 IA4</td><td>VRC34-UCA</td><td>lineage:DH270</td><td>lineage:VRC34</td><td>0.843</td></tr>
+                                <tr><td>DH270 UCA</td><td>VRC34-UCA</td><td>lineage:DH270</td><td>lineage:VRC34</td><td>0.874</td></tr>
+                                <tr><td>PGDM1400</td><td>PGDM1401</td><td>lineage:PGDM1400</td><td>patient:Donor 84</td><td>0.816</td></tr>
+                            </tbody>
+                        </table>
+                        <p class="table-caption"><strong>Table A4:</strong> Residual cross-group near-duplicates at
+                            $\geq 80\%$ Levenshtein identity.</p>
+                    </div>
+
+                    <h3>A.5. Maturation correlation sensitivity</h3>
+                    <p>Small lineage sizes make Fisher-$z$ sensitivity intervals wide, especially for DH270 and DH511.</p>
+                    <div class="table-wrapper span-both-columns">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Lineage</th>
+                                    <th>$n$</th>
+                                    <th>Frozen $r$ [interval]</th>
+                                    <th>LoRA $r$ [interval]</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>VRC34</td><td>14</td><td>0.651 [0.184, 0.878]</td><td>0.923 [0.768, 0.976]</td></tr>
+                                <tr><td>VRC01</td><td>15</td><td>0.759 [0.404, 0.915]</td><td>0.960 [0.881, 0.987]</td></tr>
+                                <tr><td>DH270</td><td>6</td><td>0.771 [$-0.108$, 0.973]</td><td>0.995 [0.950, 0.999]</td></tr>
+                                <tr><td>DH511</td><td>8</td><td>0.084 [$-0.660$, 0.745]</td><td>0.409 [$-0.415$, 0.865]</td></tr>
+                            </tbody>
+                        </table>
+                        <p class="table-caption"><strong>Table A5:</strong> Descriptive Pearson correlations and Fisher-$z$
+                            sensitivity intervals (not causal adaptation estimates).</p>
+                    </div>
+
+                    <h3>A.6. Interpretation rules</h3>
+                    <p>
+                        The paper uses “interval” rather than “confidence interval” where resampling assumptions are
+                        especially limited. It avoids significance claims for VAE evaluations, does not treat non-overlap
+                        or interval sign as proof of a biological mechanism, and distinguishes direct observations from
+                        causal interpretation. Project history retains random-split and earlier name-grouped scores, but
+                        the main narrative excludes them because their prediction artifacts are not part of the verified
+                        canonical bundle.
+                    </p>
+
+                    <h3>A.7. Per-configuration discriminative results</h3>
+                    <p>
+                        Tables&nbsp;A6 and A7 report every fixed-pooling configuration compared for frozen and LoRA
+                        representations. All candidates reuse the same five reporting folds. Figures&nbsp;A2 and A3 show
+                        complete classification and regression sweeps.
+                    </p>
+                    <figure class="paper-figure span-both-columns">
+                        <img src="assets/images/classification_auroc_by_head.png" alt="AUROC by classifier head">
+                        <figcaption><strong>Figure A2:</strong> Mean grouped-fold AUROC for all classifier heads and
+                            pooling configurations under frozen and LoRA representations.</figcaption>
+                    </figure>
+                    <figure class="paper-figure span-both-columns">
+                        <img src="assets/images/regression_spearman_by_config.png" alt="Regression Spearman by config">
+                        <figcaption><strong>Figure A3:</strong> Regression Spearman correlation across model
+                            configurations, comparing frozen and LoRA representations.</figcaption>
+                    </figure>
+                    <div class="table-wrapper span-both-columns">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Configuration</th>
+                                    <th>Frozen AUROC</th>
+                                    <th>Frozen AUPRC</th>
+                                    <th>LoRA AUROC</th>
+                                    <th>LoRA AUPRC</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>XGB, mean+max+std</td><td>0.761</td><td>0.878</td><td>0.668</td><td>0.794</td></tr>
+                                <tr><td>RF, mean+max+std</td><td>0.759</td><td>0.874</td><td>0.740</td><td>0.855</td></tr>
+                                <tr><td>RF, mean</td><td>0.759</td><td>0.875</td><td class="highlight-cell">0.745</td><td>0.858</td></tr>
+                                <tr><td>XGB, mean</td><td>0.744</td><td>0.864</td><td>0.692</td><td>0.808</td></tr>
+                                <tr><td>L1 LR, mean+max+std</td><td>0.732</td><td>0.858</td><td>0.667</td><td>0.805</td></tr>
+                                <tr><td>L2 LR, mean+max+std</td><td>0.702</td><td>0.836</td><td>0.670</td><td>0.797</td></tr>
+                                <tr><td>L1 LR, mean</td><td>0.697</td><td>0.827</td><td>0.741</td><td>0.834</td></tr>
+                                <tr><td>MLP, mean</td><td>0.696</td><td>0.836</td><td>0.700</td><td>0.803</td></tr>
+                                <tr><td>L2 LR, mean</td><td>0.677</td><td>0.822</td><td>0.723</td><td>0.833</td></tr>
+                                <tr><td>MLP, mean+max+std</td><td>0.668</td><td>0.804</td><td>0.679</td><td>0.783</td></tr>
+                            </tbody>
+                        </table>
+                        <p class="table-caption"><strong>Table A6:</strong> Mean grouped-fold classification results.
+                            Bold marks the selected LoRA configuration; the selected frozen configuration is the first
+                            row.</p>
+                    </div>
+                    <div class="table-wrapper span-both-columns">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Configuration</th>
+                                    <th>Frozen fold $\rho$</th>
+                                    <th>Frozen pooled $\rho$</th>
+                                    <th>LoRA fold $\rho$</th>
+                                    <th>LoRA pooled $\rho$</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>RF, mean+max+std</td><td class="highlight-cell">0.380</td><td>0.366</td><td>0.304</td><td>0.276</td></tr>
+                                <tr><td>RF, mean</td><td>0.342</td><td>0.344</td><td class="highlight-cell">0.357</td><td>0.319</td></tr>
+                                <tr><td>XGB, mean+max+std</td><td>0.341</td><td>0.354</td><td>0.292</td><td>0.272</td></tr>
+                                <tr><td>XGB, mean</td><td>0.329</td><td>0.340</td><td>0.353</td><td>0.333</td></tr>
+                                <tr><td>Ridge, mean+max+std</td><td>0.200</td><td>0.233</td><td>0.226</td><td>0.235</td></tr>
+                                <tr><td>Ridge, mean</td><td>0.149</td><td>0.171</td><td>0.208</td><td>0.236</td></tr>
+                                <tr><td>Length-only Ridge</td><td>0.155</td><td>0.004</td><td>0.155</td><td>0.004</td></tr>
+                            </tbody>
+                        </table>
+                        <p class="table-caption"><strong>Table A7:</strong> Regression Spearman correlations for all
+                            candidates. Bold marks mean-fold-selected configurations.</p>
+                    </div>
+
+                    <h3>A.8. Paired resampling results</h3>
+                    <p>
+                        The verification script aligns predictions by antibody ID and resamples complete
+                        <code>group_id</code> units. Table&nbsp;A8 gives paired differences from 10,000 valid resamples.
+                    </p>
+                    <div class="table-wrapper span-both-columns">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Comparison</th>
+                                    <th>Metric</th>
+                                    <th>$\Delta$</th>
+                                    <th>Low</th>
+                                    <th>High</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Frozen–handcrafted</td><td>AUROC</td><td>0.121</td><td>0.012</td><td>0.228</td></tr>
+                                <tr><td>Frozen–handcrafted</td><td>AUPRC</td><td>0.117</td><td>0.028</td><td>0.207</td></tr>
+                                <tr><td>LoRA–frozen</td><td>AUROC</td><td>$-0.020$</td><td>$-0.096$</td><td>0.059</td></tr>
+                                <tr><td>LoRA–frozen</td><td>AUPRC</td><td>$-0.031$</td><td>$-0.075$</td><td>0.024</td></tr>
+                                <tr><td>LoRA–frozen</td><td>Spearman</td><td>$-0.047$</td><td>$-0.169$</td><td>0.064</td></tr>
+                                <tr><td>LoRA–frozen</td><td>Pearson</td><td>$-0.047$</td><td>$-0.173$</td><td>0.071</td></tr>
+                                <tr><td>LoRA–frozen</td><td>$R^2$</td><td>$-0.078$</td><td>$-0.228$</td><td>0.053</td></tr>
+                            </tbody>
+                        </table>
+                        <p class="table-caption"><strong>Table A8:</strong> Paired group-bootstrap differences for selected
+                            configurations.</p>
+                    </div>
+
+                    <h3>A.9. VAE reconstruction and geometry summary</h3>
+                    <p>
+                        Frozen and LoRA VAEs use identical split membership and architecture but separate single runs.
+                        Best epochs are 299 (frozen) and 296 (LoRA); best validation total/reconstruction/KL losses are
+                        $0.2599/0.1859/14.80$ and $0.2834/0.2045/15.79$. Each run uses 27,490 training, 5,738
+                        validation, and 5,901 held-out residue embeddings.
+                    </p>
+                    <div class="table-wrapper span-both-columns">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Verified VAE quantity</th>
+                                    <th>Frozen</th>
+                                    <th>LoRA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Mean Pearson (maturation analysis)</td><td>0.566</td><td>0.822</td></tr>
+                                <tr><td>Mean Spearman (maturation analysis)</td><td>0.384</td><td>0.692</td></tr>
+                                <tr><td>Mean VAE–line MAE (geometry check)</td><td>0.041</td><td>0.076</td></tr>
+                                <tr><td>Standard deviation (geometry check)</td><td>0.274</td><td>0.237</td></tr>
+                                <tr><td>Median (geometry check)</td><td>0.004</td><td>0.018</td></tr>
+                                <tr><td>Positive fraction (geometry check)</td><td>0.573</td><td>0.693</td></tr>
+                                <tr><td>Lineage bootstrap low (geometry check)</td><td>$-0.016$</td><td>0.023</td></tr>
+                                <tr><td>Lineage bootstrap high (geometry check)</td><td>0.109</td><td>0.142</td></tr>
+                            </tbody>
+                        </table>
+                        <p class="table-caption"><strong>Table A9:</strong> Descriptive VAE geometry summaries. Positive
+                            VAE–line differences favor the reconstructed straight-line control.</p>
+                    </div>
+
+                    <h3>A.10. Reproducibility limits</h3>
+                    <p>
+                        The CPU verification script reconstructs claims from saved OOF predictions and evaluation
+                        artifacts; it does not retrain ESM3, the LoRA adapter, or either VAE. It verifies internal
+                        consistency and reported calculations, not bitwise reproducibility of GPU training runs. Group
+                        bootstrap resamples the observed 113 metadata-derived groups and does not represent a new
+                        external cohort. Confirmatory evidence would require a locked external lineage cohort or nested
+                        grouped model selection, repeated adapter and VAE seeds, and raw-embedding directionality controls
+                        for every lineage.
                     </p>
                 </div>
             </section>
@@ -477,6 +967,27 @@
                         <li id="ref-needleman">[21] Saul B. Needleman and Christian D. Wunsch. <em>A general method
                                 applicable to the search for similarities in amino acid sequences</em>. <em>Journal of
                                 Molecular Biology</em>, 48(3):443–453, 1970.</li>
+                        <li id="ref-igiraneza">[22] Aime Bienfait Igiraneza et al. <em>Learning patterns of HIV-1
+                                resistance to broadly neutralizing antibodies with reduced subtype bias using multi-task
+                                learning</em>. <em>PLOS Computational Biology</em>, 20(11):e1012618, 2024.</li>
+                        <li id="ref-ablang2">[23] Tobias H. Olsen et al. <em>Addressing the antibody germline bias and its
+                                effect on language models for improved antibody design</em>. <em>Bioinformatics</em>,
+                            40(11):btae618, 2024.</li>
+                        <li id="ref-mamahdi">[24] Mamahdi14. <em>Antibody Structure</em>. Wikimedia Commons, 2016.
+                            CC BY-SA 4.0.</li>
+                        <li id="ref-breiman">[25] Leo Breiman. <em>Random Forests</em>. <em>Machine Learning</em>, 45(1):5–32,
+                            2001.</li>
+                        <li id="ref-sklearn">[26] F. Pedregosa et al. <em>Scikit-learn: Machine Learning in Python</em>.
+                            <em>Journal of Machine Learning Research</em>, 12:2825–2830, 2011.</li>
+                        <li id="ref-saga">[27] Aaron Defazio, Francis Bach, and Simon Lacoste-Julien. <em>SAGA: A Fast
+                                Incremental Gradient Method With Support for Non-Strongly Convex Composite
+                                Objectives</em>. NeurIPS, 27:1646–1654, 2014.</li>
+                        <li id="ref-biopython">[28] Peter J. A. Cock et al. <em>Biopython: freely available Python tools for
+                                computational molecular biology and bioinformatics</em>. <em>Bioinformatics</em>,
+                            25(11):1422–1423, 2009.</li>
+                        <li id="ref-conti">[29] Simone Conti and Martin Karplus. <em>Estimation of the breadth of CD4bs
+                                targeting HIV antibodies by molecular modeling and machine learning</em>. <em>PLOS
+                                Computational Biology</em>, 15(4):e1006954, 2019.</li>
                     </ol>
                 </div>
             </section>
@@ -507,6 +1018,14 @@
                 <li data-ref="ref-bert"><a href="#ref-bert"><span class="ref-number">[19]</span> Devlin et al. — BERT</a></li>
                 <li data-ref="ref-adamw"><a href="#ref-adamw"><span class="ref-number">[20]</span> Loshchilov &amp; Hutter — AdamW</a></li>
                 <li data-ref="ref-needleman"><a href="#ref-needleman"><span class="ref-number">[21]</span> Needleman &amp; Wunsch — alignment</a></li>
+                <li data-ref="ref-igiraneza"><a href="#ref-igiraneza"><span class="ref-number">[22]</span> Igiraneza et al. — multi-task HIV ML</a></li>
+                <li data-ref="ref-ablang2"><a href="#ref-ablang2"><span class="ref-number">[23]</span> Olsen et al. — AbLang-2</a></li>
+                <li data-ref="ref-mamahdi"><a href="#ref-mamahdi"><span class="ref-number">[24]</span> Mamahdi14 — antibody structure</a></li>
+                <li data-ref="ref-breiman"><a href="#ref-breiman"><span class="ref-number">[25]</span> Breiman — random forests</a></li>
+                <li data-ref="ref-sklearn"><a href="#ref-sklearn"><span class="ref-number">[26]</span> Pedregosa et al. — scikit-learn</a></li>
+                <li data-ref="ref-saga"><a href="#ref-saga"><span class="ref-number">[27]</span> Defazio et al. — SAGA</a></li>
+                <li data-ref="ref-biopython"><a href="#ref-biopython"><span class="ref-number">[28]</span> Cock et al. — Biopython</a></li>
+                <li data-ref="ref-conti"><a href="#ref-conti"><span class="ref-number">[29]</span> Conti &amp; Karplus — CD4bs breadth</a></li>
             </ul>
         </aside>
 

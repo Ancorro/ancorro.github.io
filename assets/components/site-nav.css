@@ -16,6 +16,7 @@ site-nav {
     --nav-label-size: 9.86px;
     display: block;
     min-height: var(--nav-height-large);
+    box-sizing: border-box;
 }
 
 .nav {
@@ -24,6 +25,7 @@ site-nav {
     left: 0;
     right: 0;
     z-index: 50;
+    overflow-x: clip;
     background: rgba(241, 241, 239, 0.9);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -99,6 +101,8 @@ site-nav {
     column-gap: var(--nav-gap);
     row-gap: 8px;
     margin-left: auto;
+    min-width: 0;
+    flex: 1 1 auto;
 }
 
 /* Section groups — muted label left, links right, shared baseline */
@@ -308,7 +312,8 @@ site-nav {
     .nav-menu {
         width: auto;
         margin-left: auto;
-        flex-wrap: nowrap;
+        flex-wrap: wrap;
+        justify-content: flex-end;
         gap: 8px;
     }
 
@@ -378,6 +383,12 @@ site-nav {
         display: none;
     }
 
+    .nav-menu {
+        width: 100%;
+        margin-left: 0;
+        justify-content: flex-start;
+    }
+
     /* Keep stacked subtitles visible */
     .nav-hanford small,
     .nav-local-stack small {
@@ -393,5 +404,10 @@ site-nav {
         border-right: 0;
         padding-right: 0;
         margin-right: 0;
+    }
+
+    .nav-local,
+    .nav-link {
+        letter-spacing: 0.08em;
     }
 }

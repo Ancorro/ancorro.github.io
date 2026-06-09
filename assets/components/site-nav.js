@@ -95,11 +95,13 @@ class SiteNav extends HTMLElement {
         window.removeEventListener('resize', this.syncHeight);
         window.removeEventListener('load', this.syncHeight);
         if (this.resizeObserver) this.resizeObserver.disconnect();
+        document.documentElement.style.removeProperty('--site-nav-offset');
     }
 
     syncHeight() {
-        if (window.scrollY > 8) return;
-        this.style.height = this.navEl.offsetHeight + 'px';
+        const height = this.navEl.offsetHeight;
+        this.style.height = height + 'px';
+        document.documentElement.style.setProperty('--site-nav-offset', height + 'px');
     }
 
     updateScrollProgress() {
@@ -109,6 +111,7 @@ class SiteNav extends HTMLElement {
         requestAnimationFrame(() => {
             const progress = Math.min(window.scrollY / 180, 1);
             this.style.setProperty('--nav-progress', progress.toFixed(3));
+            this.syncHeight();
             this.frameRequested = false;
         });
     }
