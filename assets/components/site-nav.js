@@ -48,7 +48,7 @@ class SiteNav extends HTMLElement {
                             Photography
                             <small>Gallery</small>
                         </a>
-                        <a href="${root}assets/pdf/main_ML_class.pdf" class="nav-local nav-local-stack nav-resume" target="_blank" rel="noopener">
+                        <a href="${root}assets/pdf/resume.pdf" class="nav-local nav-local-stack nav-resume" target="_blank" rel="noopener">
                             Resume
                             <small>PDF</small>
                         </a>
