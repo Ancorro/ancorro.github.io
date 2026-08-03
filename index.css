@@ -415,7 +415,7 @@ section {
 }
 
 .work .laurel::before {
-    content: '— ';
+    content: '· ';
     color: var(--ink-faint);
 }
 

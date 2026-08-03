@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=LINE+Seed+JP:wght@400;700;800&display=swap');
 
-/* Shared site nav — compact single-row layout where possible. */
+/* Shared site nav: compact single-row layout where possible. */
 site-nav {
     --nav-progress: 0;
     --nav-height-large: 118px;
     --nav-height-delta: 36px;
-    --art-width-large: 76px;
-    --art-width-delta: 28px;
-    --art-height-large: 89px;
-    --art-height-delta: 33px;
+    --art-width-large: 88px;
+    --art-width-delta: 40px;
+    --art-height-large: 103px;
+    --art-height-delta: 47px;
     --nav-gap: clamp(10px, 1.2vw, 22px);
     --nav-link-size: 11.5px;
     --nav-sub-size: 9.86px;
@@ -46,8 +46,8 @@ site-nav {
     column-gap: var(--nav-gap);
     row-gap: 8px;
     min-height: calc(var(--nav-height-large) - (var(--nav-progress) * var(--nav-height-delta)));
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 .nav-brand {
@@ -105,7 +105,7 @@ site-nav {
     flex: 1 1 auto;
 }
 
-/* Section groups — muted label left, links right, shared baseline */
+/* Section groups: muted label left, links right, shared baseline */
 .nav-section {
     display: inline-flex;
     align-items: flex-end;
@@ -305,8 +305,8 @@ site-nav {
 
     .nav-inner {
         position: relative;
-        padding-top: 5px;
-        padding-bottom: 5px;
+        padding-top: 4px;
+        padding-bottom: 4px;
     }
 
     .nav-menu {

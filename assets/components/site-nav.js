@@ -54,8 +54,8 @@ class SiteNav extends HTMLElement {
                         </a>
                         <div class="nav-social" aria-label="Contact and profiles">
                             <div class="nav-social-icons">
-                                <a href="https://github.com/Ancorro" class="nav-icon" target="_blank" rel="noopener" aria-label="GitHub — Ancorro">${NAV_ICONS.github}</a>
-                                <a href="https://linkedin.com/in/stevencm" class="nav-icon" target="_blank" rel="noopener" aria-label="LinkedIn — stevencm">${NAV_ICONS.linkedin}</a>
+                                <a href="https://github.com/Ancorro" class="nav-icon" target="_blank" rel="noopener" aria-label="GitHub: Ancorro">${NAV_ICONS.github}</a>
+                                <a href="https://linkedin.com/in/stevencm" class="nav-icon" target="_blank" rel="noopener" aria-label="LinkedIn: stevencm">${NAV_ICONS.linkedin}</a>
                                 <a href="mailto:steven.cleasby.mayeda@gmail.com" class="nav-icon nav-icon-mail" aria-label="Email Steven">${NAV_ICONS.mail}</a>
                             </div>
                             <div class="nav-emails">
