@@ -225,8 +225,9 @@
             <div class="container">
                 <div class="results-intro callout-box">
                     <h2 id="results-heading">Empirical Evaluation</h2>
-                    <p>Controlled comparisons on the ProofWriter reasoning dataset across 6 training epochs. Backbone is
-                        Llama-3.1-8B, with data budget and optimizers held constant.</p>
+                    <p>Epoch-by-epoch ProofWriter run from the first version (25 March 2026), measured on
+                        question-only inputs and kept only for reference. Corrected, seed-averaged results are in the
+                        paper (Table 1). Backbone is Llama-3.1-8B, with data budget and optimizers held constant.</p>
                 </div>
 
                 <div class="results-grid">
@@ -299,13 +300,14 @@
                         <h3>Diagnostic Observations</h3>
                         <div class="callout-box">
                             <h4>Baseline Performance Flat</h4>
-                            <p>The baseline model (without a logic stream) gets stuck at 46.46% accuracy. The logic
-                                stream breaks this bottleneck, reaching 55.12% accuracy (+7.08% absolute gain).</p>
+                            <p>The 46.46% baseline shown here equals the majority-class rate of question-only inputs.
+                                With the rulebase restored, the Baseline reaches 0.925 validation accuracy, and no
+                                routed variant beats the parameter-matched No-Gate Control (see the paper's Table 1).</p>
                         </div>
                         <div class="callout-box">
-                            <h4>Active Fusion Learnings</h4>
-                            <p>During training, the scale parameter <i>&alpha;</i> (initialized to 0.01) increases to
-                                0.01001, demonstrating that gradients reinforce logic contributions.</p>
+                            <h4>Fusion <i>&alpha;</i></h4>
+                            <p>In the corrected reruns, a learned <i>&alpha;</i> starting at 0.01 shrinks to
+                                0.0077 &plusmn; 0.0014, so training turns the logic branch down rather than up.</p>
                         </div>
                         <div class="callout-box">
                             <h4>Computing Parity</h4>
