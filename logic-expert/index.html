@@ -529,10 +529,11 @@
 
                     <h3>4.4. Hyperparameter Evaluations</h3>
                     <p>
-                        Primary hyperparameters are logic dimension: $L$, gate count: $G$, gate mode: (soft vs STE),
-                        gate window size: $C_t$, window axis: (inter-token vs intra-token), fusion $\alpha$ mode: (fixed
-                        vs learned), and initial fusion $\alpha$. We validate on task validation sets; we use the
-                        No-Gate Control architecture to avoid attributing gains to unmatched model size.
+                        The reported ablations vary gate count $G$ (8 vs 16), window axis (inter-token vs intra-token),
+                        fusion $\alpha$ (0.01 vs 0.1, fixed vs learned), and cross-attention (present vs removed); logic
+                        dimension ($L=256$), window size, and gate mode (soft) are held fixed. We validate on task
+                        validation sets and compare against the No-Gate Control to avoid attributing gains to unmatched
+                        model size.
                     </p>
 
                     <h3>4.5. Metrics</h3>
@@ -726,7 +727,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <p class="table-caption"><strong>Table 2:</strong> Trainable parameter counts. Inter- vs intra-token composition has no effect on the count. With fixed $\alpha$ the fusion weight is a buffer, so these counts are one lower than with learned $\alpha$.</p>
+                        <p class="table-caption"><strong>Table 2:</strong> Trainable parameter counts. Inter- vs intra-token composition has no effect on the count. For models with a fusion weight, the counts are for fixed $\alpha$, which is stored as a buffer; learned $\alpha$ adds one parameter.</p>
                     </div>
 
                     <h3>5.3. Multi-Genre Natural Language (MNLI)</h3>
@@ -769,7 +770,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <p class="table-caption"><strong>Table 3:</strong> Performance on MNLI, mean ± SD over 3 seeds (500 validation examples per seed). "First version" is the single run reported on 25 March 2026; every first-version value lies within two standard deviations of the rerun mean.</p>
+                        <p class="table-caption"><strong>Table 3:</strong> Performance on MNLI, mean ± SD over 3 seeds (500 validation examples per seed). "First version" is the single run reported on 25 March 2026; every first-version value lies within the pre-specified tolerance of two times the larger of the seed SD and the binomial standard error (about 1.5 pp at $n=500$).</p>
                     </div>
 
                     <p>
@@ -777,7 +778,9 @@
                         The routed variants are lower (seed-paired $-1.1$ pp intra, $-2.0$ pp inter) but not
                         significantly (SE 1.6 and 2.5 pp), because the routed models vary more across seeds: one
                         inter-token seed reaches only 0.796. The first version's single-run values lie 1.7–2.7 pp
-                        above the three-seed means and within the seed spread. At this scale, routing gives no
+                        above the three-seed means. That is within our pre-specified tolerance, but for the No-Gate
+                        Control only because the sampling error of 500 validation examples dominates its small seed
+                        spread. At this scale, routing gives no
                         measurable transfer benefit on natural language inference.
                     </p>
 
@@ -930,7 +933,9 @@
                         We evaluate one logical reasoning benchmark and one transfer task, with a single 8B backbone
                         and three seeds per configuration. ProofWriter with the rulebase is largely solved by the
                         backbone alone (0.925), which leaves little headroom for an auxiliary pathway; harder or
-                        out-of-distribution reasoning splits could behave differently. All models train in pure
+                        out-of-distribution reasoning splits, such as compositional generalization benchmarks
+                        <a href="#ref-generalization" class="citation-link">[17]</a>, could behave differently. All
+                        models train in pure
                         bfloat16 without fp32 master weights, which rounds away small updates (see $\alpha$ above) and
                         may under-train the logic modules in general. We kept the original hyperparameters and did not
                         retune any variant. The routing design also introduces hyperparameters (gate count, window
