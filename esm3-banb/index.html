@@ -316,11 +316,21 @@
                 <div class="paper-content-columns">
                     <h3>4.1. Handcrafted baseline</h3>
                     <p>
-                        Seven features per $V_H$ sequence: length; charged, hydrophobic, aromatic, and cysteine
-                        fractions; cysteine count; and $N$-glycosylation-motif count. We evaluate logistic regression,
-                        random forest <a href="#ref-breiman" class="citation-link">[25]</a>, and XGBoost <a
-                            href="#ref-xgboost" class="citation-link">[18]</a>. XGBoost is the selected baseline; we
-                        retain length-only logistic regression as a diagnostic.
+                        The baseline represents each $V_H$ sequence by seven handcrafted features computed over the
+                        whole variable domain. These are sequence length, the fractions of charged (D, E, K, R, H),
+                        hydrophobic (A, I, L, M, F, W, Y, V), and aromatic (F, W, Y, H) residues, cysteine count,
+                        cysteine fraction, and the number of $N$-linked glycosylation motifs matching N-X-[S/T] where X
+                        is not proline. We count these motifs in the antibody variable domain itself, not in the viral
+                        glycan shield described in Section&nbsp;1. The label is the binary breadth class. These simple
+                        features test whether ESM3 adds signal beyond amino-acid composition.
+                    </p>
+                    <p>
+                        We evaluate four baselines: length-only logistic regression; logistic regression using all seven
+                        features; random forest using all seven features <a href="#ref-breiman"
+                            class="citation-link">[25]</a>; and XGBoost using all seven features <a href="#ref-xgboost"
+                            class="citation-link">[18]</a>. XGBoost is retained as the prespecified paired comparator
+                        for uncertainty analyses. We recompute features inside each training fold and standardize them
+                        using statistics fit on the training split only.
                     </p>
                     <h3>4.2. Frozen ESM3 and downstream heads</h3>
                     <p>
@@ -711,7 +721,23 @@
                         viral panels that vary in size and strain composition, without accounting for laboratory-specific
                         or panel-level effects.
                     </p>
-                    <h3>6.3. Grouping assumptions</h3>
+                    <h3>6.3. Handcrafted baseline scope</h3>
+                    <p>
+                        The handcrafted features average amino-acid composition over the whole $V_H$ domain. Most of
+                        that domain is conserved framework, so signal localized in the CDRs is diluted. The feature set
+                        also omits two sequence properties commonly associated with neutralization breadth: CDRH3 loop
+                        length, and somatic hypermutation relative to the germline V gene. Somatic hypermutation needs
+                        an external germline reference that we do not use. Of the seven features, only sequence length
+                        and charged fraction separate the classes individually, and the rest contribute little on their
+                        own. The charged fraction sums acidic and basic residues together and counts histidine as
+                        charged, so it does not measure net charge or isoelectric point. The aromatic set also counts
+                        histidine, unlike the usual F, W, Y definition. Because our $V_H$-completeness filter requires
+                        the two conserved framework cysteines, cysteine count is nearly constant here, so cysteine
+                        fraction tracks inverse sequence length rather than cysteine content. This baseline is a simple
+                        composition reference, not a strong biologically informed comparator. A richer feature set could
+                        narrow the reported gap.
+                    </p>
+                    <h3>6.4. Grouping assumptions</h3>
                     <p>
                         Metadata-derived clonal lineage is the strongest available grouping key, but patient-level fallback
                         groups may merge unrelated antibodies from the same donor, while singletons may mask unrecorded
@@ -719,7 +745,7 @@
                         in aggregate but cannot biologically prove complete developmental independence or rule out
                         convergent evolution.
                     </p>
-                    <h3>6.4. Adaptation and ESM3 constraints</h3>
+                    <h3>6.5. Adaptation and ESM3 constraints</h3>
                     <p>
                         LoRA domain adaptation was evaluated on a single dataset with one adapter configuration and one
                         training run. Unsupervised adaptation on OAS may align representations toward general repertoire
@@ -727,7 +753,7 @@
                         binding. ESM3's 1.4B-parameter scale introduces substantial computational overhead compared to
                         simpler sequence models, and non-commercial licensing constraints limit downstream translation.
                     </p>
-                    <h3>6.5. Interpolation and VAE constraints</h3>
+                    <h3>6.6. Interpolation and VAE constraints</h3>
                     <p>
                         The whole-sequence VAE preserves antibody-level sequence context, but its left-aligned slots do
                         not use biological IMGT/ANARCI numbering, so insertions and deletions can shift downstream
@@ -738,7 +764,7 @@
                         Finally, the model uses one random seed, and CATNAP adaptation reaches its epoch cap while
                         validation loss is still improving.
                     </p>
-                    <h3>6.6. Reproducibility boundary</h3>
+                    <h3>6.7. Reproducibility boundary</h3>
                     <p>
                         Reported calculations can be reconstructed from saved OOF predictions and evaluation artifacts
                         without retraining ESM3, the LoRA adapter, or the whole-sequence VAE. These artifacts support
