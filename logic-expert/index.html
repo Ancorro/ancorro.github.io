@@ -122,13 +122,16 @@
                     intra-token compositions (feature axis) compares features within a token, while inter-token
                     compositions (sequence axis) compares features across neighboring tokens. We evaluate these design
                     choices with Llama-3.1-8B under matched parameter budgets over three seeds. On ProofWriter with the
-                    rulebase in the input, every variant reaches 0.93–0.94 validation accuracy, and no routed variant
-                    beats a parameter-matched No-Gate Control (inter-token $G=8$: $-1.3$ pp, intra-token: $-0.4$ pp);
-                    removing cross-attention changes nothing measurable. Routing entropy stays at 97–98% of its maximum
-                    and a learned fusion weight shrinks, so the model largely routes uniformly and down-weights the
-                    branch. On MNLI, routed and No-Gate variants are also indistinguishable. We report this as a null
-                    result for operator routing at this scale, together with the data-pipeline errors that produced the
-                    gains reported in the first version of this paper.
+                    rulebase in the input, adding a parallel branch with a fusion head to the backbone gives a
+                    consistent gain: a parameter-matched No-Gate Control (an MLP branch with the same fusion head, no
+                    logic operators) beats a linear-head Baseline by $+1.4$ pp in every seed (SE 0.2 pp). The logic
+                    operators add nothing on top of that: no routed variant beats the No-Gate Control (inter-token
+                    $G=8$: $-1.3$ pp, intra-token: $-0.4$ pp), and removing cross-attention changes nothing measurable.
+                    Routing entropy stays at 97–98% of its maximum and a learned fusion weight shrinks, so the model
+                    largely routes uniformly and down-weights the branch. On MNLI, routed and No-Gate variants are also
+                    indistinguishable. The gain comes from the fusion-head path, not from operator routing, at this
+                    scale. We also document the data-pipeline errors that produced the routing gains reported in the
+                    first version of this paper.
                 </p>
                 <p>
                     <strong>Revision note (27 September 2026).</strong>
@@ -190,9 +193,10 @@
                     <p>
                         Contributions of this paper are: (1) inter-token compositional routing with operator reductions
                         and residual logic-state updates; (2) controlled, seed-paired ablations over gate count, window
-                        axis, fusion $\alpha$, and cross-attention against a parameter-matched control; (3) a negative
-                        result: on ProofWriter and MNLI, operator routing does not improve over the parameter-matched
-                        control, and mechanism metrics (near-maximal routing entropy, a shrinking learned $\alpha$)
+                        axis, fusion $\alpha$, and cross-attention against a parameter-matched control; (3) an attribution
+                        result: on ProofWriter the parallel branch with its fusion head beats a linear-head Baseline by
+                        $+1.4$ pp in every seed, but on ProofWriter and MNLI operator routing does not improve over the
+                        parameter-matched control, and mechanism metrics (near-maximal routing entropy, a shrinking learned $\alpha$)
                         indicate the branch is barely specialized; and (4) an account of the evaluation errors behind
                         the first version's positive result.
                     </p>
@@ -952,7 +956,9 @@
                         This architecture shifts conditional computation from routing among independent neural experts
                         to routing over fuzzy logical operator groups, with matched-capacity controls and
                         mechanism-level diagnostics. In seed-paired comparisons on ProofWriter with the rulebase in the
-                        input, no routed variant outperforms a parameter-matched No-Gate Control, cross-attention into
+                        input, a parallel branch with a fusion head improves on a linear-head Baseline by $+1.4$ pp in
+                        every seed, but the gain does not depend on the logic operators: no routed variant outperforms a
+                        parameter-matched No-Gate Control, cross-attention into
                         logic space adds nothing measurable, and the inter-token versus intra-token choice does not
                         matter. On MNLI, routed and No-Gate variants are also indistinguishable. Near-maximal routing
                         entropy and a shrinking learned $\alpha$ indicate that the model barely uses or specializes the
