@@ -98,8 +98,9 @@
                     <div class="tools">AI Reasoning (Mixture of Experts, Fuzzy Logic) · Machine Learning (PyTorch)</div>
                     <p>Built a mixture-of-experts transformer that routes token representations through specialized
                         logical operators. Added cross-attention between the main model and those reasoning paths, then
-                        built the PyTorch training and evaluation pipeline. Ablation studies and routing diagnostics
-                        showed stronger performance than baseline transformers on logical reasoning benchmarks.</p>
+                        built the PyTorch training and evaluation pipeline. A pre-registered, multi-seed re-verification
+                        found and fixed two evaluation bugs and showed that routing does not beat a parameter-matched
+                        control on ProofWriter or MNLI, reported as a null result with routing diagnostics.</p>
                     <div class="links">
                         <a href="logic-expert/" target="_blank" rel="noopener"><i
                                 class="fas fa-arrow-up-right-from-square"></i> Project page</a>
