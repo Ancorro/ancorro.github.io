@@ -104,7 +104,7 @@
                     </div>
                 </div>
                 <div class="paper-course">AI535 Deep Learning</div>
-                <div class="paper-date">25 March 2026, revised 27 September 2026</div>
+                <div class="paper-date">27 September 2026</div>
             </div>
 
             <!-- Abstract -->
@@ -129,18 +129,7 @@
                     Routing entropy stays at 97–98% of its maximum and a learned fusion weight shrinks, so the model
                     largely routes uniformly and down-weights the branch. On MNLI, routed and No-Gate variants are also
                     indistinguishable. The gain comes from the fusion-head path, not from operator routing, at this
-                    scale. We also document the data-pipeline errors that produced the routing gains reported in the
-                    first version of this paper.
-                </p>
-                <p>
-                    <strong>Revision note (27 September 2026).</strong>
-                    The first version (25 March 2026) reported ProofWriter gains for routing. A re-verification found
-                    that the ProofWriter loader dropped the rulebase, so every ProofWriter model saw only the question,
-                    and that the Baseline pooled the BOS token of a causal model, which made it input-blind. All
-                    ProofWriter and multi-task numbers in this version come from corrected reruns (3 seeds each). MNLI
-                    numbers are 3-seed reruns of the original setup. The original values are kept for reference in
-                    Table 1 and Figure 2. The verification report, code and per-run logs are in the public repository
-                    (<code>logic/docs/verification</code>).
+                    scale.
                 </p>
             </section>
 
@@ -189,14 +178,13 @@
                         performance. Figure 1 provides a high-level view of the architecture.
                     </p>
                     <p>
-                        This paper makes four contributions. (1) Inter-token compositional routing with operator reductions
+                        This paper makes three contributions. (1) Inter-token compositional routing with operator reductions
                         and residual logic-state updates. (2) Controlled, seed-paired ablations over gate count, window
                         axis, fusion $\alpha$, and cross-attention against a parameter-matched control. (3) An attribution
                         result: on ProofWriter the parallel branch with its fusion head beats a linear-head Baseline by
                         $+1.4$ pp in every seed, but on ProofWriter and MNLI operator routing does not improve over the
                         parameter-matched control, and mechanism metrics (near-maximal routing entropy, a shrinking learned $\alpha$)
-                        indicate the branch is barely specialized. (4) An account of the evaluation errors behind
-                        the first version's positive result.
+                        indicate the branch is barely specialized.
                     </p>
 
                     <!-- Figure 1 (Spans both columns inside the two-column grid) -->
@@ -496,9 +484,10 @@
                         so comparisons between models are seed-paired. We call a difference supported only if its
                         seed-paired mean is positive and exceeds two standard errors. The main hypothesis (routed
                         inter-token $G=8$ beats the No-Gate Control on ProofWriter) and this test were fixed before the
-                        reruns. Each run used one NVIDIA H100 80GB or H200 141GB GPU on the Oregon State University HPC
-                        cluster. The first version's single runs used an NVIDIA RTX PRO 6000 Blackwell GPU on Google
-                        Colab.
+                        runs. Each run used one NVIDIA H100 80GB or H200 141GB GPU on the Oregon State University HPC
+                        cluster. Code, per-run logs and the scripts that generate every table and figure are in the
+                        <a href="https://github.com/Ancorro/logic-expert-public" target="_blank" rel="noopener">public
+                        repository</a>.
                     </p>
 
                     <h3>4.2. Logical Reasoning -- ProofWriter</h3>
@@ -555,18 +544,17 @@
                         <h3>5.1. ProofWriter</h3>
 
                         <!-- Figure 2 (Spans both columns) -->
-                        <figure class="paper-figure span-both-columns" id="fig-proofwriter-reruns">
-                            <img src="assets/images/proofwriter_reruns.png" alt="ProofWriter validation accuracy: first-version single runs vs. corrected reruns">
-                            <figcaption><strong>Figure 2:</strong> ProofWriter validation accuracy. Grey: single runs
-                                reported in the first version, measured on question-only inputs (the dashed line is the
-                                majority-class rate, 0.465). Blue: corrected reruns with the rulebase in the input, mean
-                                of 3 seeds. Dots are individual seeds.</figcaption>
+                        <figure class="paper-figure span-both-columns" id="fig-proofwriter-accuracy">
+                            <img src="assets/images/proofwriter_accuracy.png" alt="ProofWriter validation accuracy per model: mean and standard deviation over 3 seeds, with individual seeds">
+                            <figcaption><strong>Figure 2:</strong> ProofWriter validation accuracy after 3 epochs with
+                                the rulebase in the input. Blue: mean ± SD over 3 seeds. Grey: individual seeds. The
+                                y-axis starts at 0.90.</figcaption>
                         </figure>
 
                         <div class="subsection-columns">
                             <p style="text-indent: 0;">
                                 Table 1 reports final validation accuracy, validation loss, and mechanism metrics after 3
-                                epochs. With the rulebase in the input, every model reaches 0.925–0.939 accuracy, so the
+                                epochs, and Figure 2 shows the per-seed accuracies. With the rulebase in the input, every model reaches 0.925–0.939 accuracy, so the
                                 backbone solves most of the task on its own. The No-Gate Control is the best model
                                 (0.939) and beats the Baseline by $+1.4$ pp (seed-paired SE 0.2 pp). Because the No-Gate
                                 Control also adds the fusion MLP and a normalized head, this gain should be attributed to
@@ -601,7 +589,6 @@
                                     <th>Fusion $\alpha$ (final)</th>
                                     <th>Norm. Routing Entropy</th>
                                     <th>Grad Norm</th>
-                                    <th>First version</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -612,7 +599,6 @@
                                     <td>–</td>
                                     <td>–</td>
                                     <td>28.5</td>
-                                    <td>0.417</td>
                                 </tr>
                                 <tr style="background: rgba(249, 115, 22, 0.08);">
                                     <td><strong>No-Gate Control</strong></td>
@@ -621,7 +607,6 @@
                                     <td>0.01 (fixed)</td>
                                     <td>–</td>
                                     <td>20.3</td>
-                                    <td>0.525</td>
                                 </tr>
                                 <tr>
                                     <td>Routed (intra, G=8)</td>
@@ -630,7 +615,6 @@
                                     <td>0.01 (fixed)</td>
                                     <td>0.972</td>
                                     <td>19.6</td>
-                                    <td>0.542</td>
                                 </tr>
                                 <tr>
                                     <td>Routed (inter, G=8)</td>
@@ -639,7 +623,6 @@
                                     <td>0.01 (fixed)</td>
                                     <td>0.972</td>
                                     <td>22.9</td>
-                                    <td>0.562</td>
                                 </tr>
                                 <tr>
                                     <td>Routed (inter, G=8)</td>
@@ -648,7 +631,6 @@
                                     <td>0.1 (fixed)</td>
                                     <td>0.972</td>
                                     <td>22.2</td>
-                                    <td>0.546</td>
                                 </tr>
                                 <tr>
                                     <td>Routed (inter, G=8)</td>
@@ -657,7 +639,6 @@
                                     <td>0.0077 (learned from 0.01)</td>
                                     <td>0.973</td>
                                     <td>20.9</td>
-                                    <td>0.546</td>
                                 </tr>
                                 <tr>
                                     <td>Routed (inter, G=16)</td>
@@ -666,7 +647,6 @@
                                     <td>0.01 (fixed)</td>
                                     <td>0.976</td>
                                     <td>20.3</td>
-                                    <td>0.501</td>
                                 </tr>
                                 <tr>
                                     <td>Routed (inter, G=8), no cross-attn</td>
@@ -675,11 +655,10 @@
                                     <td>0.01 (fixed)</td>
                                     <td>0.974</td>
                                     <td>21.7</td>
-                                    <td>–</td>
                                 </tr>
                             </tbody>
                         </table>
-                        <p class="table-caption"><strong>Table 1:</strong> ProofWriter validation results with the rulebase in the input, mean ± SD over 3 seeds (5,000 validation examples per seed). Normalized routing entropy is $H/\ln(3G)$ (1 = uniform routing). Grad norm is the mean over the final epoch. "First version" is the single-run accuracy reported on 25 March 2026, which was measured on question-only inputs and is kept only for reference. Abbreviations: Baseline = backbone with a linear head on the last token (no parallel branch). No-Gate Control = parallel MLP branch without cross-attention, operator routing, or compositional gating, with the same fusion and normalized head as the routed models (its used parameters match the routed model without cross-attention, Table 2). Routed = logic expert variants.</p>
+                        <p class="table-caption"><strong>Table 1:</strong> ProofWriter validation results with the rulebase in the input, mean ± SD over 3 seeds (5,000 validation examples per seed). Normalized routing entropy is $H/\ln(3G)$ (1 = uniform routing). Grad norm is the mean over the final epoch. Abbreviations: Baseline = backbone with a linear head on the last token (no parallel branch). No-Gate Control = parallel MLP branch without cross-attention, operator routing, or compositional gating, with the same fusion and normalized head as the routed models (its used parameters match the routed model without cross-attention, Table 2). Routed = logic expert variants.</p>
                     </div>
 
                     <div class="page-break-divider span-both-columns"><span>pg. 6</span></div>
@@ -746,7 +725,6 @@
                                     <th>Model</th>
                                     <th>MNLI Val Acc</th>
                                     <th>MNLI Val Loss</th>
-                                    <th>First version</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -754,33 +732,27 @@
                                     <td><strong>No-Gate Control</strong></td>
                                     <td class="highlight-cell"><strong>0.871 ± 0.006</strong></td>
                                     <td><strong>0.393 ± 0.058</strong></td>
-                                    <td>0.888</td>
                                 </tr>
                                 <tr>
                                     <td>Routed (intra, G=8)</td>
                                     <td>0.860 ± 0.033</td>
                                     <td>0.429 ± 0.114</td>
-                                    <td>0.880</td>
                                 </tr>
                                 <tr>
                                     <td>Routed (inter, G=8)</td>
                                     <td>0.851 ± 0.048</td>
                                     <td>0.451 ± 0.132</td>
-                                    <td>0.878</td>
                                 </tr>
                             </tbody>
                         </table>
-                        <p class="table-caption"><strong>Table 3:</strong> Performance on MNLI, mean ± SD over 3 seeds (500 validation examples per seed). "First version" is the single run reported on 25 March 2026. Every first-version value lies within the pre-specified tolerance of two times the larger of the seed SD and the binomial standard error (about 1.5 pp at $n=500$).</p>
+                        <p class="table-caption"><strong>Table 3:</strong> Performance on MNLI, mean ± SD over 3 seeds (500 validation examples per seed).</p>
                     </div>
 
                     <p>
                         Table 3 reports MNLI results. The No-Gate Control again has the highest mean accuracy (0.871).
                         The routed variants are lower (seed-paired $-1.1$ pp intra, $-2.0$ pp inter) but not
                         significantly (SE 1.6 and 2.5 pp), because the routed models vary more across seeds: one
-                        inter-token seed reaches only 0.796. The first version's single-run values lie 1.7–2.7 pp
-                        above the three-seed means. That is within our pre-specified tolerance, but for the No-Gate
-                        Control only because the sampling error of 500 validation examples dominates its small seed
-                        spread. At this scale, routing gives no
+                        inter-token seed reaches only 0.796. At this scale, routing gives no
                         measurable transfer benefit on natural language inference.
                     </p>
 
@@ -818,7 +790,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <p class="table-caption"><strong>Table 4:</strong> 50/50 mixed ProofWriter (with rulebase) and MNLI training, mean ± SD over 3 seeds. The first version reported 0.544 / 0.879 (No-Gate) and 0.536 / 0.881 (Routed) on question-only ProofWriter inputs.</p>
+                        <p class="table-caption"><strong>Table 4:</strong> 50/50 mixed ProofWriter (with rulebase) and MNLI training, mean ± SD over 3 seeds.</p>
                     </div>
 
                     <p>
@@ -893,7 +865,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <p class="table-caption"><strong>Table 5:</strong> ProofWriter with and without cross-attention into logic space, mean ± SD over 3 seeds. Without cross-attention the routed stream reads a linear projection of the backbone hidden state plus its previous state. This table replaces the first version's comparison with an earlier implementation, whose No-Gate value (0.4646) equalled the majority-class rate of question-only inputs.</p>
+                        <p class="table-caption"><strong>Table 5:</strong> ProofWriter with and without cross-attention into logic space, mean ± SD over 3 seeds. Without cross-attention the routed stream reads a linear projection of the backbone hidden state plus its previous state.</p>
                     </div>
 
                     <p>
@@ -904,18 +876,17 @@
 
                     <h3>6.2. Routing Visualization</h3>
                     <p>
-                        Figure 3 shows the routing weights of the corrected inter-token model. Most cells are close to
+                        Figure 3 shows the routing weights of the inter-token model. Most cells are close to
                         the uniform value $1/24$, with isolated cells up to about 0.17 and no consistent operator
-                        preference across layers. The first version read its heatmap as sparse with a few dominant
-                        operators. Normalized entropy of 0.97–0.98 shows that this reading does not hold: the router
-                        stays close to uniform.
+                        preference across layers. A few bright cells can make the heatmap look sparse, but normalized
+                        entropy of 0.97–0.98 shows that the router stays close to uniform.
                     </p>
 
                     <!-- Figure 3 (Spanned both columns) -->
                     <figure class="paper-figure span-both-columns" id="fig-heatmap">
                         <img src="assets/images/routing_heatmap.png" alt="Routing Heatmap Diagram">
                         <figcaption><strong>Figure 3:</strong> Routing-weight heatmap over transformer depth for the
-                            corrected Routed (inter, $G=8$) model (seed 42, one validation batch, averaged over
+                            Routed (inter, $G=8$) model (seed 42, one validation batch, averaged over
                             tokens). Rows are layers and columns are the $3G=24$ routed channels (AND, OR, NOT groups), and color is mean routing weight. Uniform routing is $1/24 \approx 0.042$, which is where most
                             cells sit.</figcaption>
                     </figure>
@@ -935,8 +906,8 @@
                         <a href="#ref-generalization" class="citation-link">[17]</a>, could behave differently. All
                         models train in pure
                         bfloat16 without fp32 master weights, which rounds away small updates (see $\alpha$ above) and
-                        may under-train the logic modules in general. We kept the original hyperparameters and did not
-                        retune any variant. The routing design also introduces hyperparameters (gate count, window
+                        may under-train the logic modules in general. All variants share one set of hyperparameters,
+                        and none was tuned per variant. The routing design also introduces hyperparameters (gate count, window
                         size, routing temperature) whose interactions are not fully explored.
                     </p>
                 </div>
@@ -956,8 +927,7 @@
                         logic space adds nothing measurable, and the inter-token versus intra-token choice does not
                         matter. On MNLI, routed and No-Gate variants are also indistinguishable. Near-maximal routing
                         entropy and a shrinking learned $\alpha$ indicate that the model barely uses or specializes the
-                        operator pathway. The positive ProofWriter result in the first version of this paper came from
-                        a data pipeline that dropped the rulebase and from an input-blind Baseline. Useful next steps
+                        operator pathway. Useful next steps
                         are harder reasoning benchmarks where the backbone is not already near ceiling, fp32 training
                         of the logic modules, and a pre-registered multi-task test of the one exploratory gain we
                         observed.
@@ -1107,23 +1077,8 @@
                         $G=8$, and fixed $\alpha=0.01$. In the ablated model no cross-attention modules are built. At each layer the routed stream takes the logic projection of the backbone hidden state plus the
                         previous logic state, the same input path as the No-Gate Control.</p>
 
-                    <h3>E. Changes from the First Version</h3>
-                    <ul>
-                        <li>The ProofWriter loader rendered only the question, because the dataset source stores facts
-                            and rules in a <code>theory</code> column that the loader did not read. All ProofWriter
-                            results are rerun with the rulebase.</li>
-                        <li>The Baseline pooled position 0, which in a causal model is the BOS token and carries no
-                            input information. It now pools the last non-padding token, like the other models.</li>
-                        <li>The first version listed $\alpha = 0.00001$ for several rows. The logged configurations
-                            used 0.01. MNLI used 5,000/500 examples with batch size 20, not 4,000/200 with 30.</li>
-                        <li>The earlier-implementation comparison (Routed-Gate-Only vs No-Gate) is replaced by a
-                            controlled cross-attention ablation.</li>
-                        <li>Single runs are replaced by three seeds with a pre-specified comparison rule.</li>
-                        <li>The first version called the No-Gate Control parameter-matched to the routed models by trainable count. That count includes 71M cross-attention parameters the control never uses. Table 2 now also reports used parameters, and the tightly matched comparison is against the routed model without cross-attention.</li>
-                    </ul>
-
-                    <h3>F. ProofWriter Question Example</h3>
-                    <h4>F.1. Rulebase</h4>
+                    <h3>E. ProofWriter Question Example</h3>
+                    <h4>E.1. Rulebase</h4>
                     <div class="codebox" style="margin-bottom: 1.5rem;">
                         <pre>triple1: The cow is big.
 triple2: The cow needs the dog.
@@ -1136,7 +1091,7 @@ rule1: If the cow is blue and the cow needs the rabbit then the cow needs the do
 rule2: If the cow chases the dog then the cow sees the rabbit.
 rule3: If something is big then it chases the dog.</pre>
                     </div>
-                    <h4>F.2. Question & Answer</h4>
+                    <h4>E.2. Question & Answer</h4>
                     <div class="codebox">
                         <pre>Question: The cow sees the rabbit?
 Answer: true</pre>

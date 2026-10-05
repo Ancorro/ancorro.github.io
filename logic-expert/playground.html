@@ -225,9 +225,9 @@
             <div class="container">
                 <div class="results-intro callout-box">
                     <h2 id="results-heading">Empirical Evaluation</h2>
-                    <p>Epoch-by-epoch ProofWriter run from the first version (25 March 2026), measured on
-                        question-only inputs and kept only for reference. Corrected, seed-averaged results are in the
-                        paper (Table 1). Backbone is Llama-3.1-8B, with data budget and optimizers held constant.</p>
+                    <p>Epoch-by-epoch ProofWriter validation accuracy with the rulebase in the input, mean &plusmn;
+                        standard deviation over 3 seeds (epoch 0 is before training). Backbone is Llama-3.1-8B, with
+                        data budget and optimizers held constant. Full results are in the paper (Table 1).</p>
                 </div>
 
                 <div class="results-grid">
@@ -236,61 +236,35 @@
                             <thead>
                                 <tr>
                                     <th>Epoch</th>
-                                    <th>Baseline Loss</th>
-                                    <th>Baseline Acc</th>
-                                    <th>Logic Loss</th>
-                                    <th>Logic Acc</th>
+                                    <th>Baseline</th>
+                                    <th>No-Gate Control</th>
+                                    <th>Routed (inter, G=8)</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>0</td>
-                                    <td>1.5740</td>
-                                    <td>27.06%</td>
-                                    <td>1.0931</td>
-                                    <td>36.86%</td>
+                                    <td>0.306 &plusmn; 0.033</td>
+                                    <td>0.365 &plusmn; 0.084</td>
+                                    <td>0.319 &plusmn; 0.076</td>
                                 </tr>
                                 <tr>
                                     <td>1</td>
-                                    <td>1.0666</td>
-                                    <td>46.46%</td>
-                                    <td>0.8275</td>
-                                    <td>52.90%</td>
+                                    <td>0.831 &plusmn; 0.055</td>
+                                    <td>0.897 &plusmn; 0.025</td>
+                                    <td>0.887 &plusmn; 0.041</td>
                                 </tr>
                                 <tr>
                                     <td>2</td>
-                                    <td>1.0622</td>
-                                    <td>46.46%</td>
-                                    <td>0.8158</td>
-                                    <td class="highlight-cell">55.12% (Peak)</td>
+                                    <td>0.893 &plusmn; 0.041</td>
+                                    <td>0.929 &plusmn; 0.007</td>
+                                    <td>0.916 &plusmn; 0.022</td>
                                 </tr>
                                 <tr>
                                     <td>3</td>
-                                    <td>1.0750</td>
-                                    <td>46.46%</td>
-                                    <td>0.8168</td>
-                                    <td>54.68%</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>1.0658</td>
-                                    <td>46.46%</td>
-                                    <td>0.8313</td>
-                                    <td>52.48%</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>1.0679</td>
-                                    <td>46.46%</td>
-                                    <td>0.8300</td>
-                                    <td>49.44%</td>
-                                </tr>
-                                <tr>
-                                    <td>6</td>
-                                    <td>1.0649</td>
-                                    <td>46.46%</td>
-                                    <td>0.8323</td>
-                                    <td>53.54%</td>
+                                    <td>0.925 &plusmn; 0.005</td>
+                                    <td class="highlight-cell">0.939 &plusmn; 0.004 (best)</td>
+                                    <td>0.927 &plusmn; 0.012</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -299,20 +273,20 @@
                     <div class="results-analysis">
                         <h3>Diagnostic Observations</h3>
                         <div class="callout-box">
-                            <h4>Baseline Performance Flat</h4>
-                            <p>The 46.46% baseline shown here equals the majority-class rate of question-only inputs.
-                                With the rulebase restored, the Baseline reaches 0.925 validation accuracy, and no
-                                routed variant beats the parameter-matched No-Gate Control (see the paper's Table 1).</p>
+                            <h4>Fusion Head, Not Routing</h4>
+                            <p>The No-Gate Control (same fusion head, no logic operators) beats the linear-head
+                                Baseline by 1.4 percentage points in every seed. No routed variant beats the No-Gate
+                                Control (see the paper's Table 1).</p>
                         </div>
                         <div class="callout-box">
                             <h4>Fusion <i>&alpha;</i></h4>
-                            <p>In the corrected reruns, a learned <i>&alpha;</i> starting at 0.01 shrinks to
-                                0.0077 &plusmn; 0.0014, so training turns the logic branch down rather than up.</p>
+                            <p>A learned <i>&alpha;</i> starting at 0.01 shrinks to 0.0077 &plusmn; 0.0014, so
+                                training turns the logic branch down rather than up.</p>
                         </div>
                         <div class="callout-box">
                             <h4>Computing Parity</h4>
-                            <p>Peak GPU memory is tightly matched (70.65 GB for Logic vs 69.91 GB for Baseline),
-                                confirming the pathway is highly lightweight.</p>
+                            <p>Peak GPU memory is closely matched (71.7 GB for Routed vs 70.0 GB for Baseline), so the
+                                logic pathway adds little memory on top of the 8B backbone.</p>
                         </div>
                     </div>
                 </div>

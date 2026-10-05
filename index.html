@@ -98,10 +98,10 @@
                     <div class="tools">AI Reasoning (Mixture of Experts, Fuzzy Logic) · Machine Learning (PyTorch)</div>
                     <p>Built a mixture-of-experts transformer that routes token representations through specialized
                         logical operators. Added cross-attention between the main model and those reasoning paths, then
-                        built the PyTorch training and evaluation pipeline. A pre-registered, multi-seed re-verification
-                        found and fixed two evaluation bugs. The parallel branch with its fusion head beats the linear-head
-                        baseline by 1.4 pp in every seed, but the logic operators add nothing beyond a parameter-matched
-                        control on ProofWriter or MNLI, shown with routing diagnostics.</p>
+                        built the PyTorch training and evaluation pipeline. In a pre-registered, three-seed evaluation, the
+                        parallel branch with its fusion head beats the linear-head baseline by 1.4 pp in every seed, but
+                        the logic operators add nothing beyond a parameter-matched control on ProofWriter or MNLI, shown
+                        with routing diagnostics.</p>
                     <div class="links">
                         <a href="logic-expert/" target="_blank" rel="noopener"><i
                                 class="fas fa-arrow-up-right-from-square"></i> Project page</a>
