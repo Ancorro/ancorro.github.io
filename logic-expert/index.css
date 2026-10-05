@@ -1781,6 +1781,11 @@ footer p {
     overflow-wrap: anywhere;
 }
 
+/* Room for the bullets; without it the left column clips them. */
+#appendix ul {
+    padding-left: 1.2rem;
+}
+
 /* Paper Subheader and Back Link */
 .paper-subheader {
     margin-top: 4.5rem; /* space for fixed header */

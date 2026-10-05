@@ -386,8 +386,6 @@
                         <div class="equation-number">(11)</div>
                     </div>
 
-                    <div class="page-break-divider span-both-columns"><span>pg. 3</span></div>
-
                     <h3>3.4. Windowed Operator Composition</h3>
                     <p>
                         Let $v \in [0,1]^{B \times S \times G}$ denote one operator group. Windows are causal and
@@ -463,7 +461,7 @@
                     <p>
                         After the final layer, fusion is applied as in Eq. (4). $\alpha$ may be fixed or learned, and it directly controls the contribution of the logic expert.
                     </p>
-                    <div class="page-break-divider span-both-columns"><span>pg. 4</span></div>
+                    <div class="page-break-divider span-both-columns"><span>pg. 3</span></div>
                 </div>
             </section>
 
@@ -532,7 +530,7 @@
                         gradient norms generally indicate smoother updates, very large norms can indicate unstable
                         training dynamics, small gradient norms indicates arrested training.
                     </p>
-                    <div class="page-break-divider span-both-columns"><span>pg. 5</span></div>
+                    <div class="page-break-divider span-both-columns"><span>pg. 4</span></div>
                 </div>
             </section>
 
@@ -660,8 +658,6 @@
                         </table>
                         <p class="table-caption"><strong>Table 1:</strong> ProofWriter validation results with the rulebase in the input, mean ± SD over 3 seeds (5,000 validation examples per seed). Normalized routing entropy is $H/\ln(3G)$ (1 = uniform routing). Grad norm is the mean over the final epoch. Abbreviations: Baseline = backbone with a linear head on the last token (no parallel branch). No-Gate Control = parallel MLP branch without cross-attention, operator routing, or compositional gating, with the same fusion and normalized head as the routed models (its used parameters match the routed model without cross-attention, Table 2). Routed = logic expert variants.</p>
                     </div>
-
-                    <div class="page-break-divider span-both-columns"><span>pg. 6</span></div>
 
                     <h3>5.2. Size and Transfer</h3>
                     <p>
@@ -803,7 +799,7 @@
                         that routing helps keep the logical task from being crowded out by joint training, which is
                         worth testing with more seeds.
                     </p>
-                    <div class="page-break-divider span-both-columns"><span>pg. 7</span></div>
+                    <div class="page-break-divider span-both-columns"><span>pg. 5</span></div>
                 </div>
             </section>
 
@@ -873,6 +869,7 @@
                         model without cross-attention scores $+1.1$ pp higher (seed-paired SE 1.1 pp, not significant)
                         with 71M fewer parameters, so cross-attention into logic space contributes nothing measurable on this task. Without cross-attention the routed model has the same input path as the No-Gate Control and matches its used parameters within 0.05%, which makes this pair the cleanest gates-versus-MLP comparison: $-0.2$ pp (SE 0.35). The fourth cell of this design, a No-Gate Control with cross-attention, was not run.
                     </p>
+                    <div class="page-break-divider span-both-columns"><span>pg. 6</span></div>
 
                     <h3>6.2. Routing Visualization</h3>
                     <p>
@@ -890,7 +887,6 @@
                             tokens). Rows are layers and columns are the $3G=24$ routed channels (AND, OR, NOT groups), and color is mean routing weight. Uniform routing is $1/24 \approx 0.042$, which is where most
                             cells sit.</figcaption>
                     </figure>
-                    <div class="page-break-divider span-both-columns"><span>pg. 8</span></div>
                 </div>
             </section>
 
@@ -932,7 +928,7 @@
                         of the logic modules, and a pre-registered multi-task test of the one exploratory gain we
                         observed.
                     </p>
-                    <div class="page-break-divider span-both-columns"><span>pg. 9</span></div>
+                    <div class="page-break-divider span-both-columns"><span>pg. 7</span></div>
                 </div>
             </section>
 
@@ -1047,6 +1043,8 @@
                         <li>Gate mode: <code>soft</code></li>
                         <li>Seeds: 42, 777, 123</li>
                     </ul>
+
+                    <div class="page-break-divider span-both-columns"><span>pg. 8</span></div>
 
                     <h3>C. Multi-task Evaluation Details</h3>
                     <p style="text-indent: 0;">For multi-task experiments, each batch is sampled from a mix of
