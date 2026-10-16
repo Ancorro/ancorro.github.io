@@ -176,7 +176,7 @@ figure.art figcaption {
     grid-column: span 2;
 }
 
-.bento-grid #eye-tracking {
+.bento-grid #research-focus {
     grid-column: span 1;
 }
 
@@ -290,7 +290,7 @@ figure.art figcaption {
         grid-column: span 2;
     }
 
-    .bento-grid #eye-tracking {
+    .bento-grid #research-focus {
         grid-column: span 2;
     }
 

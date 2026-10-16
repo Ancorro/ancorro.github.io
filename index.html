@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Steven Cleasby-Mayeda | AI / ML Engineer</title>
     <meta name="description"
-        content="Steven Cleasby-Mayeda. M.S. in Artificial Intelligence candidate at Oregon State University. Machine learning, research software, and web systems.">
+        content="Steven Cleasby-Mayeda. M.S. in Artificial Intelligence candidate at Oregon State University. Machine learning research, multi-agent LLM systems, and research software.">
     <meta name="author" content="Steven Cleasby-Mayeda">
     <meta name="copyright" content="© 2026 Steven Cleasby-Mayeda. All photographs are copyright Steven Cleasby-Mayeda.">
     <meta name="rights" content="All photographs © Steven Cleasby-Mayeda. All rights reserved.">
 
     <meta property="og:title" content="Steven Cleasby-Mayeda | AI / ML Engineer">
     <meta property="og:description"
-        content="M.S. in Artificial Intelligence at Oregon State. Machine learning, research software, and web systems.">
+        content="M.S. in Artificial Intelligence at Oregon State. Machine learning research, multi-agent LLM systems, and research software.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ancorro.github.io/">
 
@@ -84,8 +84,10 @@
                     <h3>AI Modeling for HIV Antibody Research</h3>
                     <div class="tools">Machine Learning (LoRA, VAE) · Antibody Modeling (ESM3, CATNAP)</div>
                     <p>Used AI to study whether an antibody's protein sequence can help predict how broadly it may
-                        neutralize HIV. Compared several modeling approaches on public antibody data, adapted a large
-                        protein model, and clearly documented both the improvements and the remaining uncertainty.</p>
+                        neutralize HIV. On 300 public antibodies with lineage-held-out validation, frozen ESM3
+                        embeddings raised AUROC from 0.651 to 0.773 over an XGBoost baseline, though the bootstrap
+                        interval still includes zero. A LoRA-adapted model placed 4 of 4 known VRC34 intermediates
+                        correctly in representation space.</p>
                     <div class="links">
                         <a href="esm3-banb/" target="_blank" rel="noopener"><i
                                 class="fas fa-arrow-up-right-from-square"></i> Project page</a>
@@ -213,14 +215,14 @@
             </div>
         </section>
 
-        <!-- Project 4 (Direct Child of Bento-Grid) -->
-        <article id="eye-tracking" class="work bento-card">
-            <h3>Computer Vision – Real-Time Eye Tracking</h3>
-            <div class="tools">Python · MediaPipe</div>
-            <p>Built a Python eye landmark extraction prototype using Google MediaPipe and FaceMesh.</p>
-            <div class="links">
-                <span class="note">Private prototype</span>
-            </div>
+        <!-- Research Directions (Direct Child of Bento-Grid) -->
+        <article id="research-focus" class="work bento-card">
+            <div class="laurel">Current Research</div>
+            <h3>Multi-Agent LLMs</h3>
+            <div class="tools">LLM Agents · Reinforcement Learning</div>
+            <p>Studying how teams of language models should communicate, including a proposal for learned peer
+                selection over agents' latent states. Also starting reinforcement learning experiments for robotic
+                grasping.</p>
         </article>
 
         <!-- 5. Skills Box -->
