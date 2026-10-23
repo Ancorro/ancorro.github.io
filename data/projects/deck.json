@@ -45,5 +45,6 @@
       "alt": "The phone's tab column open over a chat: running sessions, then script keys.",
       "caption": "The phone's tab column: running sessions on top, one-tap keys for agents and scripts below."
     }
-  ]
+  ],
+  "featured": true
 }
