@@ -9,7 +9,7 @@
   "blurb": "Asked whether an antibody's protein sequence alone predicts how broadly it neutralizes HIV. Frozen ESM3 (a protein language model) embeddings lifted AUROC (area under the ROC curve) from 0.651 to 0.773 over a handcrafted baseline.",
   "long": [
     "Broadly neutralizing antibodies (bnAbs) block many HIV strains at once, and finding them is slow lab work. This project asked how much a sequence-only model can tell about breadth before any lab test.",
-    "On 300 public heavy-chain sequences from CATNAP, grouped into 109 lineages so that relatives never sit on both sides of a split, frozen ESM3 embeddings reached a pooled AUROC (area under the receiver operating characteristic curve) of 0.773 against 0.651 for a handcrafted XGBoost baseline. The group-bootstrap interval of the difference still includes zero, and the write-up says so.",
+    "On 300 public heavy-chain sequences from CATNAP (a public tool that compiles, analyzes and tallies neutralizing antibody panels), grouped into 109 lineages so that relatives never sit on both sides of a split, frozen ESM3 embeddings reached a pooled AUROC (area under the receiver operating characteristic curve) of 0.773 against 0.651 for a handcrafted XGBoost baseline. The group-bootstrap interval of the difference still includes zero, and the write-up says so.",
     "A LoRA (low-rank adaptation) fine-tune of ESM3 on antibody repertoire data (OAS, the Observed Antibody Space) was used for lineage case studies: in its representation space it placed 4 of 4 known VRC34 intermediates correctly.",
     "Every number in the report is reconciled against saved artifacts by an audit script, so the claims and the results cannot drift apart."
   ],
