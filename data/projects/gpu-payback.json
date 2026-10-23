@@ -6,12 +6,12 @@
   "order": 17,
   "kicker": "Personal Project · Data Analysis",
   "tools": "Python data pipeline · JavaScript calculator page · Vast.ai, OpenRouter, InferenceX and GetDeploying data",
-  "blurb": "An interactive calculator for how many months a data-center GPU (graphics processing unit) takes to pay for itself, two ways: renting it out by the hour, or serving open models through OpenRouter. It covers 16 cards, 19 open models and 155 model-and-card pairs, built from live market prices and measured benchmarks.",
+  "blurb": "An interactive calculator for how many months a data-center GPU (graphics processing unit) takes to pay for itself, two ways: renting it out by the hour, or serving open models through OpenRouter. It covers 16 cards, 19 open models and 155 model-and-card pairs, based on live market prices and measured benchmarks.",
   "long": [
-    "The question: if you buy a large server GPU (graphics processing unit), how long until it pays for itself? The page compares two ways to earn: rent the card out by the hour on a marketplace, or run open-weight models on it and sell the output through OpenRouter, an API (application programming interface) marketplace for language models.",
-    "Python scripts pull Vast.ai rental offers, OpenRouter's per-provider token prices and traffic, InferenceX throughput benchmarks and GetDeploying weekly rental prices, plus a hand-kept catalogue of new and used purchase prices with sources. Server-board cards are priced as their 8-card server divided by 8 (racks by 72). Serving speed is the best measured throughput per card that still gives each user at least 30 tokens per second; rows without a direct benchmark borrow a similar model's speed and are marked as estimates.",
-    "Every assumption is a control: electricity price, rack-space cost, cooling overhead, share of hours rented, which rental price, marketplace fee, which token price, your share of a model's traffic, peak utilisation, and a yearly price drop. At the page's defaults (data as of 7 October 2026), the fastest rental payback is 17.1 months (a used H100 server board), and the fastest serving payback is 5.3 months (Kimi K3 on an AMD MI355X, a GPU), but serving income is capped by demand: the cheapest providers take most of the traffic.",
-    "A Node script runs the page's own calculation code on the data bundle to check its numbers outside the browser."
+    "The question: if you purchase a large server GPU (graphics processing unit), how long does it take to break even? The site contrasts two income streams: renting it out hourly on a marketplace, versus using it to host open-weight models and selling the inference on OpenRouter, a marketplace for language model APIs (application programming interface).",
+    "Python scripts scrape Vast.ai rental offers, OpenRouter price & traffic per provider, InferenceX throughput tests, and GetDeploying weekly rental prices, as well as my manually maintained list of new/used purchase prices and their sources. The price of server boards is the price of the 8-card server divided by 8 (and 72 for racks). The serving speeds are the fastest measured throughput per card where the user still gets ≥30 tokens/second. If there is no direct test, I copy the serving speed of a similar model and mark it as an estimate.",
+    "Each assumption is a control: electricity price, rack-space cost, cooling overhead, fraction of hours rented, which rental price, marketplace fee, which token price, your fraction of a model’s traffic, peak utilisation, and yearly price decrease. At the defaults on this page (data as of 7 October 2026) the fastest rental payback is 17.1 months (used H100 server board) and the fastest serving payback is 5.3 months (Kimi K3 on AMD MI355X, a GPU) but serving revenue is limited by demand, the cheapest providers will take most of the traffic.",
+    "A Node script executes the page’s own calc code against the data bundle, verifying the numbers outside the browser."
   ],
   "highlights": [
     "16 cards, 19 open models, 155 model-and-card pairs",
@@ -31,7 +31,7 @@
       "type": "image",
       "src": "assets/projects/gpu-payback/summary.webp",
       "alt": "Summary cards at the default assumptions.",
-      "caption": "Headline numbers at the page's default assumptions, data as of 7 October 2026."
+      "caption": "The headline numbers are based on the default assumptions of that page, with data from 7 Oct 2026."
     },
     {
       "type": "image",
@@ -43,7 +43,7 @@
       "type": "image",
       "src": "assets/projects/gpu-payback/assumptions.webp",
       "alt": "Panel of adjustable assumptions: electricity, rack space, cooling, rental share, prices, traffic share.",
-      "caption": "Every assumption is adjustable; the defaults are sourced (for example, U.S. industrial electricity price, July 2026)."
+      "caption": "All the assumptions can be modified, the defaults are cited (e.g. U.S. industrial electricity price, July 2026)."
     }
   ],
   "thumb": "assets/projects/gpu-payback/thumb.jpg"

@@ -6,12 +6,12 @@
   "order": 3,
   "kicker": "Personal Project · AI Agents",
   "tools": "Python (aiohttp) · tmux · Rust (iroh peer-to-peer tunnel) · Android (Capacitor) · Claude Code, Codex, OpenCode, Pi",
-  "blurb": "A small web app on each PC (personal computer) that lets a phone start, watch and talk to LLM (large language model) coding agents. Every agent runs in its own tmux session, so work keeps going when the phone sleeps or drops signal, and the phone gets an alert when an agent finishes or asks a question.",
+  "blurb": "A small web app running on each PC, allowing a phone to create, monitor, and communicate with LLM coding agents. Each agent operates within a dedicated tmux session, ensuring that work continues even if the phone goes to sleep or loses connection, and the phone receives a notification when an agent completes a task or requires input.",
   "long": [
-    "Deck runs on each of my PCs (personal computers) and gives my phone a column of tabs, one per session, plus one-tap keys that start Claude Code, Codex, OpenCode, Pi, agy (Google's Antigravity CLI, command-line interface), OpenClaw or my own shell scripts. Each one runs in its own tmux session on the PC, so closing the phone or losing signal never stops an agent.",
-    "Agents show as a chat rather than a raw terminal: streamed replies, tool calls you can tap open, and questions turned into buttons. A bridge process starts each agent in its machine-readable mode (for example <i>codex app-server</i> or <i>pi --mode rpc</i>), or for Claude follows its transcript and hooks, and writes one common event stream that the page replays. A shelf holds saved replies and documents (PDF (Portable Document Format), Word, Markdown) that agents can read, and on a PC (personal computer) a Review view puts a document beside the chat.",
-    "Several PCs (personal computers) link into one Deck with no main host: every host shows every host's sessions in a single tab list, and the Android app opens the next host when the one it tried doesn't answer within 4 seconds. Chats can move between hosts mid-conversation, and machine notes are a git repository that every host keeps a full copy of and pushes to its peers.",
-    "Getting in requires pairing. Deck listens only on localhost; the ways in are Tailscale or a built-in iroh tunnel (direct encrypted peer-to-peer connections with a relay fallback), and a new device must claim a one-time code that expires in 5 minutes and be approved from a device that is already paired. Phone alerts go through ntfy."
+    "Deck runs on each of my PCs (personal computers) and gives my phone a column of tabs, one per session, plus one-tap keys that start Claude Code, Codex, OpenCode, Pi, agy (Google’s Antigravity CLI, command-line interface), OpenClaw or my own shell scripts. Each one runs in its own tmux session on the PC, so closing the phone or losing signal never stops an agent.",
+    "Agents appear as a chat instead of a raw terminal: streamed responses, tappable expandable tool calls, and questions converted to buttons. A bridge process launches each agent in machine readable mode (eg codex app-server, pi --mode rpc) or for Claude, monitors its transcript and uses hooks, and writes a standardized event stream that the page replays. A shelf stores saved responses and documents (PDF, Word, Markdown) that the agents can read. On PC there is a review view that displays a document alongside the chat.",
+    "Multiple PCs connect to a single Deck without a primary host: all hosts display all hosts’ sessions in one tab list, and the android app moves to the next host if the host it connects to does not respond within 4s. Chats can migrate between hosts during a conversation. Machine notes are a git repository, each host has a full copy and pushes to other hosts.",
+    "To gain access, you need to pair. The deck only listens on localhost, so either use Tailscale or the built-in iroh tunnel (direct encrypted peer-to-peer connections with a relay fallback), and the new device needs to claim a one-time code (which expires after 5 minutes) and the new device needs to be approved from an already paired device. Phone notifications use ntfy."
   ],
   "highlights": [
     "Six agent types plus custom scripts, each in its own tmux session",
@@ -31,7 +31,7 @@
       "type": "image",
       "src": "assets/projects/deck/desktop.webp",
       "alt": "Deck on a desktop: sessions and script keys on the left, an agent chat, and the shelf.",
-      "caption": "Deck on a PC (personal computer): sessions and script keys on the left, an agent chat in the middle, the shelf of saved replies on the right. Staged demo session."
+      "caption": "Deck running on a personal computer: sessions and script keys on the left, agent chat in the center, shelf of saved responses on the right. Staged demo session."
     },
     {
       "type": "image",
@@ -43,7 +43,7 @@
       "type": "image",
       "src": "assets/projects/deck/pad.webp",
       "alt": "The phone's tab column open over a chat: running sessions, then script keys.",
-      "caption": "The phone's tab column: running sessions on top, one-tap keys for agents and scripts below."
+      "caption": "The phone’s tab column: running sessions at the top, one-tap keys for agents/scripts at the bottom."
     }
   ],
   "thumb": "assets/projects/deck/thumb.jpg"

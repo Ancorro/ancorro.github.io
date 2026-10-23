@@ -6,13 +6,13 @@
   "order": 2,
   "kicker": "Doctoral Research Direction · Multi-Agent Language Models",
   "tools": "PyTorch · Hugging Face Transformers · vLLM · Qwen3 / Qwen3.5 · Slurm on the OSU (Oregon State University) cluster · W&B (Weights & Biases)",
-  "blurb": "Can language-model agents share internal state instead of text, and can a manager learn who should read what? A controlled audit of KV-cache (key-value cache) hand-offs found the content does cross, but on standard benchmarks it adds nothing over one agent; when the receiver lacks the facts, the latent channel matches text (91% vs 92%).",
+  "blurb": "Can LM agents share internal states rather than text, and can a manager learn who needs to read what? We did a controlled test where KV-caches were passed between agents, and indeed information was shared, but it did not beat a single agent on standard benchmarks. If the receiving agent does not have the information, passing latent states performs on par with passing text (91% vs 92%).",
   "long": [
-    "Teams of LLM (large language model) agents usually talk in text: a worker writes its findings out token by token and every reader re-reads them. Agents built on the same model can instead hand over internal state, such as the KV (key-value) cache of attention. My proposal, written for the NSF GRFP (National Science Foundation Graduate Research Fellowship Program), puts a manager in charge of that traffic: workers write compact latent summaries, and the manager learns from team reward which summaries each worker should read under a bandwidth budget, in teams of 8-16 agents.",
-    "<b>First, an audit of what actually crosses.</b> I reproduced LatentMAS (a published latent multi-agent method) on Qwen3-4B with GSM8K (grade-school math) and ARC-Challenge (science questions), 300 questions × 3 seeds each, after checking that my implementation gives bit-identical caches and solver logits to the official code. Then I added cache-content controls: a cache built for a different question, no cache, a noise cache, and a sweep over the number of latent steps.",
-    "The result is a mixed one, reported as such. The latent team ties a single agent (+0.1 and −0.2 points, 95% intervals spanning zero), while a text team gains 3.4 and 2.4 points. Yet swapping in another question's cache costs 4.0 and 6.2 points, and on GSM8K 16% of the swapped arm's errors are the other question's answer. So content does cross the channel; it just does not help when the receiver can solve the task alone.",
+    "Teams of LLM agents typically communicate via text, where the worker outputs their findings token-by-token, and all recipients must process the tokens again. Agents based on the same model can instead communicate by passing internal states, like KV-cache. My NSF GRFP (National Science Foundation Graduate Research Fellowship Program) application is for a project where a manager controls this communication, workers output compact latent space summaries, and the manager learns from team reward what summaries to give to each agent within a bandwidth limit, for teams of 8-16 agents.",
+    "<b>First, an audit of what actually crosses.</b> I replicated LatentMAS (published latent multi-agent method) on Qwen3-4B using GSM8K (grade school math) and ARC-Challenge (science questions), 300 questions × 3 seeds each. I verified that my implementation produced bit-identical caches and solver logits compared to the official implementation. I added controls with cache content: cache for a different question, no cache, noise cache, and sweeping number of latent steps.",
+    "The outcome is mixed, so it is reported as mixed. The latent team ties a single agent (+0.1 and −0.2 points, with 95% intervals that include zero), but the text team improves by 3.4 and 2.4 points. However, replacing it with another problem’s cache reduces performance by 4.0 and 6.2 points, and for GSM8K, 16% of the swapped arm’s errors are the answer to the other question. So information does flow through the channel, but it does not improve performance if the receiving agent can solve the problem without it.",
     "<b>Second, a split-information probe</b> where communication is necessary: the sender holds a GSM8K problem's facts and the solver only its question (100 questions, one seed). The right cache scores 91%, a wrong cache or no cache 0%, and a text message 92% (difference −1.0 points, 95% interval −7 to +5). The latent sender needs 2.4× fewer estimated FLOPs (floating-point operations) per question in total and, at batch size 1, 19× less sender time than a text sender that thinks before writing. But its message is 25 MiB of KV cache against 111 text tokens, about 61,000× more bytes, so this measures context sharing, not compression. That gap is what the learned compact summaries in the proposal are meant to close.",
-    "Around this sits the infrastructure the plan needs: a harness that runs agents in multi-turn GEM (General Experience Maker) environments and logs every turn to a live viewer, and an RL (reinforcement learning) pipeline, GRPO (group-relative policy optimization) with LoRA (low-rank adaptation), on SWE-smith (software engineering) bug-fixing tasks in network-isolated containers. On 59 held-out tasks × 2, Qwen3.5-4B resolves 54% (64/118) and Qwen3.5-2B 16.9% (20/118). A paper draft on the audit is in progress."
+    "Surrounding this is the infrastructure required by the plan: a harness for running agents in multi-turn GEM (General Experience Maker) environments, with all interactions logged to a live viewer, and an RL (reinforcement learning) pipeline using GRPO (group-relative policy optimization) with LoRA (low-rank adaptation) on SWE-smith (software engineering) bug-fixing tasks in network-isolated containers. On 59 held-out tasks × 2, Qwen3.5-4B solves 54% (64/118) and Qwen3.5-2B 16.9% (20/118). I am writing up a paper on the audit."
   ],
   "highlights": [
     "LatentMAS (latent multi-agent system) reproduction on Qwen3-4B, bit-identical to the official code",
@@ -34,13 +34,13 @@
       "type": "image",
       "src": "assets/projects/gradproposal/team-communication.jpg",
       "alt": "Diagram of text reporting versus learned routing of internal-state summaries.",
-      "caption": "Diagram from my research plan for the NSF GRFP (National Science Foundation Graduate Research Fellowship Program): today every worker reports in text; proposed, the manager learns which internal-state summaries to send to whom under a budget."
+      "caption": "Figure from my research plan for the NSF GRFP (National Science Foundation Graduate Research Fellowship Program): currently all workers report in text, and the suggested approach is that the manager learns what summaries of internal states to send to whom within a budget."
     },
     {
       "type": "image",
       "src": "assets/projects/gradproposal/proposed-architecture.jpg",
       "alt": "Architecture diagram: text communication through a manager versus compressed hidden states routed by a trainable router head.",
-      "caption": "Diagram: (a) text communication baseline; (b) proposed latent communication, where a trainable compressor shrinks each worker's hidden states and a router head in the manager scores which worker should read which summary."
+      "caption": "Diagram: (a) text communication baseline; (b) our latent communication, with a learnable compressor that compresses each worker’s hidden states, and a router head on the manager that predicts which worker should attend to which summary."
     },
     {
       "type": "image",
@@ -52,13 +52,13 @@
       "type": "image",
       "src": "assets/projects/gradproposal/split-probe-diagram.jpg",
       "alt": "Diagram of the split-information probe, in which a sender reads the facts, a solver holding only the question continues from the sender's cache or reads a text message.",
-      "caption": "Diagram of the split-information probe: the sender reads only the facts, the solver only the question."
+      "caption": "Diagram of the split-information probe: the sender sees only the facts, and the solver sees only the question."
     },
     {
       "type": "image",
       "src": "assets/projects/gradproposal/split-probe.jpg",
       "alt": "Bar charts: right cache 91%, wrong cache 0%, no cache 0%, text 92%; latent sender 1.30 TFLOPs versus text sender 7.16.",
-      "caption": "Split-information probe, 100 GSM8K (grade-school math) questions, Qwen3-4B, one seed. The cache carries the facts and ties text; the latent sender uses 1.30 TFLOPs (trillion floating-point operations) against 7.16 for text, but its message is far larger. Source: gradProposal paper/generated/split_probe.tex."
+      "caption": "Split-information probe, 100 GSM8K (grade-school math) questions, Qwen3-4B, one seed. The cache stores the facts and ties text, while the latent sender requires 1.30 TFLOPs (trillion floating-point operations) compared to 7.16 for text, but the message is much larger. From gradProposal paper/generated/split_probe.tex."
     }
   ],
   "thumb": "assets/projects/gradproposal/thumb.jpg"

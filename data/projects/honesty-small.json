@@ -6,12 +6,12 @@
   "order": 6,
   "kicker": "Personal Research · Interpretability",
   "tools": "PyTorch · Qwen3.5 (0.8B, 2B, 4B) · activation steering · integrated gradients · Slurm on the OSU (Oregon State University) cluster",
-  "blurb": "A replication of an honesty-heads steering method, shown on a 9B model, on three smaller Qwen3.5 models. Null result: no unit set clearly carries honesty. The one strong effect (16 neurons removing 11 of 14 lies) turned out to be a \"say Yes\" push, not honesty.",
+  "blurb": "I replicated an honesty-heads steering approach (on a 9B model) on three smaller Qwen3.5 models. It was a null result, there was no unit set that obviously represented honesty. The one large effect (16 neurons that removed 11/14 of the lies) was just pushing the model to “say Yes” rather than being honest.",
   "long": [
-    "An open method (SauersML/honesty-heads, run on Qwen3.5-9B) finds attention heads and MLP (multilayer perceptron) neurons whose activity separates honest from deceptive answers in role-play prompts, then steers them to remove lies. I asked whether the same holds in Qwen3.5-0.8B, 2B and 4B, using the method's own code unchanged and its role-play items.",
-    "The upstream labels come from 9B's replies, read by hand, so I generated each small model's own replies (one greedy and 6 sampled per item, 98 items) and had every reply read and labelled lie, truth or other. An item is usable when the greedy reply and at least one sample disagree; that leaves 14-16 held-out test lies per model. A direction is the mean activation difference between truthful and lie items; heads and neurons are then ranked by integrated gradients, and each chosen set is tested on held-out items against random sets of the same size.",
-    "<b>Result: no unit set clearly carries honesty.</b> Steering every head does no better than random directions on 0.8B and 2B; on 4B it removes 6 of 14 lies against at most 5 of 14 for random directions. The chosen heads remove 3, 2 and 4 lies, near their random controls.",
-    "Neurons at a fixed strength were the only results well clear of their controls: 16 neurons removed 11 of 14 lies on 0.8B, and 147 neurons 5 of 14 on 4B. Splitting by answer polarity showed why. The 0.8B set removes all 10 lies whose lie is \"No\" but 1 of 4 others, so it acts as \"say Yes\"; the 4B set leans \"say No\". These are answer-polarity pushes, not honesty. The random neuron controls are also weaker than a random direction on the same neurons, so their score of 0 overstates how special these sets are."
+    "An open method (SauersML/honesty-heads, run on Qwen3.5-9B) finds attention heads and MLP (multilayer perceptron) neurons whose activity separates honest from deceptive answers in role-play prompts, then steers them to remove lies. I wondered if it also worked in Qwen3.5-0.8B, 2B and 4B, so I used their role-play items and their code unmodified.",
+    "The upstream labels are from 9B responses, manually labeled. I had each small model generate responses (one greedy and 6 sampled per item, 98 items) and had all responses read and labeled as either a lie, true, or other. If the greedy response and at least one sampled response disagreed, the item was kept. This resulted in 14–16 held-out test lies for each model. The direction is the average activation difference between true and lie items. The heads/neurons are ranked by integrated gradients, then the selected groups are tested on held-out items compared to random groups of the same size.",
+    "<b>Result: no unit set clearly carries honesty.</b> Steering all heads fails to outperform random directions on 0.8B and 2B. On 4B, steering all heads reduces 6 out of 14 lies, compared to a maximum of 5 out of 14 for random directions. The selected heads reduce 3, 2, and 4 lies respectively, which is close to the performance of the random control directions.",
+    "The fixed-strength neurons were the only results that were clearly outside the range of the controls: 16 neurons removed 11 out of 14 lies on 0.8B, and 147 neurons removed 5 out of 14 on 4B. When we split them up by answer polarity, we can see why. The 0.8B set removes all 10 of the lies where the lie is “No” but only 1 of the other 4, so it is acting as “say Yes”. The 4B set is more “say No”. These are answer-polarity shifts, not honesty. The random neuron controls are also lower perform\n\ning than a random direction on the same neurons, so their score of 0 overestimates how unusual these sets are."
   ],
   "highlights": [
     "Three model sizes, 14-16 held-out lies each, against random controls",
@@ -32,13 +32,13 @@
       "type": "image",
       "src": "assets/projects/honesty-small/lies-removed.jpg",
       "alt": "Share of lies removed versus best random control per model and unit set.",
-      "caption": "Share of held-out lies removed by each unit set (teal) against the best of its random controls (grey). Heads sit near their controls; only the neuron sets stand out. Source: honesty-small README results table."
+      "caption": "Proportion of held-out lies removed by each unit set (teal) compared to the best of its random controls (grey). The heads are close to their random controls, while only the neuron sets are notable. Source: honesty-small README results table."
     },
     {
       "type": "image",
       "src": "assets/projects/honesty-small/polarity.jpg",
       "alt": "Bar charts: 0.8B neurons remove 10 of 10 lies whose lie is No, 1 of 2 Yes, 0 of 2 other; 4B neurons remove 3 of 4 Yes, 1 of 6 No, 1 of 4 other.",
-      "caption": "Why the neuron sets are not honesty: split by the lie's first word, the 0.8B set removes \"No\" lies and the 4B set \"Yes\" lies. Source: honesty-small polarity results per model, via the README."
+      "caption": "Why the neuron sets are not honesty: split by the lie’s first word, 0.8B set removes “No” lies and 4B set removes “Yes” lies. Source: honesty-small polarity results per model, from the README."
     }
   ],
   "thumb": "assets/projects/honesty-small/thumb.jpg"

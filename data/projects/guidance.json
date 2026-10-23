@@ -6,11 +6,11 @@
   "order": 14,
   "kicker": "1st Place · BeaverHacks 2026",
   "tools": "AI Agents (Google Gemini) · Application Development (Python, React)",
-  "blurb": "Won 1st place in the beginner track of 20 teams. A technician photographs a machine and asks a question; a multimodal Gemini agent answers aloud and draws the next step onto the photo.",
+  "blurb": "We won 1st place out of the 20 teams in the beginner division. A technician photographs a machine and asks a question, and the multimodal Gemini agent responds verbally and draws the next step on the image.",
   "long": [
-    "Built end to end in 24 hours with a team at BeaverHacks 2026, winning 1st place in the beginner track of 20 teams.",
-    "A technician captures photos from a laptop webcam or a paired phone, then asks a question by voice or text. A multi-stage Gemini pipeline analyses the images, answers in spoken-style guidance, draws an annotated diagram on the photo showing the next action, and reads the answer aloud.",
-    "Machine manuals are retrieved locally (RAG, retrieval-augmented generation) through function calling, scoped by a QR code on each machine, and task state persists so the assistant remembers what has already been tried."
+    "I built this app end to end over 24 hours with my team at BeaverHacks 2026, we won 1st place out of 20 teams in the beginner track.",
+    "The technician takes photos using a laptop webcam or connected phone, and asks a question via voice or text input. The multi-step Gemini pipeline processes the images, provides an answer in the form of verbal instructions, creates an annotated drawing on the image, illustrating the next step, and reads the response aloud.",
+    "The machine manuals are accessed locally (RAG) via function calling, keyed to the specific machine using a QR code, with task state maintained so the assistant remembers what’s been tried."
   ],
   "highlights": [
     "1st of 20 teams, beginner track",
@@ -44,7 +44,7 @@
       "type": "image",
       "src": "assets/projects/guidance/example.jpg",
       "alt": "Annotated laptop bottom cover",
-      "caption": "A generated diagram: the assistant marks all ten screws on a photo of a laptop's bottom cover."
+      "caption": "The generated image: the assistant circles the ten screws in the image of the laptop base."
     }
   ],
   "thumb": "assets/projects/guidance/thumb.jpg"

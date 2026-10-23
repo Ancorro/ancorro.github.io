@@ -75,8 +75,10 @@ def export(args):
         for bid, text in paragraphs(p):
             m = LEAD.match(text)
             body = TAG.sub("", text[m.end():] if m else text).strip()
-            layout.append({"id": bid, "lead": m.group(1) if m else None})
-            rows.append({"brief_id": bid, "section": p["title"], "draft": body})
+            # sample_candidates.py seeds per draft with int(brief_id[1:]), so ids must be <letter><digits>.
+            sid = f"s{len(rows):03d}"
+            layout.append({"id": sid, "field": bid, "lead": m.group(1) if m else None})
+            rows.append({"brief_id": sid, "section": p["title"], "draft": body})
     (args.dir / "drafts.jsonl").write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows), encoding="utf-8")
     (args.dir / "layout.json").write_text(json.dumps(layout, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"{len(rows)} paragraphs, {sum(len(r['draft'].split()) for r in rows)} words -> {args.dir}")
@@ -94,8 +96,9 @@ def merge(args):
 
 
 def do_import(args):
-    rows = {r["id"]: r for r in json.loads((args.dir / "checked.json").read_text(encoding="utf-8"))}
-    layout = {l["id"]: l for l in json.loads((args.dir / "layout.json").read_text(encoding="utf-8"))}
+    checked = {r["id"]: r for r in json.loads((args.dir / "checked.json").read_text(encoding="utf-8"))}
+    layout = {l["field"]: l for l in json.loads((args.dir / "layout.json").read_text(encoding="utf-8"))}
+    rows = {field: checked.get(l["id"]) for field, l in layout.items()}
     log, used = [], 0
     for f, p in entries():
         changed = False

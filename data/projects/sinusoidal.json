@@ -6,12 +6,12 @@
   "order": 8,
   "kicker": "Personal Project · Game + Interpretability",
   "tools": "Godot 4 (GDScript, shaders) · Qwen3.5-2B · PyTorch steering vectors · Sparse autoencoders · PPO (Proximal Policy Optimization)",
-  "blurb": "A 3D card roguelike in Godot where the opponent, a wooden automaton called the Dealer, is a real small language model (Qwen3.5-2B). Open its head and cut glowing wires, and each cut adds a steering vector to the model's activations, changing how it talks and plays.",
+  "blurb": "It’s a 3D card roguelike in Godot where the enemy (a wooden automaton known as the Dealer) is an actual small LM (Qwen3.5-2B). You open up its head and cut the glowing wires, each time you cut a wire a steering vector is added to the LM’s activations, altering how it speaks and plays.",
   "long": [
-    "Sinusoidal is a 3D card roguelike with a dark, low-resolution look: a 480×270 render, a palette shader that snaps dark colours, a swinging lamp and candles. A run is a branching map of battles, card choices and events on a parchment, with three candles as lives; the rules, 9 sigils (creature abilities) and 10 events are data-driven and covered by headless test and balance sims.",
+    "Sinusoidal is a 3D card roguelike with a dark, low-res aesthetic: 480×270 render, palette shader snapping dark colors, swinging lamp and candles. The run consists of a branching map of battles, card choices and events on a parchment, three candles represent lives. The rules, 9 sigils (creature abilities) and 10 events are data driven and covered by headless test and balance simulations.",
     "The hook is that the Dealer is a language model you can tamper with. Its head opens to show four coloured wires; each wire is a contrastive direction (the mean activation on one set of prompts minus another, at one layer), and cutting it adds that direction to the residual stream. Players are never told what a wire means and learn it by watching the Dealer change.",
-    "Sandbox switches test interpretability papers as game mechanics on the Dealer's own model. A persona gauge reads its replies against persona vectors (evil, sycophantic, paranoid and others): grafting a trait at layer 12 moved that trait's needle the most, by 5 to 12 standard deviations, in a single run. A concept-injection test found the 2B model named an injected concept 0 times in 120 pilot trials, so the 'does it notice?' mechanic stays a sandbox curiosity. A <b>Why?</b> ledger traces each move with occlusion of board lines and sparse-autoencoder features, and a small PPO (Proximal Policy Optimization) reinforcement-learning policy lets cut wires bias the Dealer's play.",
-    "In progress, built in parallel feature tracks. The card portraits are placeholders carried over from Lantern Depths."
+    "Sandbox switches test interpretability papers as game mechanics on the Dealer’s own model. The persona gauge measures the responses against persona vectors (evil, sycophantic, paranoid and others). When they grafted a trait onto layer 12, the corresponding persona needle shifted the most, ranging from 5 to 12 standard deviations, in one test. They attempted a concept injection test but the 2B model mentioned the injected concept 0/120 times in their initial testing, so the “does it notice?” game mechanic will remain a fun sandbox experiment. The why? log uses occluding lines on the board and sparse autoencoder features to track the decision. They also trained a small PPO (Proximal Policy Optimization) RL policy so that cutting wires can influence the Dealer’s moves.",
+    "It’s a work in progress, developed in parallel feature tracks. The card portraits are placeholders from Lantern Depths."
   ],
   "highlights": [
     "Opponent is a real Qwen3.5-2B with four cuttable steering wires",
@@ -37,7 +37,7 @@
       "type": "image",
       "src": "assets/projects/sinusoidal/head-open2.webp",
       "alt": "The Dealer's head opened, showing four coloured wires.",
-      "caption": "The Dealer's head opened: each coloured wire is a steering direction in the model; cutting one changes how it talks and plays."
+      "caption": "The Dealer’s head opened: each colored wire is a steering direction in the model, and cutting one alters how it speaks and plays."
     },
     {
       "type": "image",
@@ -61,7 +61,7 @@
       "type": "image",
       "src": "assets/projects/sinusoidal/sandbox-menu.webp",
       "alt": "The debug sandbox menu listing experimental brain features.",
-      "caption": "The sandbox menu that switches the experimental interpretability features on and off."
+      "caption": "The sandbox menu for toggling the experimental interpretability features."
     }
   ],
   "thumb": "assets/projects/sinusoidal/thumb.jpg"
