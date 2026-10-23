@@ -1,0 +1,61 @@
+{
+  "slug": "esm3",
+  "title": "AI Modeling for HIV Antibody Research",
+  "status": "done",
+  "dates": "Jun 2026 – Sep 2026",
+  "order": 12,
+  "kicker": "Graduate Course Project · Protein Language Models",
+  "tools": "Protein Models (ESM3, LoRA, VAE) · Machine Learning (XGBoost, scikit-learn)",
+  "blurb": "Asked whether an antibody's protein sequence alone predicts how broadly it neutralizes HIV. Frozen ESM3 (a protein language model) embeddings lifted AUROC (area under the ROC curve) from 0.651 to 0.773 over a handcrafted baseline.",
+  "long": [
+    "Broadly neutralizing antibodies (bnAbs) block many HIV strains at once, and finding them is slow lab work. This project asked how much a sequence-only model can tell about breadth before any lab test.",
+    "On 300 public heavy-chain sequences from CATNAP, grouped into 109 lineages so that relatives never sit on both sides of a split, frozen ESM3 embeddings reached a pooled AUROC (area under the receiver operating characteristic curve) of 0.773 against 0.651 for a handcrafted XGBoost baseline. The group-bootstrap interval of the difference still includes zero, and the write-up says so.",
+    "A LoRA (low-rank adaptation) fine-tune of ESM3 on antibody repertoire data (OAS, the Observed Antibody Space) was used for lineage case studies: in its representation space it placed 4 of 4 known VRC34 intermediates correctly.",
+    "Every number in the report is reconciled against saved artifacts by an audit script, so the claims and the results cannot drift apart."
+  ],
+  "highlights": [
+    "AUROC 0.651 → 0.773 (frozen ESM3 vs. handcrafted baseline)",
+    "Lineage-held-out validation over 109 groups",
+    "4 of 4 VRC34 intermediates placed correctly"
+  ],
+  "links": [
+    {
+      "label": "Project page",
+      "href": "esm3-banb/",
+      "icon": "page"
+    }
+  ],
+  "note": "Code private (course work)",
+  "hero": {
+    "type": "image",
+    "src": "assets/projects/esm3/roc_pr.jpg",
+    "alt": "ROC and precision-recall curves for the antibody breadth classifiers",
+    "fit": "contain"
+  },
+  "gallery": [
+    {
+      "type": "image",
+      "src": "assets/projects/esm3/roc_pr.jpg",
+      "alt": "ROC and precision-recall curves",
+      "caption": "Pooled out-of-fold ROC (receiver operating characteristic) and precision-recall curves, baseline vs. ESM3."
+    },
+    {
+      "type": "image",
+      "src": "assets/projects/esm3/threeway.jpg",
+      "alt": "Three-way model comparison",
+      "caption": "Handcrafted, frozen ESM3 and LoRA ESM3 compared on the same folds."
+    },
+    {
+      "type": "image",
+      "src": "assets/projects/esm3/pgt121_lineage.jpg",
+      "alt": "PGT121 lineage in embedding space",
+      "caption": "PGT121 lineage case study in representation space."
+    },
+    {
+      "type": "image",
+      "src": "assets/projects/esm3/similarity.jpg",
+      "alt": "Similarity distribution",
+      "caption": "Embedding similarity within and across lineages."
+    }
+  ]
+}

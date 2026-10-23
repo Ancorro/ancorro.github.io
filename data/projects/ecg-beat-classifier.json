@@ -1,0 +1,49 @@
+{
+  "slug": "ecg-beat-classifier",
+  "title": "ECG Heartbeat Classifier on MIT-BIH",
+  "status": "wip",
+  "dates": "Oct 2026",
+  "order": 15,
+  "kicker": "Personal Project · Biomedical Signal Processing",
+  "tools": "Python · SciPy (Butterworth and notch filters, Welch PSD, power spectral density) · wfdb · matplotlib",
+  "blurb": "An ECG (electrocardiogram) pipeline on the MIT-BIH (Massachusetts Institute of Technology – Beth Israel Hospital) Arrhythmia Database, planned through Pan-Tompkins R-peak detection and AAMI (Association for the Advancement of Medical Instrumentation) beat classes tested on unseen patients. Done so far: loading all 48 records (109,494 beats) and filtering that removes 56.4 dB of powerline hum with no loss in the heartbeat band.",
+  "long": [
+    "The goal is an end-to-end heartbeat classifier: filter the raw ECG (electrocardiogram), find each beat with a hand-written Pan-Tompkins R-peak detector, map beats to the AAMI (Association for the Advancement of Medical Instrumentation) classes, and evaluate on patients the model never saw (the de Chazal inter-patient split), comparing against a random beat-level split to measure leakage.",
+    "Steps 0–2 are done. The loader reads all 48 half-hour MIT-BIH (Massachusetts Institute of Technology – Beth Israel Hospital) records at 360 Hz, picks lead MLII (modified limb lead II) by name with a fallback for the two records that lack it, and returns 109,494 annotated beats, matching the usual count. Filtering is a 4th-order Butterworth bandpass at 0.5–40 Hz plus a 60 Hz notch, run forward and backward (zero phase).",
+    "Measured on record 222: powerline hum down 56.4 dB, baseline drift below 0.3 Hz down 29.8 dB, and the 5–15 Hz QRS band (the main heartbeat spike) unchanged at 0.0 dB. A one-pass filter would delay peaks by different amounts for different beat shapes (11.1 ms for normal beats versus 8.3 ms for ventricular beats on record 208), which would distort the beat-timing features, so zero phase is used; that is valid only offline, since it looks at future samples.",
+    "The detector, features and classifier (steps 3–5) are not written yet."
+  ],
+  "highlights": [
+    "48 records, 109,494 annotated beats loaded",
+    "Hum −56.4 dB, drift −29.8 dB, QRS band 0.0 dB",
+    "One-pass filter delay differs by beat shape: 11.1 vs 8.3 ms"
+  ],
+  "links": [],
+  "note": "Code private",
+  "hero": {
+    "type": "image",
+    "src": "assets/projects/ecg-beat-classifier/step2-time-222.webp",
+    "alt": "Two ECG traces of record 222: the raw one sags with baseline drift; the filtered one sits level with every beat intact.",
+    "fit": "contain"
+  },
+  "gallery": [
+    {
+      "type": "image",
+      "src": "assets/projects/ecg-beat-classifier/step2-time-222.webp",
+      "alt": "Raw and filtered ECG, record 222, 10 seconds.",
+      "caption": "Record 222, 10 s: raw (top) drifts by about 1.5 mV; after the bandpass and notch filters (bottom) the trace is level and every beat keeps its place and shape."
+    },
+    {
+      "type": "image",
+      "src": "assets/projects/ecg-beat-classifier/step2-psd-222.webp",
+      "alt": "Power spectrum of raw and filtered ECG, with a deep dip at 60 Hz after filtering.",
+      "caption": "Welch PSD (power spectral density) over the whole record: the curves match where the heart's signal lives, and the 60 Hz hum spike becomes a deep notch (−56.4 dB)."
+    },
+    {
+      "type": "image",
+      "src": "assets/projects/ecg-beat-classifier/step1-raw-208.webp",
+      "alt": "Record 208 with normal (N), ventricular (V) and fusion (F) beats labelled.",
+      "caption": "Record 208 with the cardiologists' labels: wide ventricular (V) and fusion (F) beats against narrow normal (N) ones, the shapes the classifier will need to separate."
+    }
+  ]
+}

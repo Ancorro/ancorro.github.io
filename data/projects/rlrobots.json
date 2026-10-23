@@ -1,0 +1,67 @@
+{
+  "slug": "rlrobots",
+  "title": "Humanoid and Robot-Arm Manipulation in Simulation",
+  "status": "wip",
+  "dates": "Sep 2026 – present",
+  "order": 1,
+  "kicker": "Personal Research · Robotics",
+  "tools": "Isaac Lab · MuJoCo · PPO (Proximal Policy Optimization) · Behaviour cloning · Grounding DINO · SAM 2 (Segment Anything Model 2) · Gemma 4 · OSU HPC (Oregon State University high-performance computing)",
+  "blurb": "A simulated Unitree G1 humanoid that walks to a table, grasps objects with its three-finger hands, carries them and sets them down. A learned grasp lifts 345 of 360 held-out objects, against 284 for the previous best. It grew out of a camera-only pick-and-place stack for a small robot arm, which places 92% of simple shapes from camera images alone.",
+  "long": [
+    "Started in late September 2026 as a first robotics project: PPO (Proximal Policy Optimization) on toy control tasks, then a simulated SO-101 desktop robot arm in MuJoCo, a physics simulator. The current goal is a Unitree G1 humanoid (a two-legged robot with Dex3 three-finger hands) that walks around a scene and moves objects of many shapes and sizes, trained in NVIDIA's Isaac Lab, which simulates thousands of robots in parallel on one GPU (graphics processing unit).",
+    "<b>Arm, from cameras only.</b> The SO-101 stack has no learned motor policy: two RGB-D (colour plus depth) cameras feed off-the-shelf vision models (Grounding DINO finds the named object, SigLIP 2 picks between look-alikes, SAM 2.1 outlines it). The outline becomes a 3D point cloud, a planner picks the gripper's angle, and IK (inverse kinematics, which solves for the joint angles that put the hand at a target pose) moves the arm. On 200 held-out scenes with two tasks each it placed 369 of 400 simple shapes (92%) and 341 of 400 scanned household objects (85%). A full stack on top, where a language model plans a typed request (\"put the toy rhino in the red tray\") and a 9B-parameter decision model picks each skill, completed 62 of 100 held-out requests; the largest share of failures (21 of 38) came from naming objects, not from the arm.",
+    "<b>Humanoid grasping.</b> On the G1, a scripted pinch grasp became the baseline, and each learned step was measured against it on the same 360 held-out layouts of six shape classes (boxes, upright and lying cylinders, balls, capsules, eggs). A small policy that adjusts the scripted grasp's parameters, trained with REINFORCE (a basic policy-gradient method), raised lifts from 198 to 282. A closed-loop policy trained with PPO on Isaac Lab's Dexsuite lift task, which moves the waist, right arm and hand every 20 ms, then lifted and held 345 of 360 through a shake test (vs 284 for the parameter policy on the same layouts, paired test p = 4e-12). What made it learnable was smoothing: a low-pass filter on arm actions plus penalties on acceleration and action changes. Otherwise-identical runs without them stayed flat for thousands of iterations. It is weaker on household objects it never trained on (40 of 342 vs 58).",
+    "<b>Walking, carrying, putting down.</b> Walking uses Isaac Lab's pretrained locomotion network for the legs. On top of it the G1 walks 1.2 m to a table and lifts with a scripted pinch (26 of 36 lifted, no falls), and carries objects to a second table. In the latest runs, 384 robots with six shapes at their own sizes walked up, grasped, carried and set the object down upright while staying standing in 144 cases (38%). For large boxes, a two-hand squeeze learned by BC (behaviour cloning, supervised learning from 820 scripted demonstrations) followed by a scripted set-down, put the box on a target square in 17 of 20 development rollouts.",
+    "The main comparisons were pre-registered in the project log, with test layouts held out and checkpoints picked on a separate validation set. The G1 clips are physics from Isaac Lab, redrawn in MuJoCo for rendering. Training ran on the OSU (Oregon State University) cluster and AWS (Amazon Web Services) GPUs."
+  ],
+  "highlights": [
+    "Learned G1 humanoid grasp: 345/360 held-out objects lifted and held, vs 284 for the previous policy",
+    "Camera-only arm pick-and-place: 369/400 simple shapes, 341/400 household objects placed",
+    "Walk, grasp, carry, set down upright: 144 of 384 robots across six shapes (development runs)",
+    "Two-hand box carry learned by BC (behaviour cloning): 17/20 set down (development runs)"
+  ],
+  "note": "Code private",
+  "hero": {
+    "type": "video",
+    "src": "assets/projects/rlrobots/g1-walk-carry.mp4",
+    "poster": "assets/projects/rlrobots/g1-walk-carry.jpg",
+    "alt": "Simulated Unitree G1 humanoid picks a small yellow box off one table, walks to a second table and sets it down"
+  },
+  "gallery": [
+    {
+      "type": "video",
+      "src": "assets/projects/rlrobots/g1-walk-carry.mp4",
+      "poster": "assets/projects/rlrobots/g1-walk-carry.jpg",
+      "alt": "G1 humanoid walks to a table, picks a box, carries it to a second table and puts it down",
+      "caption": "Walk, grasp, carry, put down (2x speed). Learned legs, scripted grasp. Development run, Oct 2026; physics from Isaac Lab, redrawn in MuJoCo."
+    },
+    {
+      "type": "video",
+      "src": "assets/projects/rlrobots/g1-grasp-lift.mp4",
+      "poster": "assets/projects/rlrobots/g1-grasp-lift.jpg",
+      "alt": "Close-up of the G1's three-finger hand grasping and lifting a small box from a table",
+      "caption": "Learned closed-loop grasp (PPO, Proximal Policy Optimization) on a held-out test layout: lifts the box 10 cm and holds it through a shake. 345 of 360 test objects lifted and held."
+    },
+    {
+      "type": "video",
+      "src": "assets/projects/rlrobots/g1-two-hand-box.mp4",
+      "poster": "assets/projects/rlrobots/g1-two-hand-box.jpg",
+      "alt": "G1 squeezes a cardboard box between both palms, lifts it and sets it on a green square",
+      "caption": "Two-hand box grab learned by behaviour cloning from 820 scripted demos, then a scripted set-down on the green square. 17 of 20 development rollouts succeeded."
+    },
+    {
+      "type": "video",
+      "src": "assets/projects/rlrobots/so101-pick-place.mp4",
+      "poster": "assets/projects/rlrobots/so101-pick-place.jpg",
+      "alt": "Yellow SO-101 robot arm picks a red cylinder and places it in a tray, with the camera view and detection box beside it",
+      "caption": "SO-101 arm, camera only: the detector finds \"red cylinder\" (right, front camera), then the arm picks and places it. 369 of 400 held-out simple-shape tasks placed."
+    },
+    {
+      "type": "image",
+      "src": "assets/projects/rlrobots/so101-perception.jpg",
+      "alt": "Front camera view of the tabletop with labelled boxes around small objects",
+      "caption": "Perception output on a simulated scene: each detected object gets a box and a short description, which the planner reads as the scene list."
+    }
+  ],
+  "featured": true
+}

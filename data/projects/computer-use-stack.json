@@ -1,0 +1,44 @@
+{
+  "slug": "computer-use-stack",
+  "title": "Computer-Use Agent Evaluated on OSWorld",
+  "status": "wip",
+  "dates": "Oct 2026 – present",
+  "order": 5,
+  "kicker": "Personal Research · Language-Model Agents",
+  "tools": "Python · OSWorld (desktop-task benchmark) · Claude · SubQ Snap decision model · Gemma 4 · OCR (optical character recognition) · Slurm on the OSU (Oregon State University) cluster · AWS (Amazon Web Services)",
+  "blurb": "An agent that operates a Linux desktop: a fast decision model picks routine clicks in about half a second, and a vision model takes over when unsure. On 60 multi-app tasks from OSWorld (a desktop-task benchmark) it went from 0 (decision model alone) to 16 and 20 with a planner stack, then 27 with one simpler loop.",
+  "long": [
+    "This project drives a real desktop from a goal in plain words. Each step, screen reading turns the screenshot into numbered on-screen items using OCR (optical character recognition) and the accessibility tree. A fast decision model picks the next action in about 0.5 s; when it is unsure, or the action needs words (typing, finishing), a vision model (Claude) sees the screenshot and picks the action itself.",
+    "I tested it on OSWorld (a benchmark of real desktop tasks in virtual machines), using the 76 multi-app tasks that run without OSWorld's proxy, split into 15 dev tasks for changing the agent and 60 test tasks. The first design was a planner stack: plan steps, check each step against the screen, re-plan on failure. The decision model alone solved 0 of 60 test tasks; stack v2 solved 16 (exact McNemar test p = 3.1e-5 against the decision model alone), and v3 solved 20. But v3 versus v2 was 9 tasks gained and 5 lost, p = 0.42: within run-to-run noise.",
+    "Reading v3's 40 failures showed the stack itself caused many of them: 16 runs passed the stack's own done-check while OSWorld scored 0, and checks that expected typed text OCR could not read back sent 10 more runs to a weaker fallback. So I replaced it with one loop and no planner, then added kept notes and a warning when the same action repeats. That loop solved 27 of 60 (mean score 0.51). It is a single run, and it was designed after reading the test failures, so the 60 test tasks are no longer clean; from then on failures were read on dev tasks only.",
+    "Other runs, reported as measured: on the 14 dev tasks, Opus 5.5 at medium effort as the vision model solved 8 (Sonnet 5: 7). An untrained Gemma 4 12B as the fast decider solved 2. On a 10-task sample of the harder OSWorld 2.0 (100 steps), the agent fully completed 0 of 10, with a mean partial score of 0.196. Of 12 procedurally generated tasks with their own checkers, 9 ran (3 virtual machines failed to start) and it solved all 9. None of these numbers are comparable to the OSWorld leaderboard, which uses the full task set and more steps."
+  ],
+  "highlights": [
+    "60 OSWorld (desktop-task benchmark) multi-app test tasks: decision model alone 0, stack v2 16, v3 20, one loop 27",
+    "v3 vs v2: p = 0.42 (exact McNemar test), within noise",
+    "Fast decider ~0.5 s per step; vision model ~5 s",
+    "OSWorld 2.0 sample: 0 of 10 fully completed, mean partial score 0.196"
+  ],
+  "links": [],
+  "note": "Code private",
+  "hero": {
+    "type": "image",
+    "src": "assets/projects/computer-use-stack/loop-diagram.jpg",
+    "alt": "Diagram of the agent loop: screen read into numbered items, a fast decision model acts when confident, otherwise a vision model picks the action; kept notes feed back each step.",
+    "fit": "contain"
+  },
+  "gallery": [
+    {
+      "type": "image",
+      "src": "assets/projects/computer-use-stack/loop-diagram.jpg",
+      "alt": "Diagram of the one-loop computer-use agent.",
+      "caption": "Diagram of the loop: the fast decision model handles confident clicks and keys; typing, finishing and unsure steps go to the vision model. Timings are medians from the dev runs."
+    },
+    {
+      "type": "image",
+      "src": "assets/projects/computer-use-stack/osworld-test.jpg",
+      "alt": "Bar chart: fast decider alone 0 of 60, planner stack v2 16, v3 20, one loop 27.",
+      "caption": "Tasks solved on the same 60 OSWorld (desktop-task benchmark) multi-app test tasks, 50 steps each, one run per system. v3 vs v2 is within noise (p = 0.42), and the loop was designed after reading v3's test failures. Source: computer-use-stack docs/computer_use.md."
+    }
+  ]
+}

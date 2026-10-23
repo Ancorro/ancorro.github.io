@@ -1,0 +1,50 @@
+{
+  "slug": "guidance",
+  "title": "Guidance – Agentic Field Technician Assistant",
+  "status": "done",
+  "dates": "May 2026 · 24-hour hackathon",
+  "order": 14,
+  "kicker": "1st Place · BeaverHacks 2026",
+  "tools": "AI Agents (Google Gemini) · Application Development (Python, React)",
+  "blurb": "Won 1st place in the beginner track of 20 teams. A technician photographs a machine and asks a question; a multimodal Gemini agent answers aloud and draws the next step onto the photo.",
+  "long": [
+    "Built end to end in 24 hours with a team at BeaverHacks 2026, winning 1st place in the beginner track of 20 teams.",
+    "A technician captures photos from a laptop webcam or a paired phone, then asks a question by voice or text. A multi-stage Gemini pipeline analyses the images, answers in spoken-style guidance, draws an annotated diagram on the photo showing the next action, and reads the answer aloud.",
+    "Machine manuals are retrieved locally (RAG, retrieval-augmented generation) through function calling, scoped by a QR code on each machine, and task state persists so the assistant remembers what has already been tried."
+  ],
+  "highlights": [
+    "1st of 20 teams, beginner track",
+    "Image + audio input, spoken output, annotated diagrams",
+    "QR-scoped local manual retrieval"
+  ],
+  "links": [
+    {
+      "label": "Code",
+      "href": "https://github.com/ekanshArora123/beaverhacks2026",
+      "icon": "github"
+    },
+    {
+      "label": "Demo",
+      "href": "https://lnkd.in/gCfc3Sih",
+      "icon": "play"
+    },
+    {
+      "label": "Submission",
+      "href": "https://lnkd.in/gMxyVKYR",
+      "icon": "page"
+    }
+  ],
+  "hero": {
+    "type": "image",
+    "src": "assets/projects/guidance/example.jpg",
+    "alt": "A laptop's underside annotated by the assistant with the locations of its ten screws"
+  },
+  "gallery": [
+    {
+      "type": "image",
+      "src": "assets/projects/guidance/example.jpg",
+      "alt": "Annotated laptop bottom cover",
+      "caption": "A generated diagram: the assistant marks all ten screws on a photo of a laptop's bottom cover."
+    }
+  ]
+}

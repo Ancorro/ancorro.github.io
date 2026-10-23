@@ -1,0 +1,49 @@
+{
+  "slug": "deck",
+  "title": "Deck – Phone Control Panel for Coding Agents",
+  "status": "wip",
+  "dates": "Oct 2026 – present",
+  "order": 3,
+  "kicker": "Personal Project · AI Agents",
+  "tools": "Python (aiohttp) · tmux · Rust (iroh peer-to-peer tunnel) · Android (Capacitor) · Claude Code, Codex, OpenCode, Pi",
+  "blurb": "A small web app on each PC (personal computer) that lets a phone start, watch and talk to LLM (large language model) coding agents. Every agent runs in its own tmux session, so work keeps going when the phone sleeps or drops signal, and the phone gets an alert when an agent finishes or asks a question.",
+  "long": [
+    "Deck runs on each of my PCs (personal computers) and gives my phone a column of tabs, one per session, plus one-tap keys that start Claude Code, Codex, OpenCode, Pi, agy (Google's Antigravity CLI, command-line interface), OpenClaw or my own shell scripts. Each one runs in its own tmux session on the PC, so closing the phone or losing signal never stops an agent.",
+    "Agents show as a chat rather than a raw terminal: streamed replies, tool calls you can tap open, and questions turned into buttons. A bridge process starts each agent in its machine-readable mode (for example <i>codex app-server</i> or <i>pi --mode rpc</i>), or for Claude follows its transcript and hooks, and writes one common event stream that the page replays. A shelf holds saved replies and documents (PDF (Portable Document Format), Word, Markdown) that agents can read, and on a PC (personal computer) a Review view puts a document beside the chat.",
+    "Several PCs (personal computers) link into one Deck with no main host: every host shows every host's sessions in a single tab list, and the Android app opens the next host when the one it tried doesn't answer within 4 seconds. Chats can move between hosts mid-conversation, and machine notes are a git repository that every host keeps a full copy of and pushes to its peers.",
+    "Getting in requires pairing. Deck listens only on localhost; the ways in are Tailscale or a built-in iroh tunnel (direct encrypted peer-to-peer connections with a relay fallback), and a new device must claim a one-time code that expires in 5 minutes and be approved from a device that is already paired. Phone alerts go through ntfy."
+  ],
+  "highlights": [
+    "Six agent types plus custom scripts, each in its own tmux session",
+    "Linked computers with no main host; the phone app fails over after 4 s",
+    "One-time 5-minute pairing codes; localhost-only server",
+    "Chats move between hosts mid-conversation"
+  ],
+  "links": [],
+  "note": "Code private",
+  "hero": {
+    "type": "image",
+    "src": "assets/projects/deck/desktop.webp",
+    "alt": "Deck in a desktop browser: a tab column with agent sessions and script keys, a Claude chat in the middle, and the shelf on the right."
+  },
+  "gallery": [
+    {
+      "type": "image",
+      "src": "assets/projects/deck/desktop.webp",
+      "alt": "Deck on a desktop: sessions and script keys on the left, an agent chat, and the shelf.",
+      "caption": "Deck on a PC (personal computer): sessions and script keys on the left, an agent chat in the middle, the shelf of saved replies on the right. Staged demo session."
+    },
+    {
+      "type": "image",
+      "src": "assets/projects/deck/terminal.webp",
+      "alt": "A Claude chat on a phone with the key row and message box.",
+      "caption": "The same chat on a phone, with the key row (Esc, Tab, ^C, arrows) and the message box."
+    },
+    {
+      "type": "image",
+      "src": "assets/projects/deck/pad.webp",
+      "alt": "The phone's tab column open over a chat: running sessions, then script keys.",
+      "caption": "The phone's tab column: running sessions on top, one-tap keys for agents and scripts below."
+    }
+  ]
+}

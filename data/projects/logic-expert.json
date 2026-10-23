@@ -1,0 +1,58 @@
+{
+  "slug": "logic-expert",
+  "title": "Parallel Logic Expert with Operator Routing",
+  "status": "done",
+  "dates": "2026 · paper 27 Sep 2026",
+  "order": 13,
+  "kicker": "Course Project · Transformer Research",
+  "tools": "AI Reasoning (Mixture of Experts, Fuzzy Logic) · Machine Learning (PyTorch)",
+  "blurb": "A mixture-of-experts transformer that routes token representations through fuzzy-logic operators. Pre-registered result: the parallel branch gains 1.4 points, but the logic operators add nothing over a matched control.",
+  "long": [
+    "Built a mixture-of-experts transformer that routes token representations through specialized logical operators (differentiable AND, OR and NOT), with cross-attention between the main model and those reasoning paths, plus the PyTorch training and evaluation pipeline.",
+    "The evaluation was pre-registered and run over three seeds. The parallel branch with its fusion head beats the linear-head baseline by 1.4 percentage points in every seed. But a parameter-matched control with the same capacity and no logic operators does just as well on ProofWriter and MNLI (Multi-Genre Natural Language Inference), so the gain comes from capacity, not logic.",
+    "Routing diagnostics show which operators the router actually uses at each depth. The project page has the full paper and an interactive playground."
+  ],
+  "highlights": [
+    "+1.4 pp over the linear head in all 3 seeds",
+    "Logic operators = parameter-matched control (an honest null)",
+    "Pre-registered evaluation with routing diagnostics"
+  ],
+  "links": [
+    {
+      "label": "Project page",
+      "href": "logic-expert/",
+      "icon": "page"
+    },
+    {
+      "label": "Code",
+      "href": "https://github.com/Ancorro/logic-expert-public",
+      "icon": "github"
+    }
+  ],
+  "hero": {
+    "type": "image",
+    "src": "assets/projects/logic-expert/arch.jpg",
+    "alt": "Architecture of the parallel logic expert",
+    "fit": "contain"
+  },
+  "gallery": [
+    {
+      "type": "image",
+      "src": "assets/projects/logic-expert/arch.jpg",
+      "alt": "Architecture diagram",
+      "caption": "Architecture: backbone hidden states feed the logic expert and are fused back before classification."
+    },
+    {
+      "type": "image",
+      "src": "assets/projects/logic-expert/proofwriter.jpg",
+      "alt": "ProofWriter accuracy by model",
+      "caption": "ProofWriter validation accuracy per model, mean and spread over 3 seeds (y-axis starts at 0.90)."
+    },
+    {
+      "type": "image",
+      "src": "assets/projects/logic-expert/routing.jpg",
+      "alt": "Routing heatmap",
+      "caption": "Routing-weight heatmap over transformer depth."
+    }
+  ]
+}

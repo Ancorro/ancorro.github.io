@@ -1,0 +1,36 @@
+{
+  "slug": "rob538",
+  "title": "Failure-Aware Role Reallocation for Multiagent RL",
+  "status": "wip",
+  "dates": "Oct 2026 – present",
+  "order": 7,
+  "kicker": "Team Course Project · ROB 538 · Multiagent Systems",
+  "tools": "MARL (multiagent reinforcement learning) · MAPPO (multiagent Proximal Policy Optimization) · Continuous Rover Domain · LaTeX (AAMAS format)",
+  "blurb": "A three-person team paper for Oregon State University's ROB 538 (Autonomous Agents and Multiagent Systems) course, written in the format of AAMAS (International Conference on Autonomous Agents and Multiagent Systems) 2027. It asks whether a team of RL (reinforcement learning) rovers recovers better from losing a teammate if the survivors explicitly take over its tasks. Proposal stage: no experiments run yet.",
+  "long": [
+    "A team project for ROB 538 (Autonomous Agents and Multiagent Systems, Oregon State University, Fall 2026) with Hojjat T. Goudarzi and Joshua Negreanu, written in the format of the AAMAS 2027 conference (International Conference on Autonomous Agents and Multiagent Systems). It is a course paper, not a conference submission.",
+    "<b>The question.</b> In cooperative MARL (multiagent reinforcement learning), a team policy is trained for a fixed set of agents. The testbed is the Continuous Rover Domain: rovers must observe points of interest (POIs), and some POIs count only when several rovers reach them together. If one rover fails mid-task, a policy trained for the full team may leave its POIs uncovered. The paper asks whether an explicit reallocation step, which hands the failed rover's outstanding POIs to the survivors on top of a learned MAPPO (multiagent Proximal Policy Optimization) policy, reduces the immediate drop and shortens recovery.",
+    "<b>Planned design.</b> Four arms under matched failure scenarios: no failure, failure without reallocation, failure with reallocation, and a policy trained with random failures but no reallocation (the implicit fault-tolerance approach from prior work). The failed agent, the failure time and the team size will vary across random seeds, with team return, immediate drop, post-failure performance and time to recovery measured against a recovery threshold fixed before looking at results. The goal is to separate the unavoidable cost of losing an agent from the extra cost of failing to reorganize.",
+    "Written so far: introduction, background and related work (the course's Introduction and Background assignment). As a side experiment, not part of the paper, I ran a small probe of an LLM (large language model, Gemma 4 12B) acting as the replacement rover on a grid version of the task. Over 8 paired seeds, all three LLM variants did worse than a simple nearest-POI rule, and giving it the updated team roster made no clear difference."
+  ],
+  "highlights": [
+    "Team of three; ROB 538 course paper in AAMAS (Autonomous Agents and Multiagent Systems conference) 2027 format",
+    "Four-arm design isolating the effect of explicit reallocation after an agent failure",
+    "Side probe: LLM (large language model) replacement rover below a greedy rule on 8 paired seeds"
+  ],
+  "note": "Team project · Code private",
+  "hero": {
+    "type": "image",
+    "src": "assets/projects/rob538/paper-page1.jpg",
+    "alt": "First page of the paper: title, the three authors at Oregon State University, abstract and start of the introduction",
+    "fit": "contain"
+  },
+  "gallery": [
+    {
+      "type": "image",
+      "src": "assets/projects/rob538/paper-page1.jpg",
+      "alt": "First page of the paper: title, authors, abstract and start of the introduction",
+      "caption": "Page 1 of the current draft (title, authors, abstract). Rendered from the team's LaTeX source."
+    }
+  ]
+}

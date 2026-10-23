@@ -1,0 +1,44 @@
+{
+  "slug": "style-tune",
+  "title": "Rewriting Text in My Own Writing Style",
+  "status": "wip",
+  "dates": "Oct 2026 – present",
+  "order": 10,
+  "kicker": "Personal Project · Fine-Tuning",
+  "tools": "QLoRA (quantized low-rank adaptation) · DPO (direct preference optimization) · vLLM · Qwen3.5-9B / Qwen3.8-27B · Slurm on the OSU (Oregon State University) cluster",
+  "blurb": "A QLoRA (quantized low-rank adaptation) fine-tune that rewrites generic text in my own voice, trained on about 20,000 words of my finished writing. Only the tuned models moved text closer to my originals (chrF, a character-overlap score, 65.0 to 67.5), a small gain; a preference-tuning round memorized its pairs and scored at chance.",
+  "long": [
+    "The goal is a model that takes generic, assistant-sounding text and rewrites it the way I write. The training data runs backwards: I collected 44 of my own finished documents (about 20,000 words, 73 passages), had a base model rewrite each passage generically, and trained the model to turn the generic version back into my original. Documents are split so the 9 evaluation passages come from 5 documents never seen in training. The writing itself stays private and is never uploaded.",
+    "I trained LoRA (low-rank adaptation) on Qwen3.5-9B (8.7 minutes, one A40 GPU) and QLoRA, its 4-bit version, on Qwen3.8-27B (29.6 minutes). Scored by chrF (a character n-gram F-score against my original, higher is closer), returning the generic input unchanged scores 65.0. The base models move text further from my writing (57.1 and 56.3), and even with 3 of my passages as examples they reach only 62.1 and 63.5. Only the tuned models get closer: 67.5 (9B) and 67.2 (27B). That is +2.5 over doing nothing, small as expected from 20,000 words, and with 9 samples the two sizes are a tie. The tuned models also dropped em dashes to zero, matching my writing.",
+    "Next I tried DPO (direct preference optimization) on 74 of my own A/B ratings of tuned rewrites. It reached 100% reward accuracy on the 64 training pairs and 50% (chance) on the 10 held out: it memorized and learned nothing general, so it was shelved.",
+    "The current step uses an AI-text detector as the reward instead of human ratings. A first probe with Pangram (a commercial AI-text detector) scored generic drafts 1.00 (certain AI), tuned rewrites 0.84 on average, and my own writing 0.08. Two rewrites of the same draft often score very differently (1.0 vs 0.0), so pairs from the same model carry a usable training signal, with checks that every fact and number survives the rewrite."
+  ],
+  "highlights": [
+    "chrF (character n-gram F-score): input 65.0, base model 56-57, few-shot 62-64, tuned 67.2-67.5",
+    "27B QLoRA (quantized low-rank adaptation) trains in 29.6 minutes on one 48 GB GPU",
+    "DPO (direct preference optimization) v1: 100% train, 50% held-out: memorized, shelved",
+    "AI-detector probe: drafts 1.00, tuned rewrites 0.84, my writing 0.08"
+  ],
+  "links": [],
+  "note": "Code and data private",
+  "hero": {
+    "type": "image",
+    "src": "assets/projects/style-tune/pipeline-diagram.jpg",
+    "alt": "Diagram: my finished writing, split into passages, rewritten generically by a base model, then QLoRA learns to map the generic text back to my original, scored by chrF, held-out loss and an AI detector.",
+    "fit": "contain"
+  },
+  "gallery": [
+    {
+      "type": "image",
+      "src": "assets/projects/style-tune/pipeline-diagram.jpg",
+      "alt": "Pipeline diagram of the style fine-tune.",
+      "caption": "Diagram of the pipeline: training pairs go from a generic rewrite back to my original wording. QLoRA is quantized low-rank adaptation; chrF is a character n-gram F-score."
+    },
+    {
+      "type": "image",
+      "src": "assets/projects/style-tune/results.jpg",
+      "alt": "Left: chrF of input 65.0, base model 57.1 and 56.3, few-shot 62.1 and 63.5, tuned 67.5 and 67.2. Right: Pangram AI score of drafts 1.00, tuned rewrites 0.84, my writing 0.08.",
+      "caption": "Left: chrF (character n-gram F-score) against my original on 9 held-out passages, for the 9B and 27B models. Right: mean Pangram AI-detector score (20 drafts, 38 rewrites, 10 of my passages). Source: style-tune docs/results.md."
+    }
+  ]
+}

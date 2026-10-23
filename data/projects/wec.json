@@ -1,0 +1,49 @@
+{
+  "slug": "wec",
+  "title": "Reinforcement Learning Control for a Wave Energy Converter",
+  "status": "wip",
+  "dates": "Oct 2026 – present",
+  "order": 4,
+  "kicker": "Master's Project · Oregon State University · Energy Systems",
+  "tools": "Python · Gymnasium · WEC-Sim (Wave Energy Converter Simulator) · MATLAB / Simulink · Stable-Baselines3 PPO (Proximal Policy Optimization) · OSU HPC (Oregon State University high-performance computing) · W&B (Weights & Biases)",
+  "blurb": "A Python interface that lets RL (reinforcement learning) agents control a full WEC-Sim simulation of a wave energy converter (WEC) step by step, matching a Simulink-only reference to about 1e-10. A follow-up study shows a PPO (Proximal Policy Optimization) agent trained on a cheap linear model transfers to the full simulator without loss, at one thirtieth of the training time.",
+  "long": [
+    "A wave energy converter (WEC) turns the up-and-down motion of ocean waves into electricity. The one studied here, RM3 (Reference Model 3), is a float that slides along a tall spar. A generator between them, the power take-off (PTO), pushes back on the float with a force, and the choice of that force at every instant decides how much energy is captured. The host research group at OSU (Oregon State University) controls it by retuning a few damping parameters. RL (reinforcement learning) could instead learn the force directly, but the standard simulator, WEC-Sim, runs in MATLAB and Simulink and has no Python interface for step-by-step control.",
+    "<b>The interface.</b> <i>wecsim_gym</i> wraps WEC-Sim as a standard Gymnasium environment: the action is the PTO force, the observation is the float's position and velocity relative to the spar, the wave elevation (water-surface height at the device) and the previous action, and the reward is energy absorbed. Each episode is one free-running Simulink simulation that trades observations and forces with Python through shared memory in lockstep, with sequence numbers so no step can be skipped or repeated. Driven with a fixed damper, it matches the same control law built into Simulink without Python to about 1e-10 in mean power. A step takes 19.9 ms at a 0.1 s control step and 3.6 ms at 0.01 s on an HPC (high-performance computing) node. Five RL libraries (Stable-Baselines3, RLlib, Tianshou, TorchRL, CleanRL) train on it unchanged, and 11 MATLAB integration tests pass.",
+    "<b>Cheap model versus full simulator.</b> A side study compared WEC-Sim with the group's 10-state linear model of the same device, a few microseconds per step instead of 20 ms. Fed identical wave forces, the two move almost identically (correlation 0.9985 or better on three wave seeds), and the linear model absorbs a steady 6.7-7.8% less power. PPO (Proximal Policy Optimization) agents trained on each and tested on both: the one trained on the linear model averaged 148.8 kW on WEC-Sim, level with the best tuned fixed damper (147.4 kW) and above WEC-Sim's example damper (113.8 kW). It trained in 2.4 minutes instead of 71.",
+    "Both agents learned close to a tuned linear damper rather than something new, which is expected on a single sea state where a fixed damper can be tuned in advance. The next step is training across many sea states, where it cannot. Along the way, reproducing two figures from the group's earlier paper showed their wave generator delivers about 22% less wave energy than WEC-Sim at the same nominal wave height. Validation against references written by the WEC-Sim developers is in progress."
+  ],
+  "highlights": [
+    "Gymnasium interface matches a Simulink-only reference to ~1e-10 in mean power",
+    "19.9 ms per 0.1 s control step on an HPC (high-performance computing) node; 5 RL (reinforcement learning) libraries train unchanged",
+    "PPO (Proximal Policy Optimization) trained on a linear model: 148.8 kW on WEC-Sim vs 147.4 kW tuned damper, in 2.4 min instead of 71",
+    "Linear model vs WEC-Sim motion correlation ≥ 0.9985 across three wave seeds"
+  ],
+  "note": "Code private",
+  "hero": {
+    "type": "image",
+    "src": "assets/projects/wec/ppo_cross.jpg",
+    "alt": "Bar chart of mean absorbed power by seed for two fixed dampers and two PPO agents, evaluated on WEC-Sim and on the state-space model",
+    "fit": "contain"
+  },
+  "gallery": [
+    {
+      "type": "image",
+      "src": "assets/projects/wec/ppo_cross.jpg",
+      "alt": "Bar chart of mean absorbed power by seed for two fixed dampers and two PPO agents on each simulator",
+      "caption": "Cross-simulator test: PPO (Proximal Policy Optimization) agents trained on WEC-Sim (green) and on the linear state-space model (red), against two fixed dampers. Agents were trained on seed 1 only. Source: side-study report, Fig. 3 (numbers in Table II)."
+    },
+    {
+      "type": "image",
+      "src": "assets/projects/wec/plant_comparison.jpg",
+      "alt": "Two time-series plots of relative position and velocity in which the WEC-Sim and state-space curves overlap almost exactly",
+      "caption": "Same waves, same damper: float-to-spar position and velocity from WEC-Sim (solid) and the group's linear model (dashed), 150-250 s. Correlation 0.9985 or better on three seeds."
+    },
+    {
+      "type": "image",
+      "src": "assets/projects/wec/ppo_force.jpg",
+      "alt": "PTO force over 50 seconds for four controllers; the two PPO agents track the tuned damper closely",
+      "caption": "What the agents learned: their PTO (power take-off) force nearly coincides with the tuned damper's (orange), WEC-Sim, seed 1, 150-200 s."
+    }
+  ]
+}

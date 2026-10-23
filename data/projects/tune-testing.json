@@ -1,0 +1,38 @@
+{
+  "slug": "tune-testing",
+  "title": "Measuring Forgetting When Fine-Tuning a 27B Model",
+  "status": "wip",
+  "dates": "Oct 2026 – present",
+  "order": 9,
+  "kicker": "Personal Research · Fine-Tuning",
+  "tools": "QLoRA (quantized low-rank adaptation) · PEFT (Hugging Face parameter-efficient fine-tuning) · bitsandbytes · vLLM · lm-evaluation-harness · Qwen3.8-27B · Slurm on the OSU (Oregon State University) cluster · W&B (Weights & Biases)",
+  "blurb": "Teaching Qwen3.8-27B a simulated company's emails while measuring what it forgets. Training raised accuracy on new questions about trained emails from 7.6% to about 43%, about 21 points beyond a control, but coding fell 6-12 points in every arm and there was no detectable gain on questions needing inference across emails. Paused.",
+  "long": [
+    "Companies want open models that know their internal documents without losing general skills. I simulated that with EnronQA (question-answer pairs over real Enron emails): 10 inboxes, 1,058 emails trained and the rest held out as a control, then QLoRA (quantized low-rank adaptation) on Qwen3.8-27B with the emails' raw text plus training questions. Arms: A1 trains on domain data only; A2 adds 5%, 10% or 20% replay of general instruction data, a standard defence against forgetting.",
+    "Getting the measurement right took most of the work. Enron stores the same message in several folders and in quoted replies, so my first split leaked: some \"control\" emails duplicated trained ones, and some test questions repeated training questions on another copy. I found both, rebuilt the split to exclude them, and rescored every finished eval. A judge model then sorted control questions into ones whose fact appears in some trained email and ones that are truly unseen, so the style effect of training could be subtracted cleanly.",
+    "<b>What it learned:</b> on new questions about trained emails, accuracy rose from 7.6% to 42-43% in every arm (3-way multiple choice; the base model sits below chance because the wrong options read like plausible guesses). Truly unseen emails rose about 14 points from answer style alone, so the domain gain is about 21 points. Facts restated in other emails transferred too (+56 points, n = 101). But on 48 new questions that need inference across several emails, every arm's change from the base model had a 95% interval including zero. Training seems to store facts without composing them, though 48 questions cannot rule out gains of 15-20 points.",
+    "<b>What it forgot</b> (samples of 100-164 items, so ±6 points is noise): once an answer-format artifact on GSM8K (grade-school math) was corrected, math fell 7 points with domain data only and 1-5 with replay, while instruction following (IFEval) and knowledge (MMLU-Pro) moved 3 points or less. Code fell 6-12 points on HumanEval+ (Python coding) in every arm. The tuned models wrote shorter code without comments, but asking them to comment each step brought comments back and not accuracy, so the drop is real skill loss. Replay did not prevent it. The project is paused; next would be methods aimed at composition."
+  ],
+  "highlights": [
+    "Domain gain ~21 points over unseen-email control, all arms",
+    "Cross-email inference: no detectable gain (48 questions, every 95% interval includes zero)",
+    "Code drops 6-12 points in every arm; a causal prompt test shows real skill loss",
+    "Found and fixed two data leaks from duplicated Enron emails"
+  ],
+  "links": [],
+  "note": "Code private",
+  "hero": {
+    "type": "image",
+    "src": "assets/projects/tune-testing/gain-vs-forgetting.jpg",
+    "alt": "Left: EnronQA accuracy on trained versus never-trained emails for each arm. Right: change versus base model on GSM8K, IFEval, HumanEval+ and MMLU-Pro per arm.",
+    "fit": "contain"
+  },
+  "gallery": [
+    {
+      "type": "image",
+      "src": "assets/projects/tune-testing/gain-vs-forgetting.jpg",
+      "alt": "Domain accuracy and forgetting per training arm.",
+      "caption": "Left: EnronQA (Enron email question answering) accuracy on new questions about trained emails versus emails never trained on. Right: change from the base model at epoch 3 on GSM8K (math, flexible answer extraction), IFEval (instruction following), HumanEval+ (code) and MMLU-Pro (knowledge); A1 is domain data only, A2 adds replay of general data; the grey band is about ±6 points of sampling noise. Source: tune-testing docs/plan.md."
+    }
+  ]
+}
