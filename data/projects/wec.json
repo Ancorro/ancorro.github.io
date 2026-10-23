@@ -45,5 +45,6 @@
       "alt": "PTO force over 50 seconds for four controllers; the two PPO agents track the tuned damper closely",
       "caption": "What the agents learned: their PTO (power take-off) force nearly coincides with the tuned damper's (orange), WEC-Sim, seed 1, 150-200 s."
     }
-  ]
+  ],
+  "thumb": "assets/projects/wec/thumb.jpg"
 }

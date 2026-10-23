@@ -34,5 +34,6 @@
       "alt": "Domain accuracy and forgetting per training arm.",
       "caption": "Left: EnronQA (Enron email question answering) accuracy on new questions about trained emails versus emails never trained on. Right: change from the base model at epoch 3 on GSM8K (math, flexible answer extraction), IFEval (instruction following), HumanEval+ (code) and MMLU-Pro (knowledge); A1 is domain data only, A2 adds replay of general data; the grey band is about ±6 points of sampling noise. Source: tune-testing docs/plan.md."
     }
-  ]
+  ],
+  "thumb": "assets/projects/tune-testing/thumb.jpg"
 }

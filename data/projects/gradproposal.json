@@ -61,5 +61,5 @@
       "caption": "Split-information probe, 100 GSM8K (grade-school math) questions, Qwen3-4B, one seed. The cache carries the facts and ties text; the latent sender uses 1.30 TFLOPs (trillion floating-point operations) against 7.16 for text, but its message is far larger. Source: gradProposal paper/generated/split_probe.tex."
     }
   ],
-  "featured": true
+  "thumb": "assets/projects/gradproposal/thumb.jpg"
 }

@@ -45,5 +45,6 @@
       "alt": "Panel of adjustable assumptions: electricity, rack space, cooling, rental share, prices, traffic share.",
       "caption": "Every assumption is adjustable; the defaults are sourced (for example, U.S. industrial electricity price, July 2026)."
     }
-  ]
+  ],
+  "thumb": "assets/projects/gpu-payback/thumb.jpg"
 }

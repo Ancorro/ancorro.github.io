@@ -40,5 +40,6 @@
       "alt": "Bar chart: fast decider alone 0 of 60, planner stack v2 16, v3 20, one loop 27.",
       "caption": "Tasks solved on the same 60 OSWorld (desktop-task benchmark) multi-app test tasks, 50 steps each, one run per system. v3 vs v2 is within noise (p = 0.42), and the loop was designed after reading v3's test failures. Source: computer-use-stack docs/computer_use.md."
     }
-  ]
+  ],
+  "thumb": "assets/projects/computer-use-stack/thumb.jpg"
 }

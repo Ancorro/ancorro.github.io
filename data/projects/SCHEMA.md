@@ -20,6 +20,7 @@ One file per project: `data/projects/<slug>.json`. Assets live in `assets/projec
   "highlights": ["Pick + place 240/240 with exact positions", "..."],   // optional, 2-5 short bullets with numbers
   "links": [{"label": "Code", "href": "https://...", "icon": "github"}],  // icon: github | page | pdf | play
   "note": "Code private",                // optional small note shown beside links
+  "thumb": "assets/projects/rlrobots/thumb.jpg",   // the card image: written by tools/make_thumbs.py, 960x600, duotone
   "hero": {"type": "video", "src": "assets/projects/rlrobots/pick.mp4", "poster": "assets/projects/rlrobots/pick.jpg", "alt": "..."},
   "gallery": [                           // shown in the dialog, 1-6 items; hero may repeat as first
     {"type": "image", "src": "assets/projects/rlrobots/cams.jpg", "alt": "...", "caption": "..."},

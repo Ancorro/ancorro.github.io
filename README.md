@@ -14,7 +14,9 @@ linking to my featured projects, experience, and skills.
 
 ## Projects grid
 Project cards and their detail dialogs come from `data/projects/<slug>.json` (format in
-`data/projects/SCHEMA.md`), with media in `assets/projects/<slug>/`. After editing an entry run
+`data/projects/SCHEMA.md`), with media in `assets/projects/<slug>/`. Each card shows one uniform
+thumbnail (`thumb.jpg`, a 16:10 duotone crop) made by `python tools/make_thumbs.py`; the full-colour
+hero and gallery media appear only in the dialog. After editing an entry run
 `python tools/build_projects.py`; it writes static cards into `index.html` (works without JavaScript)
 and embeds the data for `assets/components/project-dialog.js`.
 

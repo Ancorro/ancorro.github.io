@@ -63,5 +63,6 @@
       "alt": "The debug sandbox menu listing experimental brain features.",
       "caption": "The sandbox menu that switches the experimental interpretability features on and off."
     }
-  ]
+  ],
+  "thumb": "assets/projects/sinusoidal/thumb.jpg"
 }

@@ -40,5 +40,6 @@
       "alt": "Left: chrF of input 65.0, base model 57.1 and 56.3, few-shot 62.1 and 63.5, tuned 67.5 and 67.2. Right: Pangram AI score of drafts 1.00, tuned rewrites 0.84, my writing 0.08.",
       "caption": "Left: chrF (character n-gram F-score) against my original on 9 held-out passages, for the 9B and 27B models. Right: mean Pangram AI-detector score (20 drafts, 38 rewrites, 10 of my passages). Source: style-tune docs/results.md."
     }
-  ]
+  ],
+  "thumb": "assets/projects/style-tune/thumb.jpg"
 }

@@ -66,7 +66,7 @@
             <div class="pd-shell">
                 <header class="pd-head">
                     <div>
-                        <div class="pd-kicker">${esc(p.kicker)}${p.status === 'wip' ? ' <span class="badge-wip inline">In progress</span>' : ''}</div>
+                        <div class="pd-kicker">${esc(p.kicker)}${p.status === 'wip' ? ' <span class="badge-wip">In progress</span>' : ''}</div>
                         <h2 id="pd-title">${esc(p.title)}</h2>
                         <div class="pd-meta">${esc(p.dates)} · ${esc(p.tools)}</div>
                     </div>
@@ -139,17 +139,6 @@
     }
     window.addEventListener('hashchange', fromHash);
     fromHash();
-
-    // Card videos play while visible and on hover; paused otherwise to save battery.
-    const vids = document.querySelectorAll('.work-media video.card-media');
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if ('IntersectionObserver' in window && !reduce) {
-        const io = new IntersectionObserver((entries) => entries.forEach((en) => {
-            if (en.isIntersecting) en.target.play().catch(() => {});
-            else en.target.pause();
-        }), { threshold: 0.4 });
-        vids.forEach((v) => io.observe(v));
-    }
 
     // Filter chips: All / In progress / Finished.
     const chips = document.querySelectorAll('.filter-chip');

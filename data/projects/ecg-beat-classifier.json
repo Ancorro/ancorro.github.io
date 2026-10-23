@@ -45,5 +45,6 @@
       "alt": "Record 208 with normal (N), ventricular (V) and fusion (F) beats labelled.",
       "caption": "Record 208 with the cardiologists' labels: wide ventricular (V) and fusion (F) beats against narrow normal (N) ones, the shapes the classifier will need to separate."
     }
-  ]
+  ],
+  "thumb": "assets/projects/ecg-beat-classifier/thumb.jpg"
 }

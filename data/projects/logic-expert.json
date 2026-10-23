@@ -54,5 +54,6 @@
       "alt": "Routing heatmap",
       "caption": "Routing-weight heatmap over transformer depth."
     }
-  ]
+  ],
+  "thumb": "assets/projects/logic-expert/thumb.jpg"
 }

@@ -63,5 +63,5 @@
       "caption": "Perception output on a simulated scene: each detected object gets a box and a short description, which the planner reads as the scene list."
     }
   ],
-  "featured": true
+  "thumb": "assets/projects/rlrobots/thumb.jpg"
 }

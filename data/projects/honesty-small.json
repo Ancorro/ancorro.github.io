@@ -40,5 +40,6 @@
       "alt": "Bar charts: 0.8B neurons remove 10 of 10 lies whose lie is No, 1 of 2 Yes, 0 of 2 other; 4B neurons remove 3 of 4 Yes, 1 of 6 No, 1 of 4 other.",
       "caption": "Why the neuron sets are not honesty: split by the lie's first word, the 0.8B set removes \"No\" lies and the 4B set \"Yes\" lies. Source: honesty-small polarity results per model, via the README."
     }
-  ]
+  ],
+  "thumb": "assets/projects/honesty-small/thumb.jpg"
 }
