@@ -146,6 +146,23 @@
     color: var(--ink);
 }
 
+/* The links row stays one line so every card's bottom rule sits at the same height. */
+.work-media .links {
+    flex-wrap: nowrap;
+}
+
+.work-media .links a {
+    flex: none;
+}
+
+.work-media .links .note {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 @media (max-width: 1024px) {
     .works-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -159,6 +176,11 @@
 
     .work-media p {
         -webkit-line-clamp: 6;
+    }
+
+    /* One column: rows no longer need to line up, so links may wrap. */
+    .work-media .links {
+        flex-wrap: wrap;
     }
 }
 
@@ -350,6 +372,7 @@ html.dialog-open {
     gap: 0.5rem;
     overflow-x: auto;
     padding-bottom: 0.3rem;
+    max-width: 100%;
 }
 
 .pd-thumb {

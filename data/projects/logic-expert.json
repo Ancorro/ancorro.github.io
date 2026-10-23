@@ -55,5 +55,6 @@
       "caption": "Routing-weight heatmap over transformer depth."
     }
   ],
-  "thumb": "assets/projects/logic-expert/thumb.jpg"
+  "thumb": "assets/projects/logic-expert/thumb.jpg",
+  "thumb_alt": "Heatmap of routing weights across the 32 logic blocks: which fuzzy-logic operator each channel was sent to."
 }

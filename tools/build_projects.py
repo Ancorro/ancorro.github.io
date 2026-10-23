@@ -47,7 +47,7 @@ def card(p, i):
     return f"""
                 <article id="proj-{esc(p['slug'])}" class="work work-media" data-slug="{esc(p['slug'])}" data-status="{esc(status)}">
                     <a class="card-figure frame" href="#{esc(p['slug'])}" aria-label="Open details: {esc(p['title'])}">
-                        <img class="card-media" src="{esc(p['thumb'])}" alt="{esc(p['hero'].get('alt'))}" width="960" height="600" loading="{loading}">
+                        <img class="card-media" src="{esc(p['thumb'])}" alt="{esc(p.get('thumb_alt') or p['hero'].get('alt'))}" width="960" height="600" loading="{loading}">
                     </a>
                     <div class="work-body">
                         <div class="laurel">{esc(p.get('kicker'))}</div>
