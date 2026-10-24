@@ -151,13 +151,17 @@ figure.art figcaption {
 
 /* Card Column Spans on Desktop */
 .bento-grid .masthead {
-    grid-column: span 3;
+    grid-column: span 1;
     background: radial-gradient(circle at 80% 20%, #2c2c29 0%, #151514 100%);
     color: #e5e5e2;
     border: 1px solid rgba(255, 255, 255, 0.06);
     box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16);
     position: relative;
     overflow: hidden;
+}
+
+.bento-grid #profile {
+    grid-column: span 2;
 }
 
 .bento-grid #works {
@@ -185,31 +189,17 @@ figure.art figcaption {
     padding: 0;
 }
 
-/* Profile Masthead Content Layout */
-.masthead-content {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 2.5rem;
-    align-items: center;
-}
-
-.masthead-main {
-    display: flex;
-    flex-direction: column;
-}
-
-/* Name + role as a distinct header band across the top of the profile card */
-.masthead-header {
-    padding-bottom: 1.3rem;
-    margin-bottom: 1.6rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+/* Name tile: name and role at the top, university and town at the foot */
+.masthead {
+    justify-content: space-between;
+    gap: 1.8rem;
 }
 
 .masthead h1 {
     font-family: 'Lexend', sans-serif;
     font-weight: 800;
-    font-size: 1.7rem;
-    line-height: 1.15;
+    font-size: 1.75rem;
+    line-height: 1.1;
     letter-spacing: -0.02em;
     color: #ffffff;
 }
@@ -221,40 +211,44 @@ figure.art figcaption {
     font-weight: 700;
 }
 
-.masthead .intro+.intro {
-    margin-top: 0.7rem;
+.masthead-foot {
+    display: grid;
+    gap: 0.25rem;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    color: #a0a09e;
 }
 
-.masthead .intro {
-    margin-top: 0;
-    color: #d0d0cd;
-    max-width: 72ch;
-    font-size: 0.82rem;
+/* Intro tile: two paragraphs and a fact row, in the light card style */
+.profile-intro {
+    justify-content: center;
+    gap: 0.95rem;
+}
+
+.profile-intro .intro {
+    color: var(--ink-soft);
+    max-width: 62ch;
+    font-size: 0.88rem;
     line-height: 1.6;
 }
 
-/* Masthead Highlights Stats Panel */
-.masthead-stats {
+.profile-row {
     display: flex;
-    flex-direction: column;
-    gap: 0.9rem;
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
-    padding-left: 2rem;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.6rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.78rem;
+    color: var(--ink-soft);
 }
 
-.stat-badge {
-    color: #d0d0cd;
-    font-size: 0.88rem;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-}
-
-.stat-badge i {
-    color: #a0a09e;
-    font-size: 0.9rem;
-    width: 1.2rem;
-    text-align: center;
+.profile-row b {
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-right: 0.5rem;
 }
 
 /* Works Grid Layout */
@@ -294,14 +288,8 @@ figure.art figcaption {
         grid-column: span 2;
     }
 
-    .masthead-content {
-        grid-template-columns: 1fr;
-        gap: 1.8rem;
-    }
-
-    .masthead-stats {
-        border-left: none;
-        padding-left: 0;
+    .bento-grid #profile {
+        grid-column: span 2;
     }
 }
 
@@ -320,11 +308,7 @@ figure.art figcaption {
 
     .masthead {
         padding: 1.6rem 1.6rem !important;
-    }
-
-    .masthead-content {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 1.2rem;
     }
 
     .masthead h1 {
@@ -332,13 +316,8 @@ figure.art figcaption {
         overflow-wrap: anywhere;
     }
 
-    .masthead .intro {
-        font-size: 0.78rem;
-    }
-
-    .masthead-stats {
-        border-left: none;
-        padding-left: 0;
+    .profile-intro .intro {
+        font-size: 0.82rem;
     }
 
     .works-grid {
