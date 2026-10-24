@@ -17,7 +17,7 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 W, H = 960, 600
 INK = (24, 24, 23)        # darkest tone, near the masthead's #151514
 PAPER = (247, 247, 245)   # lightest tone, the site's paper
-KEEP_COLOUR = 0.14        # how much of the original colour survives the tone pass
+KEEP_COLOUR = 0.5         # how much of the original colour survives the tone pass
 
 # slug: (source under assets/projects/<slug>/, pre-crop box or None, focus x, focus y)
 # The box picks the detail to show; the focus point says where the 16:10 crop centres.
