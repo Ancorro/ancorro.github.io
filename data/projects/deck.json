@@ -9,10 +9,9 @@
   "tags": "Python · tmux · Rust",
   "blurb": "A web app on each PC that lets a phone start, watch and message coding agents, which keep running in tmux when the phone sleeps.",
   "long": [
-    "Deck runs on each of my PCs (personal computers) and gives my phone a column of tabs, one per session, plus one-tap keys that start Claude Code, Codex, OpenCode, Pi, agy (Google’s Antigravity CLI, command-line interface), OpenClaw or my own shell scripts. Each one runs in its own tmux session on the PC, so closing the phone or losing signal never stops an agent.",
-    "Agents appear as a chat instead of a raw terminal: streamed responses, tappable expandable tool calls, and questions converted to buttons. A bridge process launches each agent in machine readable mode (eg codex app-server, pi --mode rpc) or for Claude, monitors its transcript and uses hooks, and writes a standardized event stream that the page replays. A shelf stores saved responses and documents (PDF, Word, Markdown) that the agents can read. On PC there is a review view that displays a document alongside the chat.",
-    "Multiple PCs connect to a single Deck without a primary host: all hosts display all hosts’ sessions in one tab list, and the android app moves to the next host if the host it connects to does not respond within 4s. Chats can migrate between hosts during a conversation. Machine notes are a git repository, each host has a full copy and pushes to other hosts.",
-    "To gain access, you need to pair. The deck only listens on localhost, so either use Tailscale or the built-in iroh tunnel (direct encrypted peer-to-peer connections with a relay fallback), and the new device needs to claim a one-time code (which expires after 5 minutes) and the new device needs to be approved from an already paired device. Phone notifications use ntfy."
+    "Deck runs on each of my PCs (personal computers) and gives my phone a tab per agent session, with one-tap keys for Claude Code, Codex, OpenCode, Pi and others. Each agent runs in its own tmux session, so closing the phone or losing signal never stops it.",
+    "Agents show up as a chat rather than a raw terminal, with expandable tool calls and questions turned into buttons. All my PCs join one Deck with no main host; the phone app fails over after 4 s, and chats can move between hosts mid-conversation.",
+    "The server only listens on localhost and is reached over Tailscale or a built-in peer-to-peer tunnel. New devices pair with a one-time 5-minute code approved from a paired device."
   ],
   "highlights": [
     "Six agent types plus custom scripts, each in its own tmux session",

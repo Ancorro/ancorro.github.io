@@ -9,10 +9,9 @@
   "tags": "Python · JavaScript",
   "blurb": "A calculator for how many months a data-center GPU takes to pay for itself, renting by the hour or serving open models, across 16 cards.",
   "long": [
-    "The question: if you purchase a large server GPU (graphics processing unit), how long does it take to break even? The site contrasts two income streams: renting it out hourly on a marketplace, versus using it to host open-weight models and selling the inference on OpenRouter, a marketplace for language model APIs (application programming interface).",
-    "Python scripts scrape Vast.ai rental offers, OpenRouter price & traffic per provider, InferenceX throughput tests, and GetDeploying weekly rental prices, as well as my manually maintained list of new/used purchase prices and their sources. The price of server boards is the price of the 8-card server divided by 8 (and 72 for racks). The serving speeds are the fastest measured throughput per card where the user still gets ≥30 tokens/second. If there is no direct test, I copy the serving speed of a similar model and mark it as an estimate.",
-    "Each assumption is a control: electricity price, rack-space cost, cooling overhead, fraction of hours rented, which rental price, marketplace fee, which token price, your fraction of a model’s traffic, peak utilisation, and yearly price decrease. At the defaults on this page (data as of 7 October 2026) the fastest rental payback is 17.1 months (used H100 server board) and the fastest serving payback is 5.3 months (Kimi K3 on AMD MI355X, a GPU) but serving revenue is limited by demand, the cheapest providers will take most of the traffic.",
-    "A Node script executes the page’s own calc code against the data bundle, verifying the numbers outside the browser."
+    "If you buy a data-center GPU (graphics processing unit), how long until it pays for itself? The site compares renting it out by the hour with serving open models through OpenRouter, a marketplace for model APIs (application programming interfaces).",
+    "Python scripts collect rental offers, per-provider prices and traffic, and measured serving speeds, and every assumption, from electricity price to yearly price decline, is an adjustable control.",
+    "At the defaults (data as of 7 October 2026), the fastest rental payback is 17.1 months and the fastest serving payback 5.3 months, though serving revenue is limited by demand."
   ],
   "highlights": [
     "16 cards, 19 open models, 155 model-and-card pairs",

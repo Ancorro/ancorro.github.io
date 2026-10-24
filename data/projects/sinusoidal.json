@@ -9,10 +9,9 @@
   "tags": "Godot · Qwen3.5 · Steering vectors",
   "blurb": "A 3D card roguelike in Godot against a small language model; cutting wires in its head adds steering vectors that change how it speaks and plays.",
   "long": [
-    "Sinusoidal is a 3D card roguelike with a dark, low-res aesthetic: 480×270 render, palette shader snapping dark colors, swinging lamp and candles. The run consists of a branching map of battles, card choices and events on a parchment, three candles represent lives. The rules, 9 sigils (creature abilities) and 10 events are data driven and covered by headless test and balance simulations.",
-    "The hook is that the Dealer is a language model you can tamper with. Its head opens to show four coloured wires; each wire is a contrastive direction (the mean activation on one set of prompts minus another, at one layer), and cutting it adds that direction to the residual stream. Players are never told what a wire means and learn it by watching the Dealer change.",
-    "Sandbox switches test interpretability papers as game mechanics on the Dealer’s own model. The persona gauge measures the responses against persona vectors (evil, sycophantic, paranoid and others). When they grafted a trait onto layer 12, the corresponding persona needle shifted the most, ranging from 5 to 12 standard deviations, in one test. They attempted a concept injection test but the 2B model mentioned the injected concept 0/120 times in their initial testing, so the “does it notice?” game mechanic will remain a fun sandbox experiment. The why? log uses occluding lines on the board and sparse autoencoder features to track the decision. They also trained a small PPO (Proximal Policy Optimization) RL policy so that cutting wires can influence the Dealer’s moves.",
-    "It’s a work in progress, developed in parallel feature tracks. The card portraits are placeholders from Lantern Depths."
+    "A 3D card roguelike with a dark, low-res look: a branching map of battles and events, with three candles as lives.",
+    "The opponent, the Dealer, is a real language model (Qwen3.5-2B). Its head opens to show four wires; cutting one adds a steering vector to its activations, and players learn what each wire does by watching the Dealer change.",
+    "Sandbox modes turn interpretability papers into game mechanics, such as a gauge that tracks persona traits in the Dealer's responses. It is a work in progress; the card portraits are placeholders."
   ],
   "highlights": [
     "Opponent is a real Qwen3.5-2B with four cuttable steering wires",

@@ -9,10 +9,9 @@
   "tags": "Python · SciPy · Signal processing",
   "blurb": "An ECG (electrocardiogram) heartbeat pipeline on MIT-BIH; so far it loads all 48 records (109,494 beats) and filters out 56.4 dB of powerline hum.",
   "long": [
-    "Our aim is an end-to-end heartbeat classifier: cleaning the raw ECG (electrocardiogram) signal using a filter, locating the individual beats using our handwritten Pan-Tompkins R peak detector, mapping the beats to AAMI (Association for the Advancement of Medical Instrumentation) classes, and evaluating on unseen patients (de Chazal inter-patient split), in contrast with a random beat-level split, to quantify data leakage.",
-    "Steps 0–2 are complete. The loader loads all 48 half-hour MIT-BIH (Massachusetts Institute of Technology – Beth Israel Hospital) records at 360 Hz, selects lead MLII (modified limb lead II) by name, with a fallback for the two records that lack it, and returns 109,494 annotated beats, which is the expected number. The filtering consists of a 4th order Butterworth bandpass filter from 0.5–40 Hz and a 60 Hz notch filter, applied forwards and backwards (zero-phase).",
-    "For record 222 measured: powerline hum reduced by 56.4 dB, baseline drift (<0.3 Hz) reduced by 29.8 dB, and the 5-15 Hz QRS band (main heartbeat peak) remains unchanged at 0.0 dB. We use zero-phase instead of a single-pass filter because a single-pass filter would shift peaks by different amounts depending on the shape of the beat (e.g., 11.1 ms for normal beats vs. 8.3 ms for Ventricular beats on record 208). This would distort our beat timing features. Zero-phase filtering is only permissible for offline analysis because it requires future values.",
-    "The detector, features and classifier (steps 3-5) have not been implemented yet."
+    "An end-to-end heartbeat classifier on ECG (electrocardiogram) data: filter the signal, detect beats with a hand-written Pan-Tompkins detector, and classify them, tested on unseen patients rather than a random beat split, to measure data leakage.",
+    "Done so far: a loader for all 48 MIT-BIH records (109,494 beats), and zero-phase filtering that removes 56.4 dB of powerline hum and 29.8 dB of drift while leaving the heartbeat band unchanged.",
+    "The detector, features and classifier are next."
   ],
   "highlights": [
     "48 records, 109,494 annotated beats loaded",
