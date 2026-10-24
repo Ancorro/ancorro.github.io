@@ -28,7 +28,7 @@ PICKS = {
     "wec": ("plant_comparison.jpg", (0, 30, 930, 570), 0.5, 0.5),
     "computer-use-stack": ("loop-diagram.jpg", (300, 90, 1100, 590), 0.5, 0.5),
     "honesty-small": ("lies-removed.jpg", (378, 60, 1400, 699), 0.5, 0.5),
-    "sinusoidal": ("head-open2.webp", (0, 0, 960, 500), 0.5, 0.45),
+    "sinusoidal": ("battle.webp", (120, 40, 1320, 720), 0.5, 0.5),
     "style-tune": ("pipeline-diagram.jpg", (800, 84, 1400, 459), 0.5, 0.5),
     "waste": ("app.jpg", (680, 100, 1400, 550), 0.5, 0.5),
     "esm3": ("roc_pr.jpg", (60, 40, 700, 440), 0.5, 0.5),

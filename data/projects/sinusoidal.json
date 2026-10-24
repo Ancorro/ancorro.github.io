@@ -1,6 +1,6 @@
 {
   "slug": "sinusoidal",
-  "title": "Sinusoidal – A Card Game Against a Language Model You Can Rewire",
+  "title": "Sinusoidal – Battle a Language Model and Hack Its Brain",
   "status": "wip",
   "dates": "Oct 2026 – present",
   "order": 8,
@@ -28,45 +28,39 @@
   ],
   "hero": {
     "type": "image",
-    "src": "assets/projects/sinusoidal/merge-e-battle.webp",
-    "alt": "A dark candle-lit table with creature cards in lanes, the wooden Dealer automaton watching from across the board."
+    "src": "assets/projects/sinusoidal/battle.webp",
+    "alt": "A night clearing lit by a side campfire and candles: creature cards in hand, the wooden Dealer across the board with brass health counters and an hourglass."
   },
   "gallery": [
     {
       "type": "image",
-      "src": "assets/projects/sinusoidal/merge-e-battle.webp",
-      "alt": "Battle: creature cards on the lanes in front of the Dealer.",
-      "caption": "A hand against the Dealer. In-game render at 480×270, scaled 2× with no smoothing."
+      "src": "assets/projects/sinusoidal/battle.webp",
+      "alt": "A night clearing lit by a side campfire and candles: creature cards in hand, the wooden Dealer across the board with brass health counters and an hourglass.",
+      "caption": "A hand against the Dealer. Health sits on brass counters, mana on tokens, and turning the hourglass ends the turn."
     },
     {
       "type": "image",
-      "src": "assets/projects/sinusoidal/head-open2.webp",
+      "src": "assets/projects/sinusoidal/head.webp",
       "alt": "The Dealer's head opened, showing four coloured wires.",
       "caption": "The Dealer’s head opened: each colored wire is a steering direction in the model, and cutting one alters how it speaks and plays."
     },
     {
       "type": "image",
-      "src": "assets/projects/sinusoidal/ev-map.webp",
-      "alt": "The run's branching map on a parchment, with wax seals for battles.",
+      "src": "assets/projects/sinusoidal/map.webp",
+      "alt": "The run's branching map on a parchment across the table.",
       "caption": "The run map: red seals are battles, small cards are card choices, folded notes are events, the dark seal is the boss."
     },
     {
       "type": "image",
-      "src": "assets/projects/sinusoidal/ev-ledger.webp",
-      "alt": "An event note on parchment with three choices.",
+      "src": "assets/projects/sinusoidal/event.webp",
+      "alt": "An event note on parchment, Rats in the Walls, with three choices.",
       "caption": "An event: the Dealer slides a note across with trade-off choices."
     },
     {
       "type": "image",
-      "src": "assets/projects/sinusoidal/view-won4.webp",
+      "src": "assets/projects/sinusoidal/won.webp",
       "alt": "End-of-run summary: stops cleared, candles left, wires cut, cards taken.",
       "caption": "End-of-run summary, including which wires were cut."
-    },
-    {
-      "type": "image",
-      "src": "assets/projects/sinusoidal/sandbox-menu.webp",
-      "alt": "The debug sandbox menu listing experimental brain features.",
-      "caption": "The sandbox menu for toggling the experimental interpretability features."
     }
   ],
   "thumb": "assets/projects/sinusoidal/thumb.jpg"

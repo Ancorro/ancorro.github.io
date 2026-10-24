@@ -4,7 +4,7 @@
   "status": "wip",
   "dates": "Oct 2026 – present",
   "order": 4,
-  "kicker": "Master's Project · Oregon State University · Energy Systems",
+  "kicker": "Graduate Project · Oregon State University · Energy Systems",
   "tools": "Python · Gymnasium · WEC-Sim (Wave Energy Converter Simulator) · MATLAB / Simulink · Stable-Baselines3 PPO (Proximal Policy Optimization) · OSU HPC (Oregon State University high-performance computing) · W&B (Weights & Biases)",
   "tags": "WEC-Sim · PPO · Gymnasium",
   "blurb": "A Python interface that lets RL (reinforcement learning) agents step a full WEC-Sim wave simulation; a PPO agent trained on a cheap linear model transferred with no loss.",
