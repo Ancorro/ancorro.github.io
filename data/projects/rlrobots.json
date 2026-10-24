@@ -6,7 +6,7 @@
   "order": 1,
   "kicker": "Personal Research · Robotics",
   "tools": "Isaac Lab · MuJoCo · PPO (Proximal Policy Optimization) · Behaviour cloning · Grounding DINO · SAM 2 (Segment Anything Model 2) · Gemma 4 · OSU HPC (Oregon State University high-performance computing)",
-  "tags": "Isaac Lab · MuJoCo · PPO",
+  "tags": "RL · ML · Isaac Lab · MuJoCo",
   "blurb": "A simulated Unitree G1 humanoid walks, grasps, carries and places objects; its learned grasp picks up 345 of 360 unseen objects, up from 284.",
   "long": [
     "My first robotics project, started in September 2026: PPO (Proximal Policy Optimization) on toy tasks, then a simulated SO-101 robot arm in MuJoCo, now a Unitree G1 humanoid in NVIDIA's Isaac Lab, which simulates thousands of robots on one GPU (graphics processing unit).",
