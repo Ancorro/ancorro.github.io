@@ -6,7 +6,8 @@
   "order": 12,
   "kicker": "Graduate Course Project · Protein Language Models",
   "tools": "Protein Models (ESM3, LoRA, VAE) · Machine Learning (XGBoost, scikit-learn)",
-  "blurb": "I asked if the protein sequence of an antibody alone could predict how broadly it neutralizes HIV. Embeddings from frozen ESM3 (a protein LM) improved AUROC (area under the ROC curve) from 0.651 to 0.773 compared to a handcrafted feature baseline.",
+  "tags": "ESM3 · LoRA · XGBoost",
+  "blurb": "Predicting HIV antibody breadth from sequence: frozen ESM3 embeddings raised AUROC from 0.651 to 0.773 on 300 antibodies, though the interval includes zero.",
   "long": [
     "Broadly neutralizing antibodies (bnAbs) block many HIV strains at once, and finding them is slow lab work. This project explored how much information a sequence-only model could provide regarding breadth, before any physical assay.",
     "For 300 public heavy-chain sequences from CATNAP (public tool for aggregating, analyzing and tallying neutralizing antibody panels), clustered into 109 lineages to ensure relatives are not on opposite sides of the split, the frozen ESM3 embeddings achieved a pooled AUROC (area under the receiver operating characteristic curve) of 0.773 compared to 0.651 for the handcrafted XGBoost baseline. The group bootstrap confidence interval for the difference still includes zero, and the document notes this.",

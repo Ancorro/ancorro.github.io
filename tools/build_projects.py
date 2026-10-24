@@ -52,7 +52,7 @@ def card(p, i):
                     <div class="work-body">
                         <div class="laurel">{esc(p.get('kicker'))}</div>
                         <h3><a class="card-open" href="#{esc(p['slug'])}">{esc(p['title'])}</a></h3>
-                        <div class="tools">{esc(p.get('tools'))}</div>
+                        <div class="tools">{esc(p.get('tags') or p.get('tools'))}</div>
                         <div class="dates"><span>{esc(dates)}</span>{badge}</div>
                         <p>{p.get('blurb', '')}</p>
                         <div class="links">

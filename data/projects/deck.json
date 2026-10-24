@@ -6,7 +6,8 @@
   "order": 3,
   "kicker": "Personal Project · AI Agents",
   "tools": "Python (aiohttp) · tmux · Rust (iroh peer-to-peer tunnel) · Android (Capacitor) · Claude Code, Codex, OpenCode, Pi",
-  "blurb": "A small web app running on each PC, allowing a phone to create, monitor, and communicate with LLM coding agents. Each agent operates within a dedicated tmux session, ensuring that work continues even if the phone goes to sleep or loses connection, and the phone receives a notification when an agent completes a task or requires input.",
+  "tags": "Python · tmux · Rust",
+  "blurb": "A web app on each PC that lets a phone start, watch and message coding agents, which keep running in tmux when the phone sleeps.",
   "long": [
     "Deck runs on each of my PCs (personal computers) and gives my phone a column of tabs, one per session, plus one-tap keys that start Claude Code, Codex, OpenCode, Pi, agy (Google’s Antigravity CLI, command-line interface), OpenClaw or my own shell scripts. Each one runs in its own tmux session on the PC, so closing the phone or losing signal never stops an agent.",
     "Agents appear as a chat instead of a raw terminal: streamed responses, tappable expandable tool calls, and questions converted to buttons. A bridge process launches each agent in machine readable mode (eg codex app-server, pi --mode rpc) or for Claude, monitors its transcript and uses hooks, and writes a standardized event stream that the page replays. A shelf stores saved responses and documents (PDF, Word, Markdown) that the agents can read. On PC there is a review view that displays a document alongside the chat.",

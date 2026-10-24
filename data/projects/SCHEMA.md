@@ -12,7 +12,8 @@ One file per project: `data/projects/<slug>.json`. Assets live in `assets/projec
   "order": 10,                           // lower = earlier on the page; newest/most impressive first
   "kicker": "Personal Research · Robotics",   // small label above the title
   "tools": "Reinforcement Learning (PPO, MuJoCo) · Vision (Grounding DINO, SAM 2)",
-  "blurb": "2-3 sentence card text, plain language, real numbers only.",
+  "tags": "Isaac Lab · MuJoCo · PPO",          // card tags: 2-3 short names, no expansions
+  "blurb": "One-sentence card text, ~25 words, plain language, real numbers only.",
   "long": [                              // dialog body: 2-6 paragraphs, plain HTML allowed (<b>, <i>, <a>)
     "Paragraph one...",
     "Paragraph two..."

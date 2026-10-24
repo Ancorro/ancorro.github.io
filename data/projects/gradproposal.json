@@ -6,7 +6,8 @@
   "order": 2,
   "kicker": "Doctoral Research Direction · Multi-Agent Language Models",
   "tools": "PyTorch · Hugging Face Transformers · vLLM · Qwen3 / Qwen3.5 · Slurm on the OSU (Oregon State University) cluster · W&B (Weights & Biases)",
-  "blurb": "Can LM agents share internal states rather than text, and can a manager learn who needs to read what? We did a controlled test where KV-caches were passed between agents, and indeed information was shared, but it did not beat a single agent on standard benchmarks. If the receiving agent does not have the information, passing latent states performs on par with passing text (91% vs 92%).",
+  "tags": "PyTorch · vLLM · Qwen3",
+  "blurb": "Can LLM agents share internal state instead of text? Passing KV caches does carry information (91% vs 92% for text), but does not beat a single agent.",
   "long": [
     "Teams of LLM agents typically communicate via text, where the worker outputs their findings token-by-token, and all recipients must process the tokens again. Agents based on the same model can instead communicate by passing internal states, like KV-cache. My NSF GRFP (National Science Foundation Graduate Research Fellowship Program) application is for a project where a manager controls this communication, workers output compact latent space summaries, and the manager learns from team reward what summaries to give to each agent within a bandwidth limit, for teams of 8-16 agents.",
     "<b>First, an audit of what actually crosses.</b> I replicated LatentMAS (published latent multi-agent method) on Qwen3-4B using GSM8K (grade school math) and ARC-Challenge (science questions), 300 questions × 3 seeds each. I verified that my implementation produced bit-identical caches and solver logits compared to the official implementation. I added controls with cache content: cache for a different question, no cache, noise cache, and sweeping number of latent steps.",

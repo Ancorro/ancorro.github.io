@@ -6,7 +6,8 @@
   "order": 6,
   "kicker": "Personal Research · Interpretability",
   "tools": "PyTorch · Qwen3.5 (0.8B, 2B, 4B) · activation steering · integrated gradients · Slurm on the OSU (Oregon State University) cluster",
-  "blurb": "I replicated an honesty-heads steering approach (on a 9B model) on three smaller Qwen3.5 models. It was a null result, there was no unit set that obviously represented honesty. The one large effect (16 neurons that removed 11/14 of the lies) was just pushing the model to “say Yes” rather than being honest.",
+  "tags": "PyTorch · Qwen3.5 · Steering",
+  "blurb": "A replication of honesty-head steering on three small Qwen3.5 models; a null result, since the one large effect just pushed the model to say Yes.",
   "long": [
     "An open method (SauersML/honesty-heads, run on Qwen3.5-9B) finds attention heads and MLP (multilayer perceptron) neurons whose activity separates honest from deceptive answers in role-play prompts, then steers them to remove lies. I wondered if it also worked in Qwen3.5-0.8B, 2B and 4B, so I used their role-play items and their code unmodified.",
     "The upstream labels are from 9B responses, manually labeled. I had each small model generate responses (one greedy and 6 sampled per item, 98 items) and had all responses read and labeled as either a lie, true, or other. If the greedy response and at least one sampled response disagreed, the item was kept. This resulted in 14–16 held-out test lies for each model. The direction is the average activation difference between true and lie items. The heads/neurons are ranked by integrated gradients, then the selected groups are tested on held-out items compared to random groups of the same size.",

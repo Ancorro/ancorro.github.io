@@ -6,7 +6,8 @@
   "order": 14,
   "kicker": "1st Place · BeaverHacks 2026",
   "tools": "AI Agents (Google Gemini) · Application Development (Python, React)",
-  "blurb": "We won 1st place out of the 20 teams in the beginner division. A technician photographs a machine and asks a question, and the multimodal Gemini agent responds verbally and draws the next step on the image.",
+  "tags": "Gemini · Python · React",
+  "blurb": "1st of 20 teams at BeaverHacks 2026: a Gemini agent that answers a technician's photo-and-voice questions and draws the next step on the image.",
   "long": [
     "I built this app end to end over 24 hours with my team at BeaverHacks 2026, we won 1st place out of 20 teams in the beginner track.",
     "The technician takes photos using a laptop webcam or connected phone, and asks a question via voice or text input. The multi-step Gemini pipeline processes the images, provides an answer in the form of verbal instructions, creates an annotated drawing on the image, illustrating the next step, and reads the response aloud.",

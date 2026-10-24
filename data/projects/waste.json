@@ -6,7 +6,8 @@
   "order": 11,
   "kicker": "Senior Capstone · Lead Software Engineer",
   "tools": "Software Engineering (Python, PyQt) · Data Analysis (Processing Pipelines)",
-  "blurb": "I led the student team developing a Python desktop application for performing safety critical calculations for Hanford radioactive waste vitrification. Specifically, glass formulations for tank waste, and chemical and radiological contents of each canister.",
+  "tags": "Python · PyQt",
+  "blurb": "Led the student team building a Python desktop app for safety-critical Hanford radioactive-waste vitrification calculations.",
   "long": [
     "The Hanford site in Washington holds ~56M gallons of radioactive waste stored in 177 underground tanks. The plan is vitrification, turning the waste into glass so it can be safely stored for long periods of time. For each batch they will need a glass recipe, and they will need to document the contents of each canister.",
     "Our client’s preliminary code did those calculations. As lead technical developer I converted it to a python application with data-analysis pipelines designed for auditability, consistency and maintainability. The user selects a melter train and campaign, then runs the five processing steps. Each execution is archived along with its input data to ensure traceability.",

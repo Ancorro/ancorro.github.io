@@ -6,7 +6,8 @@
   "order": 13,
   "kicker": "Course Project · Transformer Research",
   "tools": "AI Reasoning (Mixture of Experts, Fuzzy Logic) · Machine Learning (PyTorch)",
-  "blurb": "Mixture-of-experts transformer with fuzzy-logic operator routing of token representations. Pre-registered finding: parallel branch improves performance by 1.4 points, but the logic operators do not outperform a matched control.",
+  "tags": "PyTorch · Mixture of experts",
+  "blurb": "A mixture-of-experts transformer with fuzzy-logic operators; the fusion head gained 1.4 points in every seed, but the operators added nothing over a matched control.",
   "long": [
     "I built a mixture-of-experts transformer that routes token representations through specialized logical operators (differentiable AND, OR and NOT), with cross-attention between the main model and those reasoning paths, as well as the PyTorch training and evaluation pipeline.",
     "I pre-registered the eval and ran it three seeds. The parallel branch + fusion head outperforms the linear-head baseline by 1.4 percentage points across all three seeds. However, the parameter-matched control without logic operators performs equally well on ProofWriter and MNLI (Multi-Genre Natural Language Inference), so the improvement is due to increased capacity rather than the presence of logical operators.",

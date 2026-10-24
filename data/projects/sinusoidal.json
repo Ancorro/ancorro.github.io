@@ -6,7 +6,8 @@
   "order": 8,
   "kicker": "Personal Project · Game + Interpretability",
   "tools": "Godot 4 (GDScript, shaders) · Qwen3.5-2B · PyTorch steering vectors · Sparse autoencoders · PPO (Proximal Policy Optimization)",
-  "blurb": "It’s a 3D card roguelike in Godot where the enemy (a wooden automaton known as the Dealer) is an actual small LM (Qwen3.5-2B). You open up its head and cut the glowing wires, each time you cut a wire a steering vector is added to the LM’s activations, altering how it speaks and plays.",
+  "tags": "Godot · Qwen3.5 · Steering vectors",
+  "blurb": "A 3D card roguelike in Godot against a small language model; cutting wires in its head adds steering vectors that change how it speaks and plays.",
   "long": [
     "Sinusoidal is a 3D card roguelike with a dark, low-res aesthetic: 480×270 render, palette shader snapping dark colors, swinging lamp and candles. The run consists of a branching map of battles, card choices and events on a parchment, three candles represent lives. The rules, 9 sigils (creature abilities) and 10 events are data driven and covered by headless test and balance simulations.",
     "The hook is that the Dealer is a language model you can tamper with. Its head opens to show four coloured wires; each wire is a contrastive direction (the mean activation on one set of prompts minus another, at one layer), and cutting it adds that direction to the residual stream. Players are never told what a wire means and learn it by watching the Dealer change.",
