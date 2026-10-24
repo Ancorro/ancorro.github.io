@@ -9,10 +9,10 @@
   "tags": "ESM3 · LoRA · XGBoost",
   "blurb": "Predicting HIV antibody breadth from sequence: frozen ESM3 embeddings raised AUROC from 0.651 to 0.773 on 300 antibodies, though the interval includes zero.",
   "long": [
-    "Broadly neutralizing antibodies (bnAbs) block many HIV strains at once, and finding them is slow lab work. This project explored how much information a sequence-only model could provide regarding breadth, before any physical assay.",
-    "For 300 public heavy-chain sequences from CATNAP (public tool for aggregating, analyzing and tallying neutralizing antibody panels), clustered into 109 lineages to ensure relatives are not on opposite sides of the split, the frozen ESM3 embeddings achieved a pooled AUROC (area under the receiver operating characteristic curve) of 0.773 compared to 0.651 for the handcrafted XGBoost baseline. The group bootstrap confidence interval for the difference still includes zero, and the document notes this.",
-    "We used a LoRA (low-rank adaptation) fine-tune of ESM3 on antibody repertoire data (OAS, the Observed Antibody Space) for the lineage case studies, it correctly positioned 4/4 known VRC34 intermediates in its representation space.",
-    "All numbers in the report are verified against the saved artifacts using the auditing script, ensuring that the claims and results cannot diverge."
+    "Broadly neutralizing antibodies block many HIV strains at once, and finding them is slow lab work. This project asked how much a sequence-only model can say about breadth before any physical assay.",
+    "On 300 public heavy-chain sequences from CATNAP, grouped into 109 lineages so that relatives never sit on both sides of a split, frozen ESM3 embeddings reached a pooled AUROC of 0.773 against 0.651 for the handcrafted XGBoost baseline. The group-bootstrap interval of the difference still includes zero, and the write-up says so.",
+    "Adapted ESM3 with LoRA on OAS antibody repertoires for the lineage case studies. That adaptation run did not improve downstream performance, but in its representation space it placed 4 of 4 known VRC34 intermediates correctly.",
+    "Reconciled every number in the report against the saved artifacts with an audit script, so the claims and the results cannot drift apart."
   ],
   "highlights": [
     "AUROC 0.651 → 0.773 (frozen ESM3 vs. handcrafted baseline)",
@@ -37,7 +37,7 @@
       "type": "image",
       "src": "assets/projects/esm3/roc_pr.jpg",
       "alt": "ROC and precision-recall curves",
-      "caption": "Pooled out-of-fold ROC (receiver operating characteristic) and precision-recall curves, baseline vs. ESM3."
+      "caption": "Pooled out-of-fold ROC and precision-recall curves, handcrafted baseline against frozen ESM3."
     },
     {
       "type": "image",
@@ -55,7 +55,7 @@
       "type": "image",
       "src": "assets/projects/esm3/similarity.jpg",
       "alt": "Similarity distribution",
-      "caption": "Within and between lineages embedding similarity."
+      "caption": "Embedding similarity within and across lineages."
     }
   ],
   "thumb": "assets/projects/esm3/thumb.jpg"

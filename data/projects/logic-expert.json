@@ -9,9 +9,9 @@
   "tags": "PyTorch · Mixture of experts",
   "blurb": "A mixture-of-experts transformer with fuzzy-logic operators; the fusion head gained 1.4 points in every seed, but the operators added nothing over a matched control.",
   "long": [
-    "I built a mixture-of-experts transformer that routes token representations through specialized logical operators (differentiable AND, OR and NOT), with cross-attention between the main model and those reasoning paths, as well as the PyTorch training and evaluation pipeline.",
-    "I pre-registered the eval and ran it three seeds. The parallel branch + fusion head outperforms the linear-head baseline by 1.4 percentage points across all three seeds. However, the parameter-matched control without logic operators performs equally well on ProofWriter and MNLI (Multi-Genre Natural Language Inference), so the improvement is due to increased capacity rather than the presence of logical operators.",
-    "The routing diagnostics reveal which operators the router actually uses at each depth. The project page has the full paper and an interactive playground."
+    "Built a mixture-of-experts transformer that routes token representations through specialized logical operators, differentiable AND, OR and NOT. Added cross-attention between the main model and those reasoning paths, then built the PyTorch training and evaluation pipeline.",
+    "Pre-registered the evaluation and ran it over three seeds. The parallel branch with its fusion head beats the linear-head baseline by 1.4 pp in every seed, at a standard error of 0.2 pp. A parameter-matched control with the same capacity and no logic operators does just as well on ProofWriter and MNLI, so the gain comes from the fusion-head path, not from the logic operators.",
+    "Routing diagnostics show which operators the router actually uses at each depth: routing entropy stays at 97 to 98% of its maximum and the learned fusion weight shrinks, so the model routes close to uniformly and down-weights the branch. The project page has the full paper and an interactive playground."
   ],
   "highlights": [
     "+1.4 pp over the linear head in all 3 seeds",
@@ -47,13 +47,13 @@
       "type": "image",
       "src": "assets/projects/logic-expert/proofwriter.jpg",
       "alt": "ProofWriter accuracy by model",
-      "caption": "ProofWriter validation accuracy for each model, average and variability across 3 different seeds (y-axis starts at 0.90)."
+      "caption": "ProofWriter validation accuracy per model, mean and spread over 3 seeds (y-axis starts at 0.90)."
     },
     {
       "type": "image",
       "src": "assets/projects/logic-expert/routing.jpg",
       "alt": "Routing heatmap",
-      "caption": "Routing-weight heatmap across transformer layers."
+      "caption": "Routing-weight heatmap over transformer depth."
     }
   ],
   "thumb": "assets/projects/logic-expert/thumb.jpg",

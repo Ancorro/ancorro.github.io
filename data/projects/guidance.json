@@ -9,9 +9,9 @@
   "tags": "Gemini · Python · React",
   "blurb": "1st of 20 teams at BeaverHacks 2026: a Gemini agent that answers a technician's photo-and-voice questions and draws the next step on the image.",
   "long": [
-    "I built this app end to end over 24 hours with my team at BeaverHacks 2026, we won 1st place out of 20 teams in the beginner track.",
-    "The technician takes photos using a laptop webcam or connected phone, and asks a question via voice or text input. The multi-step Gemini pipeline processes the images, provides an answer in the form of verbal instructions, creates an annotated drawing on the image, illustrating the next step, and reads the response aloud.",
-    "The machine manuals are accessed locally (RAG) via function calling, keyed to the specific machine using a QR code, with task state maintained so the assistant remembers what’s been tried."
+    "Built the end-to-end solution in 24 hours with a team at BeaverHacks 2026, and won 1st place in the beginner track of 20 teams.",
+    "A technician captures photos from a laptop webcam or a paired phone, then asks a question by voice or text. A multi-stage Gemini pipeline transcribes the audio, analyzes the images, answers in spoken guidance, edits the photo into an annotated diagram of the next action, and reads the answer aloud.",
+    "The agent retrieves machine manuals locally by RAG through function calling, scoped by the QR code on each machine, and keeps task state so it remembers what has already been tried."
   ],
   "highlights": [
     "1st of 20 teams, beginner track",
@@ -45,7 +45,7 @@
       "type": "image",
       "src": "assets/projects/guidance/example.jpg",
       "alt": "Annotated laptop bottom cover",
-      "caption": "The generated image: the assistant circles the ten screws in the image of the laptop base."
+      "caption": "A generated diagram: the assistant marks all ten screws on a photo of a laptop's bottom cover."
     }
   ],
   "thumb": "assets/projects/guidance/thumb.jpg"
