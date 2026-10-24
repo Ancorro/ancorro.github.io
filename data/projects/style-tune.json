@@ -20,8 +20,14 @@
     "DPO (direct preference optimization) v1: 100% train, 50% held-out: memorized, shelved",
     "AI-detector probe: drafts 1.00, tuned rewrites 0.84, my writing 0.08"
   ],
-  "links": [],
-  "note": "Code and data private",
+  "links": [
+    {
+      "label": "Code",
+      "href": "https://github.com/Ancorro/style-tune",
+      "icon": "github"
+    }
+  ],
+  "note": "Writing data private",
   "hero": {
     "type": "image",
     "src": "assets/projects/style-tune/pipeline-diagram.jpg",

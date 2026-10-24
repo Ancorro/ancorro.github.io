@@ -20,8 +20,13 @@
     "Concept injection: 0 of 120 pilot trials noticed on 2B",
     "Headless tests drive 40 bot runs through the map"
   ],
-  "links": [],
-  "note": "Code private",
+  "links": [
+    {
+      "label": "Code",
+      "href": "https://github.com/Ancorro/sinusoidal-public",
+      "icon": "github"
+    }
+  ],
   "hero": {
     "type": "image",
     "src": "assets/projects/sinusoidal/merge-e-battle.webp",

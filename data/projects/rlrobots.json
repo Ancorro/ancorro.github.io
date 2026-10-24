@@ -21,7 +21,13 @@
     "Walk, grasp, carry, set down upright: 144 of 384 robots across six shapes (development runs)",
     "Two-hand box carry learned by BC (behaviour cloning): 17/20 set down (development runs)"
   ],
-  "note": "Code private",
+  "links": [
+    {
+      "label": "Code",
+      "href": "https://github.com/Ancorro/rlRobots",
+      "icon": "github"
+    }
+  ],
   "hero": {
     "type": "video",
     "src": "assets/projects/rlrobots/g1-walk-carry.mp4",

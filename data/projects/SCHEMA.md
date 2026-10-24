@@ -40,5 +40,5 @@ Rules
   (datasets' object textures, reference art, logos, other papers' figures, `external/` folders).
 - A diagram you draw yourself is fine (SVG or matplotlib) but caption it as a diagram. A chart must plot real
   numbers from the repo; caption the source.
-- All the source repos are private: no GitHub links to them (use "note": "Code private"). Do not link
+- Public repos (rlRobots, sinusoidal-public, style-tune, logic-expert-public) get a "Code" link; the rest are private (use "note": "Code private"). Do not link
   claude.ai/artifact pages.
