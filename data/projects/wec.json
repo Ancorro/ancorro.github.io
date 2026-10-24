@@ -19,7 +19,6 @@
     "PPO (Proximal Policy Optimization) trained on a linear model: 148.8 kW on WEC-Sim vs 147.4 kW tuned damper, in 2.4 min instead of 71",
     "Linear model vs WEC-Sim motion correlation ≥ 0.9985 across three wave seeds"
   ],
-  "note": "Code private",
   "hero": {
     "type": "image",
     "src": "assets/projects/wec/ppo_cross.jpg",

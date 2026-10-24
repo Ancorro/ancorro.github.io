@@ -20,7 +20,6 @@
     "Engine check: the method's forward pass matches Hugging Face's within 0.03 nats"
   ],
   "links": [],
-  "note": "Code private",
   "hero": {
     "type": "image",
     "src": "assets/projects/honesty-small/lies-removed.jpg",

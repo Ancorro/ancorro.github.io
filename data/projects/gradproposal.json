@@ -21,7 +21,7 @@
     "Latent sender 19× faster, 2.4× fewer total FLOPs (floating-point operations), 61,000× larger message"
   ],
   "links": [],
-  "note": "Code private · paper draft in progress",
+  "note": "Paper draft in progress",
   "hero": {
     "type": "image",
     "src": "assets/projects/gradproposal/team-communication.jpg",

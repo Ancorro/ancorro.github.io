@@ -19,7 +19,6 @@
     "One-pass filter delay differs by beat shape: 11.1 vs 8.3 ms"
   ],
   "links": [],
-  "note": "Code private",
   "hero": {
     "type": "image",
     "src": "assets/projects/ecg-beat-classifier/step2-time-222.webp",

@@ -20,7 +20,7 @@ One file per project: `data/projects/<slug>.json`. Assets live in `assets/projec
   ],
   "highlights": ["Pick + place 240/240 with exact positions", "..."],   // optional, 2-5 short bullets with numbers
   "links": [{"label": "Code", "href": "https://...", "icon": "github"}],  // icon: github | page | pdf | play
-  "note": "Code private",                // optional small note shown beside links
+  "note": "Paper draft in progress",     // optional small note shown beside links; never "Code private"
   "thumb": "assets/projects/rlrobots/thumb.jpg",   // the card image: written by tools/make_thumbs.py, 960x600, duotone
   "hero": {"type": "video", "src": "assets/projects/rlrobots/pick.mp4", "poster": "assets/projects/rlrobots/pick.jpg", "alt": "..."},
   "gallery": [                           // shown in the dialog, 1-6 items; hero may repeat as first
@@ -40,5 +40,5 @@ Rules
   (datasets' object textures, reference art, logos, other papers' figures, `external/` folders).
 - A diagram you draw yourself is fine (SVG or matplotlib) but caption it as a diagram. A chart must plot real
   numbers from the repo; caption the source.
-- Public repos (rlRobots, sinusoidal-public, style-tune, logic-expert-public) get a "Code" link; the rest are private (use "note": "Code private"). Do not link
+- Public repos (rlRobots, sinusoidal-public, style-tune, logic-expert-public) get a "Code" link; the rest get no code link and no "private" note. Do not link
   claude.ai/artifact pages.
