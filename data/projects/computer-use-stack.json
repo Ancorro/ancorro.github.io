@@ -19,7 +19,7 @@
     "Fast decider ~0.5 s per step; vision model ~5 s",
     "OSWorld 2.0 sample: 0 of 10 fully completed, mean partial score 0.196"
   ],
-  "links": [],
+  "links": [{"label": "Code", "href": "https://github.com/Ancorro/computer-use-stack-public", "icon": "github"}],
   "hero": {
     "type": "image",
     "src": "assets/projects/computer-use-stack/loop-diagram.jpg",

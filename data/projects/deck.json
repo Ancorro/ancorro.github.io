@@ -19,7 +19,7 @@
     "One-time 5-minute pairing codes; localhost-only server",
     "Chats move between hosts mid-conversation"
   ],
-  "links": [],
+  "links": [{"label": "Code", "href": "https://github.com/Ancorro/deck-public", "icon": "github"}],
   "hero": {
     "type": "image",
     "src": "assets/projects/deck/desktop.webp",

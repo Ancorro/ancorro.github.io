@@ -20,7 +20,7 @@
     "Split probe: right cache 91%, text 92%, wrong or no cache 0%",
     "Latent sender 19× faster, 2.4× fewer total FLOPs (floating-point operations), 61,000× larger message"
   ],
-  "links": [],
+  "links": [{"label": "Code", "href": "https://github.com/Ancorro/latent-comm-public", "icon": "github"}],
   "note": "Paper draft in progress",
   "hero": {
     "type": "image",

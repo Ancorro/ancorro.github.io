@@ -10,7 +10,7 @@ linking to my featured projects, experience, and skills.
 - **Guidance — Agentic Field Technician Assistant** — 1st place, BeaverHacks 2026 ([code](https://github.com/ekanshArora123/beaverhacks2026)).
 - **Waste Treatment Completion Company** — leading software engineer, senior capstone project ([project page](https://hlwa-portfolio.github.io/)).
 - **[AI Modeling for HIV Antibody Research](https://ancorro.github.io/esm3-banb/)** — ESM3 / LoRA / VAE course project with a full write-up.
-- **Deck — Multi-Agent Orchestration and Control Panel** — parallel LLM coding agents and a phone control panel for them (code private).
+- **Deck — Multi-Agent Orchestration and Control Panel** — parallel LLM coding agents and a phone control panel for them ([code](https://github.com/Ancorro/deck-public)).
 
 ## Projects grid
 Project cards and their detail dialogs come from `data/projects/<slug>.json` (format in
