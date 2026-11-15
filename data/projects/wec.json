@@ -5,19 +5,22 @@
   "dates": "Oct 2026 – present",
   "order": 4,
   "kicker": "Graduate Project · Oregon State University · Energy Systems",
-  "tools": "Python · Gymnasium · WEC-Sim (Wave Energy Converter Simulator) · MATLAB / Simulink · Stable-Baselines3 PPO (Proximal Policy Optimization) · OSU HPC (Oregon State University high-performance computing) · W&B (Weights & Biases)",
+  "tools": "Python · Gymnasium · WEC-Sim (Wave Energy Converter Simulator) · MATLAB / Simulink · PyTorch · Stable-Baselines3 PPO (Proximal Policy Optimization) · OSU HPC (Oregon State University high-performance computing) · W&B (Weights & Biases)",
   "tags": "WEC-Sim · PPO · Gymnasium",
-  "blurb": "A Python interface that lets RL (reinforcement learning) agents step a full WEC-Sim wave simulation; a PPO agent trained on a cheap linear model transferred with no loss.",
+  "blurb": "A Python interface that lets RL (reinforcement learning) agents step a full WEC-Sim wave simulation, and a learned controller that absorbs 48% more energy than fixed damping.",
   "long": [
     "A wave energy converter (WEC) turns ocean wave motion into electricity, and the force its generator applies at each moment decides how much energy it harvests. RL (reinforcement learning) could learn that force directly, but the standard simulator, WEC-Sim, runs in MATLAB and Simulink with no Python control loop.",
     "<b>The interface.</b> wecsim_gym wraps WEC-Sim as a Gymnasium environment: the action is the force, the reward is energy absorbed. It matches a Simulink-only reference to about 1e-10 in mean power, and five RL libraries train on it unchanged.",
-    "<b>Cheap model versus full simulator.</b> A PPO (Proximal Policy Optimization) agent trained on the group's linear model reached 148.8 kW in WEC-Sim, level with the best tuned damper (147.4 kW), and trained in 2.4 minutes instead of 71. The next step is training across many sea states, where a fixed damper cannot keep up."
+    "<b>Cheap model versus full simulator.</b> A PPO (Proximal Policy Optimization) agent trained on the group's linear model reached 148.8 kW in WEC-Sim, level with the best tuned damper (147.4 kW), and trained in 2.4 minutes instead of 71.",
+    "<b>Learned damping controller.</b> A small recurrent network (GRU, gated recurrent unit), trained by backpropagation through the linear model with the float's travel kept under 2 m, absorbs 48.1 ± 2.9 % more energy than fixed damping on 200 test waves (three seeds), against 10.4 % and 8.2 % for the group's two earlier controllers. The seed-0 network gains 47.6 % on WEC-Sim with nonlinear hydrodynamics (six test waves). At long wave periods (13–15 s) it absorbs less than the best fixed damping.",
+    "<b>Lab test rig.</b> For LUPA, the lab's 1:20 wave energy test rig, with its spar locked, a controller that sets both damping and stiffness gains 22.8 % electrical energy over the best fixed damping on the rig's model. It is the only controller tested that gains under all four combinations of uncertain generator loss and applied force, and is exported as a MATLAB block for the lab."
   ],
   "highlights": [
     "Gymnasium interface matches a Simulink-only reference to ~1e-10 in mean power",
     "19.9 ms per 0.1 s control step on an HPC (high-performance computing) node; 5 RL (reinforcement learning) libraries train unchanged",
     "PPO (Proximal Policy Optimization) trained on a linear model: 148.8 kW on WEC-Sim vs 147.4 kW tuned damper, in 2.4 min instead of 71",
-    "Linear model vs WEC-Sim motion correlation ≥ 0.9985 across three wave seeds"
+    "Learned GRU (gated recurrent unit) controller: +48.1 ± 2.9 % energy over fixed damping on 200 test waves, vs +10.4 % and +8.2 % for earlier controllers",
+    "Lab rig (LUPA) reactive controller: +22.8 % electrical energy on its model; gains in all four loss and force cases"
   ],
   "hero": {
     "type": "image",
