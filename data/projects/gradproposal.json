@@ -4,7 +4,7 @@
   "status": "wip",
   "dates": "Oct 2026 – present",
   "order": 2,
-  "kicker": "Doctoral Research Direction · Multi-Agent Language Models",
+  "kicker": "Personal Research · Multi-Agent Language Models",
   "tools": "PyTorch · Hugging Face Transformers · vLLM · Qwen3 / Qwen3.5 · Slurm on the OSU (Oregon State University) cluster · W&B (Weights & Biases)",
   "tags": "PyTorch · vLLM · Qwen3",
   "blurb": "Can LLM agents share internal state instead of text? Passing KV caches does carry information (91% vs 92% for text), but does not beat a single agent.",
